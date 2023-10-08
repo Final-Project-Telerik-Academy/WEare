@@ -7,6 +7,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="RESTAssured-EXAM-Solution" />
+        <module name="test-automation-framework" />
       </profile>
     </annotationProcessing>
   </component>
