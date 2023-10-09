@@ -8,6 +8,7 @@ import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static com.weare.api.Utils.Endpoints.BASE_URL;
 import static com.weare.api.Utils.Endpoints.REGISTER_ENDPOINT;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
@@ -20,13 +21,13 @@ public class RegistrationTest extends BaseTestSetup {
         UserService userService = new UserService();
         User user = new User();
 
-        baseURI = format("%s", REGISTER_ENDPOINT);
+        baseURI = format("%s%s", BASE_URL, REGISTER_ENDPOINT);
 
-        String registrationJson = userService.userToJson(user);
+        String registrationJsonBody = userService.generateRegistrationRequest(user);
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .body(registrationJson)
+                .body(registrationJsonBody)
                 .when()
                 .post();
 

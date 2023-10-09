@@ -17,7 +17,7 @@ public class User {
     private static final Faker faker = new Faker();
 
     public User(){
-        this.username = faker.name().username();
+        this.username = randomUsername();
         this.password = Constants.PASSWORD;
         this.email = faker.internet().emailAddress();
         this.firstName = faker.name().firstName();
@@ -88,5 +88,22 @@ public class User {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    private String randomUsername() {
+        String generatedUsername = faker.name().username().replace(".", "");
+        if (!isValidUsername(generatedUsername)) {
+            throw new IllegalArgumentException("Generated username is invalid. Only alphabetic characters are allowed, with no whitespaces or dots.");
+        }
+        return generatedUsername;
+    }
+    private boolean isValidUsername(String username) {
+        for (char c : username.toCharArray()) {
+            if (Character.isWhitespace(c) || c == '.') {
+                return false;
+            }
+        }
+
+        return username.matches("^[a-zA-Z]+$");
     }
 }
