@@ -1,7 +1,6 @@
 package com.weare.api.Models;
 
 import com.weare.api.Utils.Constants;
-import com.weare.api.Utils.JSONRequests;
 
 import com.github.javafaker.Faker;
 
@@ -89,12 +88,5 @@ public class User {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
-    }
-
-
-    public String toJsonRequest() {
-        return String.format(JSONRequests.REGISTRATION,
-                Constants.AUTHORITIES_USER, this.categoryId, this.categoryName,
-                this.password, this.email, this.password, this.username);
     }
 }
