@@ -1,4 +1,4 @@
-package com.weare.api;
+package com.weare.api.Utils;
 
 public class Constants {
     public static final String USERNAME = "";
@@ -14,6 +14,4 @@ public class Constants {
 
     public static final String FULL_NAME = FIRST_NAME + " " + LAST_NAME;
     public static final String EXPERTISE = "All";
-
-
 }

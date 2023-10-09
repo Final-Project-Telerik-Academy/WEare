@@ -22,12 +22,6 @@ import static org.apache.http.HttpStatus.SC_OK;
 import static org.testng.Assert.assertTrue;
 
 public class BaseTestSetup {
-
-    @BeforeSuite
-    public void initialSetup() {
-
-    }
-
     /**
      * Provided configuration resolve REST Assured issue with a POST request without request body.
      * Missing configuration leads to response status code 415 (Unsupported Media Type)
@@ -40,16 +34,4 @@ public class BaseTestSetup {
 
         RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
     }
-
-    @AfterSuite(alwaysRun = true)
-    public void afterSuite() {
-
-    }
-
-/*    public RequestSpecification getApplicationAuthentication() {
-        return given()
-            .queryParam("key", KEY)
-            .queryParam("token", TOKEN)
-            .log().all();
-    }*/
 }

@@ -1,4 +1,5 @@
-package com.weare.api;
+package com.weare.api.Utils;
 
 public class JSONRequests {
+
 }
