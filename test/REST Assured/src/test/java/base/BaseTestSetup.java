@@ -28,11 +28,6 @@ public class BaseTestSetup {
     @BeforeSuite
     public void initialSetup() {
         baseURI = BASE_URL;
-/*
-        Faker faker = new Faker();
-
-        USERNAME = generateRandomUsername(faker);
-        EMAIL = generateRandomEmail(faker);*/
     }
 
     /**
@@ -46,11 +41,4 @@ public class BaseTestSetup {
 
         RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
     }
-
-/*    private static String generateRandomUsername(Faker faker) {
-        return faker.name().username();
-    }
-    private String generateRandomEmail(Faker faker) {
-        return faker.internet().emailAddress();
-    }*/
 }
