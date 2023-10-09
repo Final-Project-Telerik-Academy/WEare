@@ -3,7 +3,7 @@ package com.weare.api.Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class JSONValidator {
+public class Helper {
     public static boolean isValid(String json) {
         try {
             new JSONObject(json);

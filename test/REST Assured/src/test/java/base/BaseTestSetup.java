@@ -4,7 +4,7 @@ import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 
 
-import org.apache.commons.lang3.RandomStringUtils;
+import com.github.javafaker.Faker;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -29,8 +29,10 @@ public class BaseTestSetup {
     public void initialSetup() {
         baseURI = BASE_URL;
 
-        USERNAME = generateRandomUsername(10);
-        EMAIL = generateRandomEmail(6);
+        Faker faker = new Faker();
+
+        USERNAME = generateRandomUsername(faker);
+        EMAIL = generateRandomEmail(faker);
     }
 
     /**
@@ -39,18 +41,16 @@ public class BaseTestSetup {
      */
     @BeforeSuite
     public void setup() {
-
         EncoderConfig encoderConfig = RestAssured.config().getEncoderConfig()
             .appendDefaultContentCharsetToContentTypeIfUndefined(false);
 
         RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
     }
 
-    private static String generateRandomUsername(int length) {
-        return RandomStringUtils.randomAlphanumeric(length);
+    private static String generateRandomUsername(Faker faker) {
+        return faker.name().username();
     }
-    private static String generateRandomEmail(int emailLength) {
-        String emailName = RandomStringUtils.randomAlphabetic(emailLength);
-        return emailName + "@gmail.com";
+    private String generateRandomEmail(Faker faker) {
+        return faker.internet().emailAddress();
     }
 }
