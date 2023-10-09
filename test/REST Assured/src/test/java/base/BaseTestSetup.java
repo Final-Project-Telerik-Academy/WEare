@@ -27,8 +27,8 @@ import static org.testng.Assert.assertTrue;
 public class BaseTestSetup {
     @BeforeSuite
     public void initialSetup() {
-/*        baseURI = BASE_URL;
-
+        baseURI = BASE_URL;
+/*
         Faker faker = new Faker();
 
         USERNAME = generateRandomUsername(faker);
