@@ -1,28 +1,31 @@
 package com.weare.api.Models;
 
+import com.weare.api.Utils.Constants;
+import com.weare.api.Utils.JSONRequests;
+
+import com.github.javafaker.Faker;
+
 public class User {
-    private int id;
     private String username;
     private String password;
     private String email;
     private String firstName;
     private String lastName;
+    private String authority;
 
-    public User(int id, String username, String password, String email, String firstName, String lastName){
-        this.id = id;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
+    private String categoryId;
+    private String categoryName;
 
-    public int getId() {
-        return id;
-    }
+    private static final Faker faker = new Faker();
 
-    public void setId(int id) {
-        this.id = id;
+    public User(){
+        this.username = faker.name().username();
+        this.password = Constants.PASSWORD;
+        this.email = faker.internet().emailAddress();
+        this.firstName = faker.name().firstName();
+        this.lastName = faker.name().lastName();
+        this.authority = Constants.AUTHORITIES_USER;
+        this.categoryId = Constants.CATEGORY_ID;
     }
 
     public String getUsername() {
@@ -65,4 +68,34 @@ public class User {
         this.lastName = lastName;
     }
 
+    public String getAuthority() {
+        return authority;
+    }
+
+    public void setAuthority(String authority) {
+        this.authority = authority;
+    }
+
+    public String getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(String categoryId) {
+        this.categoryId = categoryId;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
+
+    public String toJsonRequest() {
+        return String.format(JSONRequests.REGISTRATION,
+                Constants.AUTHORITIES_USER, this.categoryId, this.categoryName,
+                this.password, this.email, this.password, this.username);
+    }
 }
