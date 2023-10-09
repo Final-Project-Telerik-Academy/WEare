@@ -3,6 +3,7 @@ package base;
 import java.time.Instant;
 import java.time.format.DateTimeFormatter;
 
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
@@ -12,6 +13,8 @@ import io.restassured.config.EncoderConfig;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
+import static com.weare.api.Utils.Endpoints.BASE_URL;
+import static com.weare.api.Utils.Constants.*;
 import static io.restassured.RestAssured.basePath;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
@@ -22,6 +25,14 @@ import static org.apache.http.HttpStatus.SC_OK;
 import static org.testng.Assert.assertTrue;
 
 public class BaseTestSetup {
+    @BeforeSuite
+    public void initialSetup() {
+        baseURI = BASE_URL;
+
+        USERNAME = generateRandomUsername(10);
+        EMAIL = generateRandomEmail(6);
+    }
+
     /**
      * Provided configuration resolve REST Assured issue with a POST request without request body.
      * Missing configuration leads to response status code 415 (Unsupported Media Type)
@@ -33,5 +44,13 @@ public class BaseTestSetup {
             .appendDefaultContentCharsetToContentTypeIfUndefined(false);
 
         RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
+    }
+
+    private static String generateRandomUsername(int length) {
+        return RandomStringUtils.randomAlphanumeric(length);
+    }
+    private static String generateRandomEmail(int emailLength) {
+        String emailName = RandomStringUtils.randomAlphabetic(emailLength);
+        return emailName + "@gmail.com";
     }
 }
