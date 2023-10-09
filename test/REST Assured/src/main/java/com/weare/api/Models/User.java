@@ -12,7 +12,6 @@ public class User {
     private String firstName;
     private String lastName;
     private String authority;
-
     private String categoryId;
     private String categoryName;
 
