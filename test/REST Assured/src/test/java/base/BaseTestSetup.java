@@ -38,11 +38,6 @@ public class BaseTestSetup {
     private String userId;
     protected static User user;
 
-    public void setCredentials(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     @BeforeClass
     public void setupUser() {
         baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
