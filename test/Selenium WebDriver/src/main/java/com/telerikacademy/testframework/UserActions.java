@@ -70,6 +70,14 @@ public class UserActions {
     }
 
     //############# WAITS #########
+
+    public void waitFor(long timeOutMilliseconds) {
+        try {
+            Thread.sleep(timeOutMilliseconds);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
     public void waitForElementVisible(String locatorKey, Object... arguments) {
         int defaultTimeout = Integer.parseInt(getConfigPropertyByKey("config.defaultTimeoutSeconds"));
 

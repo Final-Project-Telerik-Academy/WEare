@@ -28,4 +28,12 @@ public class PostTest extends BaseTest {
         postPage.assertPostIsDisliked();
     }
 
+    @Test
+    public void editPostContent() {
+        PostPage postPage = new PostPage(actions.getDriver());
+        postPage.createPublicPost("This is my new post");
+        postPage.editPostContent("This is my edited post");
+        postPage.assertPostContentIsEdited();
+    }
+
 }
