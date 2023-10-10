@@ -42,4 +42,10 @@ public class PostTests extends BaseTest {
         postPage.deletePost();
         postPage.assertPostDeleted();
     }
+
+    @Test
+    public void createPostWithPhoto() {
+        PostPage postPage = new PostPage(actions.getDriver());
+        postPage.createPostWithPhoto();
+    }
 }

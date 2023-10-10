@@ -2,6 +2,8 @@ package pages.weare;
 
 import org.openqa.selenium.WebDriver;
 
+import java.nio.file.Paths;
+
 public class PostPage extends BaseWEArePage {
     public PostPage(WebDriver driver) {
         super(driver, "weare.homepage");
@@ -27,6 +29,25 @@ public class PostPage extends BaseWEArePage {
         actions.typeValueInField(message, "weare.messageForm");
 
         actions.clickElement("weare.submitButton");
+    }
+
+    public void createPostWithPhoto() {
+        // Get absolute image path
+        String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo.png").toAbsolutePath().toString();
+
+        actions.waitForElementPresent("weare.addNewPostButton");
+        actions.hoverOverElement("weare.addNewPostButton");
+        actions.clickElement("weare.addNewPostButton");
+
+        // File input
+        actions.waitForElementPresent("weare.fileInput");
+        actions.typeValueInField(imagePath, "weare.fileInput");
+
+        actions.waitFor(5000);
+
+        // Confirm the upload
+        actions.clickElement("weare.submitButton");
+
     }
 
     public void likePost() {
