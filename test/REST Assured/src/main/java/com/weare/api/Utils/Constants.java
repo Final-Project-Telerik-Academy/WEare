@@ -5,7 +5,7 @@ public class Constants {
     public static final String PASSWORD = "P@ssw0rd";
     public static final String AUTHORITIES_USER = "ROLE_USER";
     public static  String COOKIE="";
-    public static String USER_ID = "12";
+    public static String USER_ID = "123";
     public static String CATEGORY_ID = "102";
 
     public static String EMAIL = "";
