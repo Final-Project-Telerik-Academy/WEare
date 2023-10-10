@@ -3,9 +3,9 @@ package com.weare.api.Utils;
 public class Constants {
     public static String USERNAME = "";
     public static final String PASSWORD = "P@ssw0rd";
-    public static final String AUTHORITIES_USER = "RULE_USER";
+    public static final String AUTHORITIES_USER = "ROLE_USER";
     public static  String COOKIE="";
-    public static String USER_ID = "";
+    public static String USER_ID = "12";
     public static String CATEGORY_ID = "102";
 
     public static String EMAIL = "";
