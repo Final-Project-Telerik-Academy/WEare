@@ -93,7 +93,7 @@ public class User {
     private String randomUsername() {
         String generatedUsername = faker.name().username().replace(".", "");
         if (!isValidUsername(generatedUsername)) {
-            throw new IllegalArgumentException("Generated username is invalid. Only alphabetic characters are allowed, with no whitespaces or dots.");
+            throw new IllegalArgumentException("Invalid username. Only alphabetic characters are allowed with no whitespaces or dots.");
         }
         return generatedUsername;
     }
