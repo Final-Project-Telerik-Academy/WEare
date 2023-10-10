@@ -14,7 +14,7 @@ public class PostPage extends BaseWEArePage {
         actions.waitForElementPresent("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
 
-//        Select public post
+        //Select public post
         actions.waitForElementPresent("weare.selectPublicOrPrivate");
         actions.hoverOverElement("weare.selectPublicOrPrivate");
         actions.clickElement("weare.selectPublicOrPrivate");
@@ -60,6 +60,30 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.submitButton");
     }
 
+    public void deletePost() {
+        //click Explore this post
+        actions.waitForElementPresent("weare.exploreThisPost");
+        actions.hoverOverElement("weare.exploreThisPost");
+        actions.clickElement("weare.exploreThisPost");
+
+        //click Delete post
+        actions.waitForElementClickable("weare.deletePostbutton");
+        actions.clickElement("weare.deletePostbutton");
+
+        //Confirm delete
+        actions.waitFor(1000);
+        actions.waitForElementPresent("weare.confirmDelete");
+        actions.clickElement("weare.confirmDelete");
+
+        //Choose delete
+        actions.waitForElementPresent("weare.deleteOption");
+        actions.clickElement("weare.deleteOption");
+
+        //Submit
+        actions.waitForElementPresent("weare.submitButton");
+        actions.clickElement("weare.submitButton");
+    }
+
     public void assertPublicPostCreated() {
         //Welcome to our community header is present
         actions.waitForElementPresent("weare.assertPostPublic");
@@ -76,5 +100,8 @@ public class PostPage extends BaseWEArePage {
 
     public void assertPostContentIsEdited() {
         actions.waitForElementPresent("weare.assertEditedPost");
+    }
+    public void assertPostDeleted() {
+        actions.waitForElementPresent("weare.postDeletedSuccessfully");
     }
 }
