@@ -2,16 +2,42 @@ package weare.api.tests;
 
 import base.BaseTestSetup;
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
+import io.restassured.specification.ResponseSpecification;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import static com.weare.api.Utils.Constants.*;
 import static com.weare.api.Utils.Endpoints.*;
 import static io.restassured.RestAssured.baseURI;
+import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
+import static org.apache.http.HttpStatus.SC_OK;
 
 public class AuthenticateLoginTest extends BaseTestSetup {
+
     @Test
+    public void authenticationTest() {
+        baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
+        Response response = getApplicationAuthentication()
+                .when()
+                .post();
+
+/*        Response response = given()
+                .formParam("username", username)
+                .formParam("password", password)
+                .when()
+                .post();*/
+
+        int statusCode = response.getStatusCode();
+        Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+    }
+
+
+
+
+   /* @Test
     public void successfulRegistration_when_createNewUser() {
         baseURI = format("%s%s", BASE_URL, REGISTER_ENDPOINT);
     }
@@ -33,6 +59,6 @@ public void testAuthentication() {
 
     System.out.println("Cookie Value: " + COOKIE);
 
-}
+}*/
 }
 

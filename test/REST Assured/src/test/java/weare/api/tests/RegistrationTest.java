@@ -3,6 +3,7 @@ package weare.api.tests;
 import base.BaseTestSetup;
 import com.weare.api.Models.User;
 import com.weare.api.Services.UserService;
+import com.weare.api.Utils.Constants;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -26,6 +27,7 @@ public class RegistrationTest extends BaseTestSetup {
     public void successfulRegistration_when_createNewUser() {
         UserService userService = new UserService();
         User user = new User();
+        setCredentials(user.getUsername(), user.getPassword());
 
         baseURI = format("%s%s", BASE_URL, REGISTER_ENDPOINT);
 
@@ -49,6 +51,7 @@ public class RegistrationTest extends BaseTestSetup {
             username = matcher.group(1);
             userId = matcher.group(3);
         }
+
         Assert.assertEquals(username, user.getUsername(), "Username does not match expected value");
         Assert.assertTrue(Integer.parseInt(userId) > 0, "User ID is not valid.");
     }

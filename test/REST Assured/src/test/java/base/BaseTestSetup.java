@@ -5,7 +5,9 @@ import java.time.format.DateTimeFormatter;
 
 
 import com.github.javafaker.Faker;
+import com.weare.api.Utils.Constants;
 import org.testng.annotations.AfterSuite;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeSuite;
 
 import io.restassured.RestAssured;
@@ -25,6 +27,13 @@ import static org.apache.http.HttpStatus.SC_OK;
 import static org.testng.Assert.assertTrue;
 
 public class BaseTestSetup {
+    protected String username;
+    protected String password;
+
+    public void setCredentials(String username, String password) {
+        this.username = username;
+        this.password = password;
+    }
     @BeforeSuite
     public void initialSetup() {
         baseURI = BASE_URL;
@@ -40,5 +49,12 @@ public class BaseTestSetup {
             .appendDefaultContentCharsetToContentTypeIfUndefined(false);
 
         RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
+    }
+
+    public RequestSpecification getApplicationAuthentication() {
+        return given()
+                .multiPart("username", username)
+                .multiPart("password", password)
+                .log().all();
     }
 }
