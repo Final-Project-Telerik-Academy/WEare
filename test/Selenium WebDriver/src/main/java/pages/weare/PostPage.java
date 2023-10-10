@@ -128,16 +128,12 @@ public class PostPage extends BaseWEArePage {
     }
 
     public void assertPublicPostCreated() {
-        //Welcome to our community header is present
         actions.waitForElementPresent("weare.assertPostPublic");
-        //Please update your profile is present
         actions.waitForElementPresent("weare.assertTopic");
     }
 
     public void assertPrivatePostCreated() {
-        //Welcome to our community header is present
         actions.waitForElementPresent("weare.assertPostPrivate");
-        //Please update your profile is present
         actions.waitForElementPresent("weare.assertTopicToPrivatePost");
     }
 
