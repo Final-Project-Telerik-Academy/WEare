@@ -23,7 +23,6 @@ public class AuthenticateLoginTest extends BaseTestSetup {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
 
         Response response = getApplicationAuthentication()
-                .contentType(ContentType.JSON)
                 .when()
                 .post();
 
