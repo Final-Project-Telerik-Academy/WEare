@@ -6,7 +6,6 @@ import pages.weare.PostPage;
 public class PostTest extends BaseTest {
     @Test
     public void createPublicPost() {
-
         PostPage postPage = new PostPage(actions.getDriver());
         postPage.createPublicPost("This is my new post");
         postPage.assertPublicPostCreated();
@@ -27,6 +26,14 @@ public class PostTest extends BaseTest {
         postPage.likePost();
         postPage.dislikePost();
         postPage.assertPostIsDisliked();
+    }
+
+    @Test
+    public void editPostContent() {
+        PostPage postPage = new PostPage(actions.getDriver());
+        postPage.createPublicPost("This is my new post");
+        postPage.editPostContent("This is my edited post");
+        postPage.assertPostContentIsEdited();
     }
 
 }

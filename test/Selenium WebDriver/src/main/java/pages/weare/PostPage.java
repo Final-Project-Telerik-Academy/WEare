@@ -41,6 +41,25 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.dislikePostButton");
     }
 
+    public void editPostContent(String editMessage) {
+        //click Explore this post
+        actions.waitForElementPresent("weare.exploreThisPost");
+        actions.hoverOverElement("weare.exploreThisPost");
+        actions.clickElement("weare.exploreThisPost");
+
+        //click Edit post
+        actions.waitForElementClickable("weare.editPostButton");
+        actions.clickElement("weare.editPostButton");
+
+        //Click and fulfill message form
+        actions.waitForElementPresent("weare.messageForm");
+        actions.waitFor(1000);
+        actions.typeValueInField(editMessage, "weare.messageForm");
+
+        actions.waitForElementPresent("weare.submitButton");
+        actions.clickElement("weare.submitButton");
+    }
+
     public void assertPublicPostCreated() {
         //Welcome to our community header is present
         actions.waitForElementPresent("weare.assertPostPublic");
@@ -53,5 +72,9 @@ public class PostPage extends BaseWEArePage {
     }
     public void assertPostIsDisliked() {
         actions.waitForElementPresent("weare.assertPostDisliked");
+    }
+
+    public void assertPostContentIsEdited() {
+        actions.waitForElementPresent("weare.assertEditedPost");
     }
 }
