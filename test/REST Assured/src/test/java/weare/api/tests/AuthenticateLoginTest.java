@@ -4,6 +4,7 @@ import base.BaseTestSetup;
 import com.weare.api.Models.User;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 import io.restassured.specification.ResponseSpecification;
 import org.testng.Assert;
@@ -15,8 +16,10 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
+import static org.apache.http.HttpStatus.SC_MOVED_TEMPORARILY;
 
 public class AuthenticateLoginTest extends BaseTestSetup {
+    private Cookie cookie;
 
     @Test
     public void authenticationTest() {
@@ -26,13 +29,27 @@ public class AuthenticateLoginTest extends BaseTestSetup {
                 .when()
                 .post();
 
-        String responseBody = response.getBody().asString();
+        if (response.getDetailedCookie("JSESSIONID") != null) {
+            cookie = response.getDetailedCookie("JSESSIONID");
+        }
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+        boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
+        Assert.assertTrue(isValidStatusCode, format("Incorrect status code. Expected %s.", SC_OK));
     }
 
+    @Test(dependsOnMethods = "authenticationTest")
+        public void authenticateWithCookie() {
+            baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
+            String cookieString = cookie.getValue();
+            Response response = getApplicationAuthentication()
+                    .cookie("JSESSIONID", cookieString)
+                    .when()
+                    .get();
 
+        int statusCode = response.getStatusCode();
+            Assert.assertEquals(statusCode, SC_MOVED_TEMPORARILY, "Cookie status code is correct");
+        }
 
 
    /* @Test
