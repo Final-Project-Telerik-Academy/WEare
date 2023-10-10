@@ -26,8 +26,8 @@ public class RegistrationTest extends BaseTestSetup {
     @Test
     public void successfulRegistration_when_createNewUser() {
         UserService userService = new UserService();
-        User user = new User();
-        setCredentials(user.getUsername(), user.getPassword());
+        user = new User();
+        //setCredentials(user.getUsername(), user.getPassword());
 
         baseURI = format("%s%s", BASE_URL, REGISTER_ENDPOINT);
 

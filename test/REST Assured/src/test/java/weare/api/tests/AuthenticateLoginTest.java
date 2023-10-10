@@ -1,6 +1,7 @@
 package weare.api.tests;
 
 import base.BaseTestSetup;
+import com.weare.api.Models.User;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
@@ -20,15 +21,13 @@ public class AuthenticateLoginTest extends BaseTestSetup {
     @Test
     public void authenticationTest() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
+
         Response response = getApplicationAuthentication()
+                .contentType(ContentType.JSON)
                 .when()
                 .post();
 
-/*        Response response = given()
-                .formParam("username", username)
-                .formParam("password", password)
-                .when()
-                .post();*/
+        String responseBody = response.getBody().asString();
 
         int statusCode = response.getStatusCode();
         Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
