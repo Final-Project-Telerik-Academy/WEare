@@ -8,4 +8,6 @@ public class Endpoints {
     public static final String REGISTER_ENDPOINT ="/api/users/";
     public static final String CREATE_POST_ENDPOINT ="/api/post/auth/creator" ;
 
+    public static final String CREATE_POST_ENDPOINTTT ="/api/post/auth/creator" ;
+
 }
