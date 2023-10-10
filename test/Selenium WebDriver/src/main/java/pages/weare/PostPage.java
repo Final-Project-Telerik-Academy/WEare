@@ -125,4 +125,8 @@ public class PostPage extends BaseWEArePage {
     public void assertPostDeleted() {
         actions.waitForElementPresent("weare.postDeletedSuccessfully");
     }
+
+    public void assertPostCreatedWithPhoto() {
+        actions.waitForElementPresent("weare.assertPhotoExists");
+    }
 }

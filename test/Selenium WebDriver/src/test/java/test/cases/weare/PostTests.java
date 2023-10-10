@@ -47,5 +47,6 @@ public class PostTests extends BaseTest {
     public void createPostWithPhoto() {
         PostPage postPage = new PostPage(actions.getDriver());
         postPage.createPostWithPhoto();
+        postPage.assertPostCreatedWithPhoto();
     }
 }
