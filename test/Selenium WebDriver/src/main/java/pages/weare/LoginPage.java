@@ -24,8 +24,25 @@ public class LoginPage extends BaseWEArePage {
         //submit form
         actions.clickElement("weare.LoginSubmitButton");
     }
+
+    public void logoutUser() {
+
+        //Home section
+        actions.waitForElementVisible("weare.homeButton");
+        actions.clickElement("weare.homeButton");
+
+        //Logout button
+        actions.waitForElementVisible("weare.logoutButton");
+        actions.clickElement("weare.logoutButton");
+    }
+
     public void assertUserIsLoggedIn() {
         //Find your professional is present
         actions.waitForElementPresent("weare.findYourProfessional");
+    }
+
+    public void assertUserIsLoggedOut() {
+        //Find your professional is present
+        actions.waitForElementPresent("weare.assertLoggedOutText");
     }
 }

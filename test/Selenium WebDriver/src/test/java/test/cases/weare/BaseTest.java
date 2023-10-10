@@ -8,6 +8,10 @@ import pages.weare.LoginPage;
 import pages.weare.RegistrationPage;
 
 public class BaseTest {
+
+    private String username;
+    private String email;
+    private String password = "P@ssw0rd";
     UserActions actions = new UserActions();
 
     @BeforeEach
@@ -15,19 +19,16 @@ public class BaseTest {
 
         UserActions.loadBrowser("weare.homepage");
         Faker faker = new Faker();
-        String username = generateRandomLowercaseUsername(faker);
-        String email = generateRandomEmail(faker);
+        username = generateRandomLowercaseUsername(faker);
+        email = generateRandomEmail(faker);
 
-        RegistrationPage registrationPage = new RegistrationPage(actions.getDriver());
-        String password = "P@ssw0rd";
-        registrationPage.userRegistration(username, email, password);
-        registrationPage.assertUserRegistered();
-
+        register(username, email, password);
         login(username, password);
     }
 
     @AfterEach
     public void tearDown() {
+        logout();
         UserActions.quitDriver();
     }
 
@@ -50,10 +51,21 @@ public class BaseTest {
         return result.toString();
     }
 
+    private void register(String username, String email, String password) {
+        RegistrationPage registrationPage = new RegistrationPage(actions.getDriver());
+        registrationPage.userRegistration(username, email, password);
+        registrationPage.assertUserRegistered();
+    }
+
     private void login(String username, String password) {
         LoginPage loginPage = new LoginPage(actions.getDriver());
         loginPage.loginUser(username, password);
         loginPage.assertUserIsLoggedIn();
+    }
+    public void logout() {
+        LoginPage loginPage = new LoginPage(actions.getDriver());
+        loginPage.logoutUser();
+        loginPage.assertUserIsLoggedOut();
     }
 }
 
