@@ -14,4 +14,9 @@ public class JSONRequests {
             "  \"password\": \"%s\",\n" +
             "  \"username\": \"%s\"\n" +
             "}";
+    public static final String POST="{\n" +
+            "    \"content\": \"%s\",\n" +
+            "    \"picture\": \"\",\n" +
+            "    \"public\": true\n" +
+            "}";
 }

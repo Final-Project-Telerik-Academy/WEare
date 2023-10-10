@@ -15,4 +15,5 @@ public class Constants {
 
     public static final String FULL_NAME = FIRST_NAME + " " + LAST_NAME;
     public static final String EXPERTISE = "All";
+    public static final String CONTENT_POST = "This is my public post.";
 }
