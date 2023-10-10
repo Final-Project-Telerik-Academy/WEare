@@ -16,6 +16,7 @@ public class PostPage extends BaseWEArePage {
 
 //        Select public post
         actions.waitForElementPresent("weare.selectPublicOrPrivate");
+        actions.hoverOverElement("weare.selectPublicOrPrivate");
         actions.clickElement("weare.selectPublicOrPrivate");
 
         actions.waitForElementPresent("weare.publicPostOption");
@@ -28,10 +29,29 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.submitButton");
     }
 
+    public void likePost() {
+        //click Like
+        actions.waitForElementPresent("weare.likePostButton");
+        actions.clickElement("weare.likePostButton");
+    }
+
+    public void dislikePost() {
+        //click dislike
+        actions.waitForElementPresent("weare.dislikePostButton");
+        actions.clickElement("weare.dislikePostButton");
+    }
+
     public void assertPublicPostCreated() {
         //Welcome to our community header is present
         actions.waitForElementPresent("weare.assertPostPublic");
         //Please update your profile is present
         actions.waitForElementPresent("weare.assertTopic");
+    }
+
+    public void assertPostIsLiked() {
+        actions.waitForElementPresent("weare.assertPostLiked");
+    }
+    public void assertPostIsDisliked() {
+        actions.waitForElementPresent("weare.assertPostDisliked");
     }
 }

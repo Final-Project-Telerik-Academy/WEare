@@ -11,4 +11,22 @@ public class PostTest extends BaseTest {
         postPage.createPublicPost("This is my new post");
         postPage.assertPublicPostCreated();
     }
+
+    @Test
+    public void likePost() {
+        PostPage postPage = new PostPage(actions.getDriver());
+        postPage.createPublicPost("This is my new post");
+        postPage.likePost();
+        postPage.assertPostIsLiked();
+    }
+
+    @Test
+    public void dislikePost() {
+        PostPage postPage = new PostPage(actions.getDriver());
+        postPage.createPublicPost("This is my new post");
+        postPage.likePost();
+        postPage.dislikePost();
+        postPage.assertPostIsDisliked();
+    }
+
 }
