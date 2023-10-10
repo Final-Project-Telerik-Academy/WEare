@@ -31,6 +31,28 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.submitButton");
     }
 
+    public void createPrivatePost(String message) {
+
+        //click Add New Post
+        actions.hoverOverElement("weare.addNewPostButton");
+        actions.waitForElementPresent("weare.addNewPostButton");
+        actions.clickElement("weare.addNewPostButton");
+
+        //Select private post
+        actions.waitForElementPresent("weare.selectPublicOrPrivate");
+        actions.hoverOverElement("weare.selectPublicOrPrivate");
+        actions.clickElement("weare.selectPublicOrPrivate");
+
+        actions.waitForElementPresent("weare.privatePostOption");
+        actions.clickElement("weare.privatePostOption");
+
+        //Fill in Post message
+        actions.waitForElementPresent("weare.messageForm");
+        actions.typeValueInField(message, "weare.messageForm");
+
+        actions.clickElement("weare.submitButton");
+    }
+
     public void createPostWithPhoto() {
         // Get absolute image path
         String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo.png").toAbsolutePath().toString();
@@ -112,6 +134,17 @@ public class PostPage extends BaseWEArePage {
         actions.waitForElementPresent("weare.assertTopic");
     }
 
+    public void assertPrivatePostCreated() {
+        //Welcome to our community header is present
+        actions.waitForElementPresent("weare.assertPostPrivate");
+        //Please update your profile is present
+        actions.waitForElementPresent("weare.assertTopicToPrivatePost");
+    }
+
+    public void assertPostCreatedWithPhoto() {
+        actions.waitForElementPresent("weare.assertPhotoExists");
+    }
+
     public void assertPostIsLiked() {
         actions.waitForElementPresent("weare.assertPostLiked");
     }
@@ -126,7 +159,5 @@ public class PostPage extends BaseWEArePage {
         actions.waitForElementPresent("weare.postDeletedSuccessfully");
     }
 
-    public void assertPostCreatedWithPhoto() {
-        actions.waitForElementPresent("weare.assertPhotoExists");
-    }
+
 }

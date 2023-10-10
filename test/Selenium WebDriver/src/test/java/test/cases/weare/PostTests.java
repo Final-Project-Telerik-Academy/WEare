@@ -12,6 +12,20 @@ public class PostTests extends BaseTest {
     }
 
     @Test
+    public void createPrivatePost() {
+        PostPage postPage = new PostPage(actions.getDriver());
+        postPage.createPrivatePost("This is my private post");
+        postPage.assertPrivatePostCreated();
+    }
+
+    @Test
+    public void createPostWithPhoto() {
+        PostPage postPage = new PostPage(actions.getDriver());
+        postPage.createPostWithPhoto();
+        postPage.assertPostCreatedWithPhoto();
+    }
+
+    @Test
     public void likePost() {
         PostPage postPage = new PostPage(actions.getDriver());
         postPage.createPublicPost("This is my new post");
@@ -41,12 +55,5 @@ public class PostTests extends BaseTest {
         postPage.createPublicPost("This is my new post");
         postPage.deletePost();
         postPage.assertPostDeleted();
-    }
-
-    @Test
-    public void createPostWithPhoto() {
-        PostPage postPage = new PostPage(actions.getDriver());
-        postPage.createPostWithPhoto();
-        postPage.assertPostCreatedWithPhoto();
     }
 }
