@@ -2,8 +2,8 @@ package com.weare.api.Services;
 
 import com.google.gson.Gson;
 import com.weare.api.Models.Post;
+import com.weare.api.Utils.Constants;
 import com.weare.api.Utils.JSONRequests;
-
 public class PostService {
     private final Gson gson = new Gson();
 
@@ -19,4 +19,10 @@ public class PostService {
                 post.getContent(),post.getPicture(),post.isPublic());
 
     }
+    public String editPostRequest(Post post) {
+        return String.format(JSONRequests.EDIT_POST,
+                Constants.CONTENT_EDIT_POST,post.getPicture(),post.isPublic());
+
+    }
 }
+
