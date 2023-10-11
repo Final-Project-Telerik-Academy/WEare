@@ -13,10 +13,12 @@ public class User {
     private String authority;
     private String categoryId;
     private String categoryName;
+    private String userId;
 
     private static final Faker faker = new Faker();
 
     public User(){
+        this.userId = getUserId();
         this.username = randomUsername();
         this.password = Constants.PASSWORD;
         this.email = getRandomEmail();
@@ -24,6 +26,13 @@ public class User {
         this.lastName = getRandomLastName();
         this.authority = Constants.AUTHORITIES_USER;
         this.categoryId = Constants.CATEGORY_ID;
+    }
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {

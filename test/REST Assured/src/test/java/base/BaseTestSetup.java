@@ -34,9 +34,7 @@ public class BaseTestSetup {
     protected String username;
     protected String password;
 
-
-
-    private static String userId;
+    private String userId;
     protected static User user;
     protected Cookie cookie;
 
@@ -68,7 +66,10 @@ public class BaseTestSetup {
         if (matcher.find()) {
             username = matcher.group(1);
             userId = matcher.group(3);
+
         }
+
+        userId = user.getUserId();
 
         Assert.assertEquals(username, user.getUsername(), "Username does not match expected value");
         Assert.assertTrue(Integer.parseInt(userId) > 0, "User ID is not valid.");
@@ -91,7 +92,7 @@ public class BaseTestSetup {
         Assert.assertTrue(isValidStatusCode, format("Incorrect status code. Expected %s.", SC_OK));
     }
 
-    @BeforeMethod
+    @BeforeMethod(dependsOnMethods = "setupAuthentication")
     public void setupCookieAuthentication() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
         String cookieValue = cookie.getValue();
@@ -124,9 +125,5 @@ public class BaseTestSetup {
                 .multiPart("username", username)
                 .multiPart("password", password)
                 .log().all();
-    }
-
-    public static String getUserId() {
-        return userId;
     }
 }
