@@ -127,4 +127,8 @@ public class User {
 
         return username.matches("^[a-zA-Z]+$");
     }
+
+    public String getFullName() {
+        return getFirstName() + " " + getLastName();
+    }
 }

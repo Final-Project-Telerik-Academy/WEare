@@ -2,7 +2,6 @@ package weare.api.tests;
 
 import base.BaseTestSetup;
 import io.restassured.http.ContentType;
-import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
@@ -11,7 +10,6 @@ import static com.weare.api.Utils.Endpoints.*;
 import static io.restassured.RestAssured.*;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
-import static org.apache.http.HttpStatus.SC_MOVED_TEMPORARILY;
 
 public class UserTests extends BaseTestSetup {
     @Test
@@ -19,12 +17,12 @@ public class UserTests extends BaseTestSetup {
         String formattedEndpoint = String.format(UPDATE_PERSONAL_PROFILE_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL,formattedEndpoint);
 
-        String updateUserJsonBody = userService.generateUpdatePersonalProfile(user);
+        String updateUserBody = userService.generateUpdatePersonalProfile(user);
 
         Response response = given()
                 .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
-                .body(updateUserJsonBody)
+                .body(updateUserBody)
                 .when()
                 .post();
 
@@ -50,9 +48,31 @@ public class UserTests extends BaseTestSetup {
         String resEmail = response.getBody().jsonPath().getString("email");
 
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        Assert.assertNotNull(response.getBody(), "Response body is null");
         Assert.assertEquals(resUserId, user.getUserId(), "Incorrect user ID");
         Assert.assertEquals(resUsername, user.getUsername(), "Incorrect username");
         Assert.assertEquals(resEmail, user.getEmail(), "Incorrect email");
+    }
+
+    @Test
+    public void searchByUserTest() {
+        baseURI = format("%s%s", BASE_URL, SEARCH_USER_ENDPOINT);
+
+        String searchUserBody = userService.generateSearchUserRequest(user);
+
+        Response response = given()
+                .cookie(cookie.getName(), cookie.getValue())
+                .body(searchUserBody)
+                .when()
+                .post();
+
+        int statusCode = response.getStatusCode();
+        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+        String resUserId = response.getBody().jsonPath().getString("id");
+        String resUsername = response.getBody().jsonPath().getString("username");
+        Assert.assertEquals(resUserId, user.getUserId(), "Incorrect user ID");
+        Assert.assertEquals(resUsername, user.getUsername(), "Incorrect username");
     }
 }
 

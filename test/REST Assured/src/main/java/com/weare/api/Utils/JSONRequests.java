@@ -35,12 +35,20 @@ public class JSONRequests {
             "  \"personalReview\": \"\",\n" +
             "  \"picture\": \"\",\n" +
             "  \"picturePrivacy\": true,\n" +
-            "  \"sex\": \"MALE\"\n" +
+            "  \"sex\": \"%s\"\n" +
             "}\n";
 
     public static final String EDIT_POST="{\n" +
             "    \"content\": \"%s\",\n" +
             "    \"picture\": \"%s\",\n" +
             "    \"public\": %s\n" +
+            "}";
+
+    public static final String SEARCH_USER = "{\n" +
+            "  \"index\": 0,\n" +
+            "  \"next\": true,\n" +
+            "  \"searchParam1\": \"\",\n" +
+            "  \"searchParam2\": \"%s\",\n" +
+            "  \"size\": 10\n" +
             "}";
 }

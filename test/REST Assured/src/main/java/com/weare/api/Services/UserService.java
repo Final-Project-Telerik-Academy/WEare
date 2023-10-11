@@ -26,6 +26,10 @@ public class UserService {
     public String generateUpdatePersonalProfile(User user) {
         return String.format(JSONRequests.UPDATE_PERSONAL_PROFILE,
                 Constants.birthYear, user.getFirstName(), user.getUserId(), user.getLastName(),
-                Constants.CITY, Constants.CITY_ID);
+                Constants.CITY, Constants.CITY_ID, Constants.SEX);
+    }
+
+    public String generateSearchUserRequest(User user) {
+        return String.format(JSONRequests.SEARCH_USER, user.getFullName());
     }
 }
