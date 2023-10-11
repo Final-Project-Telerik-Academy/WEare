@@ -3,7 +3,7 @@ package com.weare.api.Utils;
 import static java.lang.String.format;
 
 public class Endpoints {
-    public static final String BASE_URL="http://localhost:8081";
+    public static final String BASE_URL = "http://localhost:8081";
     public static final String AUTH_ENDPOINT = "/authenticate";
     public static final String REGISTER_ENDPOINT = "/api/users/";
     public static final String CREATE_POST_ENDPOINT = "/api/post/auth/creator";
@@ -11,5 +11,6 @@ public class Endpoints {
     public static final String USER_BY_ID_ENDPOINT = "/api/users/auth/%s";
     public static final String EDIT_POST="/api/post/auth/editor?postId=";
     public static final String SEARCH_USER_ENDPOINT = "/api/users";
-    public static final String SEARCH_USER_POSTS = "/api/users/%s/posts";
+    public static final String SEARCH_USER_POSTS_ENDPOINT = "/api/users/%s/posts";
+    public static final String UPDATE_USER_EXPERTISE_ENDPOINT = "/api/users/auth/%s/expertise";
 }

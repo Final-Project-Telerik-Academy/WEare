@@ -32,4 +32,9 @@ public class UserService {
     public String generateSearchUserRequest(User user) {
         return String.format(JSONRequests.SEARCH_USER, user.getFullName());
     }
+
+    public String generateUpdateExpertiseProfile(User user) {
+        return String.format(JSONRequests.UPDATE_USER_EXPERTISE,
+                Constants.AVAILABILITY, user.getCategoryId(), user.getUserId(), Constants.SKILL);
+    }
 }

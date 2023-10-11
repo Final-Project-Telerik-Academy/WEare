@@ -119,7 +119,6 @@ public class BaseTestSetup {
     public RequestSpecification getApplicationAuthentication() {
         return given()
                 .multiPart("username", username)
-                .multiPart("password", password)
-                .log().all();
+                .multiPart("password", password);
     }
 }

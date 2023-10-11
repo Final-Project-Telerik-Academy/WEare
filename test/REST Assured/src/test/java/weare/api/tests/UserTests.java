@@ -50,8 +50,8 @@ public class UserTests extends BaseTestSetup {
         String resEmail = response.getBody().jsonPath().getString("email");
 
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-        Assert.assertNotNull(response.getBody(), "Response body is null");
-        Assert.assertEquals(resUserId, user.getUserId(), "Incorrect user ID");
+        Assert.assertNotNull(response.getBody(), "Response body is empty.");
+        Assert.assertEquals(resUserId, user.getUserId(), "User ID does not match the expected value");
         Assert.assertEquals(resUsername, user.getUsername(), "Incorrect username");
         Assert.assertEquals(resEmail, user.getEmail(), "Incorrect email");
     }
@@ -74,13 +74,13 @@ public class UserTests extends BaseTestSetup {
 
         String resUserId = response.getBody().jsonPath().getString("id");
         String resUsername = response.getBody().jsonPath().getString("username");
-        Assert.assertEquals(resUserId, user.getUserId(), "Incorrect user ID");
+        Assert.assertEquals(resUserId, user.getUserId(), "User ID does not match the expected value");
         Assert.assertEquals(resUsername, user.getUsername(), "Incorrect username");
     }
 
     @Test
     public void searchUserPostsTest() {
-        String formattedEndpoint = format(SEARCH_USER_POSTS, userId) ;
+        String formattedEndpoint = format(SEARCH_USER_POSTS_ENDPOINT, userId) ;
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
 
         Response response = given()
@@ -95,6 +95,36 @@ public class UserTests extends BaseTestSetup {
 
         String postId = response.getBody().jsonPath().getString("postId");
         //assertEquals(postId, "postId?", "Incorrect postId");
+
+        String postContent = response.getBody().jsonPath().getString("content");
+        Assert.assertEquals(postContent, Constants.CONTENT_POST, "The content of the post is not the same.");
+    }
+
+    @Test
+    public void updateUserExpertiseTest() {
+        String formattedString = format(UPDATE_USER_EXPERTISE_ENDPOINT, userId);
+        baseURI = format("%s%s", BASE_URL, formattedString);
+
+        String updateUserExpertiseBody = userService.generateUpdateExpertiseProfile(user);
+
+        Response response = given()
+                .cookie(cookie.getName(), cookie.getValue())
+                .contentType(ContentType.JSON)
+                .body(updateUserExpertiseBody)
+                .when()
+                .post();
+
+        int statusCode = response.getStatusCode();
+        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+        String resUserId = response.getBody().jsonPath().getString("id");
+        String resCategoryId = response.getBody().jsonPath().getString("category.id");
+        String availability = response.getBody().jsonPath().getString("availability");
+
+        Assert.assertEquals(resUserId, user.getUserId(), "User ID does not match the expected value");
+        Assert.assertNotNull(resCategoryId, "Missing category ID");
+        Assert.assertEquals(resCategoryId, user.getCategoryId(), "Expected category ID don't match user's category ID.");
+        Assert.assertEquals(availability, Constants.AVAILABILITY, "Mismatch between actual and expected availability.");
     }
 }
 

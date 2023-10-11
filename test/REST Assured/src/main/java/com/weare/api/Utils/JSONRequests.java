@@ -59,4 +59,19 @@ public class JSONRequests {
             "  \"searchParam2\": \"\",\n" +
             "  \"size\": 5\n" +
             "}";
+
+    public static final String UPDATE_USER_EXPERTISE = "{\n" +
+            "  \"availability\": %s,\n" +
+            "  \"category\": {\n" +
+            "    \"id\": %s,\n" +
+            "    \"name\": \"Cleaner\"\n" +
+            "  },\n" +
+            "  \"id\": %s,\n" +
+            "    \"skill1\": \"%s\",\n" +
+            "    \"skill2\": \"\",\n" +
+            "    \"skill3\": \"\",\n" +
+            "    \"skill4\": \"\",\n" +
+            "    \"skills\": [\n" +
+            "    ]\n" +
+            "}";
 }
