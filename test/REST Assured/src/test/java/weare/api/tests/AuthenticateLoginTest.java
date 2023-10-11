@@ -45,8 +45,12 @@ public class AuthenticateLoginTest extends BaseTestSetup {
             Response response = getApplicationAuthentication()
                     .cookie("JSESSIONID", cookieString)
                     .when()
-                    .get();
+                    .post();
 
+        System.out.println("JSESSIONID cookie: " + response.getCookie("JSESSIONID"));
+        System.out.println("Response code: " + response.getStatusCode());
+
+        System.out.println("Response body: " + response.getBody().asString());
         int statusCode = response.getStatusCode();
             Assert.assertEquals(statusCode, SC_MOVED_TEMPORARILY, "Cookie status code is correct");
         }
