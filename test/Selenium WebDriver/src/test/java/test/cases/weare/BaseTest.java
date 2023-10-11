@@ -12,6 +12,9 @@ public class BaseTest {
     private String username;
     private String email;
     private String password = "P@ssw0rd";
+    protected String publicPostMessage = "This is my new post";
+    protected String privatePostMessage = "This is my private post";
+    protected String editedPostMessage = "This is my edited post";
     UserActions actions = new UserActions();
 
     @BeforeEach
