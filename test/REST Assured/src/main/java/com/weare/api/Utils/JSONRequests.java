@@ -51,4 +51,12 @@ public class JSONRequests {
             "  \"searchParam2\": \"%s\",\n" +
             "  \"size\": 10\n" +
             "}";
+
+    public static final String SHOW_PROFILE_POSTS = "{\n" +
+            "  \"index\": 0,\n" +
+            "  \"next\": true,\n" +
+            "  \"searchParam1\": \"\",\n" +
+            "  \"searchParam2\": \"\",\n" +
+            "  \"size\": 5\n" +
+            "}";
 }

@@ -11,4 +11,5 @@ public class Endpoints {
     public static final String USER_BY_ID_ENDPOINT = "/api/users/auth/%s";
     public static final String EDIT_POST="/api/post/auth/editor?postId=";
     public static final String SEARCH_USER_ENDPOINT = "/api/users";
+    public static final String SEARCH_USER_POSTS = "/api/users/%s/posts";
 }

@@ -1,6 +1,8 @@
 package weare.api.tests;
 
 import base.BaseTestSetup;
+import com.weare.api.Utils.Constants;
+import com.weare.api.Utils.JSONRequests;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
@@ -62,6 +64,7 @@ public class UserTests extends BaseTestSetup {
 
         Response response = given()
                 .cookie(cookie.getName(), cookie.getValue())
+                .contentType(ContentType.JSON)
                 .body(searchUserBody)
                 .when()
                 .post();
@@ -73,6 +76,25 @@ public class UserTests extends BaseTestSetup {
         String resUsername = response.getBody().jsonPath().getString("username");
         Assert.assertEquals(resUserId, user.getUserId(), "Incorrect user ID");
         Assert.assertEquals(resUsername, user.getUsername(), "Incorrect username");
+    }
+
+    @Test
+    public void searchUserPostsTest() {
+        String formattedEndpoint = format(SEARCH_USER_POSTS, userId) ;
+        baseURI = format("%s%s", BASE_URL, formattedEndpoint);
+
+        Response response = given()
+                .cookie(cookie.getName(), cookie.getValue())
+                .contentType(ContentType.JSON)
+                .body(JSONRequests.SHOW_PROFILE_POSTS)
+                .when()
+                .get();
+
+        int statusCode = response.getStatusCode();
+        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+        String postId = response.getBody().jsonPath().getString("postId");
+        //assertEquals(postId, "postId?", "Incorrect postId");
     }
 }
 

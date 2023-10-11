@@ -88,12 +88,13 @@ public class BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
-        Assert.assertTrue(isValidStatusCode, format("Incorrect status code. Expected %s.", SC_OK));
+        Assert.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
     }
 
     @BeforeMethod(dependsOnMethods = "setupAuthentication")
     public void setupCookieAuthentication() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
+
         Response response = getApplicationAuthentication()
                 .cookie(cookie.getName(), cookie.getValue())
                 .when()
