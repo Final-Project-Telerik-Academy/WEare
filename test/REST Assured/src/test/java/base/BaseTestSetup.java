@@ -33,15 +33,15 @@ import static org.testng.Assert.assertTrue;
 public class BaseTestSetup {
     protected String username;
     protected String password;
-
-    private String userId;
+    protected String userId;
     protected static User user;
+    protected static UserService userService;
     protected Cookie cookie;
 
     @BeforeClass
     public void setupUser() {
         baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
-        UserService userService = new UserService();
+        userService = new UserService();
         user = new User();
 
         username = user.getUsername();
@@ -66,10 +66,9 @@ public class BaseTestSetup {
         if (matcher.find()) {
             username = matcher.group(1);
             userId = matcher.group(3);
-
         }
 
-        userId = user.getUserId();
+        user.setUserId(userId);
 
         Assert.assertEquals(username, user.getUsername(), "Username does not match expected value");
         Assert.assertTrue(Integer.parseInt(userId) > 0, "User ID is not valid.");
@@ -95,9 +94,9 @@ public class BaseTestSetup {
     @BeforeMethod(dependsOnMethods = "setupAuthentication")
     public void setupCookieAuthentication() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
-        String cookieValue = cookie.getValue();
+        //String cookieValue = cookie.getValue();
         Response response = getApplicationAuthentication()
-                .cookie("JSESSIONID", cookieValue)
+                .cookie(cookie.getName(), cookie.getValue())
                 .when()
                 .post();
 
