@@ -11,9 +11,10 @@ public class Constants {
     public static String EMAIL = "";
     public static  String FIRST_NAME = "";
     public static  String LAST_NAME = "";
-    public static final String birthYear = "";
+    public static final String birthYear = "1990-10-03";
 
     public static final String FULL_NAME = FIRST_NAME + " " + LAST_NAME;
+    public static final int countryId = 2;
     public static final String EXPERTISE = "All";
     public static final String CONTENT_POST = "This is my public post.";
 }

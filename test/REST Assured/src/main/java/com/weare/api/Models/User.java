@@ -19,9 +19,9 @@ public class User {
     public User(){
         this.username = randomUsername();
         this.password = Constants.PASSWORD;
-        this.email = faker.internet().emailAddress();
-        this.firstName = faker.name().firstName();
-        this.lastName = faker.name().lastName();
+        this.email = getRandomEmail();
+        this.firstName = getRandomFirstName();
+        this.lastName = getRandomLastName();
         this.authority = Constants.AUTHORITIES_USER;
         this.categoryId = Constants.CATEGORY_ID;
     }
@@ -88,6 +88,18 @@ public class User {
 
     public void setCategoryName(String categoryName) {
         this.categoryName = categoryName;
+    }
+
+    private String getRandomFirstName() {
+        return faker.name().firstName();
+    }
+
+    private String getRandomLastName() {
+        return faker.name().lastName();
+    }
+
+    private String getRandomEmail() {
+        return faker.internet().emailAddress();
     }
 
     private String randomUsername() {
