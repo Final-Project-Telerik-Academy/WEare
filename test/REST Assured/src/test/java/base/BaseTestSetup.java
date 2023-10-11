@@ -36,7 +36,7 @@ public class BaseTestSetup {
 
 
 
-    private String userId;
+    private static String userId;
     protected static User user;
     protected Cookie cookie;
 
@@ -119,13 +119,14 @@ public class BaseTestSetup {
         RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
     }
 
-    public String getUserId() {
-        return userId;
-    }
     public RequestSpecification getApplicationAuthentication() {
         return given()
                 .multiPart("username", username)
                 .multiPart("password", password)
                 .log().all();
+    }
+
+    public static String getUserId() {
+        return userId;
     }
 }

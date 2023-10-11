@@ -2,6 +2,7 @@ package com.weare.api.Services;
 
 import com.google.gson.Gson;
 import com.weare.api.Models.User;
+import base.BaseTestSetup;
 import com.weare.api.Utils.Constants;
 import com.weare.api.Utils.JSONRequests;
 import com.github.javafaker.Faker;
@@ -27,5 +28,10 @@ public class UserService {
         return String.format(JSONRequests.UPDATE_PERSONAL_PROFILE,
                 Constants.birthYear, user.getFirstName(), "userId?", user.getLastName(),
                 Constants.CITY, Constants.CITY_ID, Constants.SEX);
+    }
+
+    //
+    private void getUserId() {
+         String userId = BaseTestSetup.getUserId();
     }
 }
