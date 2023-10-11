@@ -17,4 +17,9 @@ public class Constants {
     public static final int countryId = 2;
     public static final String EXPERTISE = "All";
     public static final String CONTENT_POST = "This is my public post.";
+
+    public static final String PICTURE_POST = "";
+
+    public static final String PUBLIC_POST = "true";
+
 }

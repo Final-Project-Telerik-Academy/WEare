@@ -16,8 +16,8 @@ public class JSONRequests {
             "}";
     public static final String POST="{\n" +
             "    \"content\": \"%s\",\n" +
-            "    \"picture\": \"\",\n" +
-            "    \"public\": true\n" +
+            "    \"picture\": \"%s\",\n" +
+            "    \"public\": %s\n" +
             "}";
 
     public static final String UPDATE_PERSONAL_PROFILE = "{\n" +
