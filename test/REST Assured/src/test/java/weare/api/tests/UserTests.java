@@ -34,7 +34,7 @@ public class UserTests extends BaseTestSetup {
 
     @Test
     public void getUserByIdTest() {
-        String formattedEndpoint = String.format(GET_USER_BY_ID_ENDPOINT, userId);
+        String formattedEndpoint = String.format(USER_BY_ID_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
 
         Response response = given()
