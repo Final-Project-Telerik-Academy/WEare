@@ -5,12 +5,14 @@ import com.weare.api.Models.Post;
 import com.weare.api.Models.User;
 import com.weare.api.Services.PostService;
 import com.weare.api.Services.UserService;
+import com.weare.api.Utils.Constants;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
+import static com.weare.api.Utils.Constants.POST_ID;
 import static com.weare.api.Utils.Endpoints.*;
 import static com.weare.api.Utils.JSONRequests.POST;
 import static io.restassured.RestAssured.baseURI;
@@ -71,6 +73,33 @@ public class PostTest extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
         System.out.println(responseBody);
+    }
+    @Test
+    public void editPost() {
+
+
+        baseURI = format("%s%s%d", BASE_URL, EDIT_POST,POST_ID);
+        PostService postService = new PostService();
+        // post = new Post();
+
+        content = Constants.CONTENT_EDIT_POST;
+        picture = post.getPicture();
+        isPublic = post.isPublic();
+
+
+        String editJsonBody = postService.editPostRequest(post);
+
+        // Use the previously saved authentication cookie for this request
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .cookie("JSESSIONID", authCookie.getValue()) // Use the saved authentication cookie
+                .body(editJsonBody)
+                .when()
+                .put();
+
+        int statusCode = response.getStatusCode();
+        Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+        // System.out.println(responseBody);
     }
 
 }

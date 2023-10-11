@@ -23,5 +23,9 @@ public class Constants {
     public static final String PICTURE_POST = "";
 
     public static final String PUBLIC_POST = "true";
+    public static Integer POST_ID;
+
+    public static final String CONTENT_EDIT_POST = "This is my edited post.";
+
 
 }

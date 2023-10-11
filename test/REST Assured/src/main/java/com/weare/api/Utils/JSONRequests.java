@@ -37,4 +37,10 @@ public class JSONRequests {
             "  \"picturePrivacy\": true,\n" +
             "  \"sex\": \"MALE\"\n" +
             "}\n";
+
+    public static final String EDIT_POST="{\n" +
+            "    \"content\": \"%s\",\n" +
+            "    \"picture\": \"%s\",\n" +
+            "    \"public\": %s\n" +
+            "}";
 }
