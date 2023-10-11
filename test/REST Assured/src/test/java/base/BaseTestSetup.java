@@ -100,9 +100,6 @@ public class BaseTestSetup {
                 .when()
                 .post();
 
-        System.out.println("JSESSIONID cookie: " + response.getCookie("JSESSIONID"));
-        System.out.println("Response code: " + response.getStatusCode());
-
         int statusCode = response.getStatusCode();
         Assert.assertEquals(statusCode, SC_MOVED_TEMPORARILY, "Cookie status code is correct");
     }

@@ -23,7 +23,7 @@ public class UserTests extends BaseTestSetup {
         String updateUserJsonBody = userService.generateUpdatePersonalProfile(user);
 
         Response response = given()
-                .cookie("JSESSIONID", cookie.getValue())
+                .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
                 .body(updateUserJsonBody)
                 .when()
@@ -33,40 +33,5 @@ public class UserTests extends BaseTestSetup {
         Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
     }
 
-
-    //private Cookie cookie;
-
-//    @Test
-//    public void authenticationTest() {
-//        baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
-//
-//        Response response = getApplicationAuthentication()
-//                .when()
-//                .post();
-//
-//        if (response.getDetailedCookie("JSESSIONID") != null) {
-//            cookie = response.getDetailedCookie("JSESSIONID");
-//        }
-//
-//        int statusCode = response.getStatusCode();
-//        boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
-//        Assert.assertTrue(isValidStatusCode, format("Incorrect status code. Expected %s.", SC_OK));
-//    }
-//
-//    @Test(dependsOnMethods = "authenticationTest")
-//        public void authenticateWithCookie() {
-//            baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
-//            String cookieValue = cookie.getValue();
-//            Response response = getApplicationAuthentication()
-//                    .cookie("JSESSIONID", cookieValue)
-//                    .when()
-//                    .post();
-//
-//        System.out.println("JSESSIONID cookie: " + response.getCookie("JSESSIONID"));
-//        System.out.println("Response code: " + response.getStatusCode());
-//
-//        int statusCode = response.getStatusCode();
-//        Assert.assertEquals(statusCode, SC_MOVED_TEMPORARILY, "Cookie status code is correct");
-//        }
 }
 

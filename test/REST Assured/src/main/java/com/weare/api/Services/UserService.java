@@ -26,6 +26,6 @@ public class UserService {
     public String generateUpdatePersonalProfile(User user) {
         return String.format(JSONRequests.UPDATE_PERSONAL_PROFILE,
                 Constants.birthYear, user.getFirstName(), user.getUserId(), user.getLastName(),
-                Constants.CITY, Constants.CITY_ID, Constants.SEX);
+                Constants.CITY, Constants.CITY_ID);
     }
 }
