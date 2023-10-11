@@ -17,6 +17,8 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.addNewPostButton");
 
         //Select public post
+        actions.waitFor(500);
+
         actions.waitForElementPresent("weare.selectPublicOrPrivate");
         actions.hoverOverElement("weare.selectPublicOrPrivate");
         actions.clickElement("weare.selectPublicOrPrivate");
@@ -39,6 +41,8 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.addNewPostButton");
 
         //Select private post
+        actions.waitFor(500);
+
         actions.waitForElementPresent("weare.selectPublicOrPrivate");
         actions.hoverOverElement("weare.selectPublicOrPrivate");
         actions.clickElement("weare.selectPublicOrPrivate");
@@ -62,6 +66,8 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.addNewPostButton");
 
         // File input
+        actions.waitFor(500);
+
         actions.waitForElementPresent("weare.fileInput");
         actions.typeValueInField(imagePath, "weare.fileInput");
 
@@ -95,8 +101,10 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.editPostButton");
 
         //Click and fulfill message form
+        actions.waitFor(500);
+
         actions.waitForElementPresent("weare.messageForm");
-        actions.waitFor(1000);
+//        actions.waitFor(1000);
         actions.typeValueInField(editMessage, "weare.messageForm");
 
         actions.waitForElementPresent("weare.submitButton");
@@ -110,6 +118,8 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.exploreThisPost");
 
         //click Delete post
+        actions.waitFor(1000);
+
         actions.waitForElementClickable("weare.deletePostbutton");
         actions.clickElement("weare.deletePostbutton");
 
