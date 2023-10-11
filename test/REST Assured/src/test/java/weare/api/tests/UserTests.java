@@ -14,20 +14,21 @@ import static org.apache.http.HttpStatus.SC_OK;
 import static org.apache.http.HttpStatus.SC_MOVED_TEMPORARILY;
 
 public class UserTests extends BaseTestSetup {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     //private Cookie cookie;
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 //    @Test
 //    public void authenticationTest() {

@@ -33,6 +33,9 @@ import static org.testng.Assert.assertTrue;
 public class BaseTestSetup {
     protected String username;
     protected String password;
+
+
+
     private String userId;
     protected static User user;
     protected Cookie cookie;
@@ -116,6 +119,9 @@ public class BaseTestSetup {
         RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
     }
 
+    public String getUserId() {
+        return userId;
+    }
     public RequestSpecification getApplicationAuthentication() {
         return given()
                 .multiPart("username", username)

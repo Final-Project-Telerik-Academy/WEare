@@ -14,9 +14,11 @@ public class Constants {
     public static final String birthYear = "1990-10-03";
 
     public static final String FULL_NAME = FIRST_NAME + " " + LAST_NAME;
-    public static final int countryId = 2;
+    public static final int CITY_ID = 2;
+    public static final String CITY = "Plovdiv";
     public static final String EXPERTISE = "All";
     public static final String CONTENT_POST = "This is my public post.";
+    public static String SEX = "Male";
 
     public static final String PICTURE_POST = "";
 

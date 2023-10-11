@@ -35,6 +35,6 @@ public class JSONRequests {
             "  \"personalReview\": \"\",\n" +
             "  \"picture\": \"\",\n" +
             "  \"picturePrivacy\": true,\n" +
-            "  \"sex\": \"MALE\"\n" +
+            "  \"sex\": \"%s\"\n" +
             "}\n";
 }
