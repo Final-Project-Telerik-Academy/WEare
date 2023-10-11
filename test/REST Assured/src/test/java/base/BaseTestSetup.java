@@ -94,7 +94,6 @@ public class BaseTestSetup {
     @BeforeMethod(dependsOnMethods = "setupAuthentication")
     public void setupCookieAuthentication() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
-        //String cookieValue = cookie.getValue();
         Response response = getApplicationAuthentication()
                 .cookie(cookie.getName(), cookie.getValue())
                 .when()
