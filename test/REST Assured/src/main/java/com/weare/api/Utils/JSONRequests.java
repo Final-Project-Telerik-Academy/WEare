@@ -43,6 +43,37 @@ public class JSONRequests {
             "    \"picture\": \"%s\",\n" +
             "    \"public\": %s\n" +
             "}";
+
+    public static final String SEARCH_USER = "{\n" +
+            "  \"index\": 0,\n" +
+            "  \"next\": true,\n" +
+            "  \"searchParam1\": \"\",\n" +
+            "  \"searchParam2\": \"%s\",\n" +
+            "  \"size\": 10\n" +
+            "}";
+
+    public static final String SHOW_PROFILE_POSTS = "{\n" +
+            "  \"index\": 0,\n" +
+            "  \"next\": true,\n" +
+            "  \"searchParam1\": \"\",\n" +
+            "  \"searchParam2\": \"\",\n" +
+            "  \"size\": 5\n" +
+            "}";
+
+    public static final String UPDATE_USER_EXPERTISE = "{\n" +
+            "  \"availability\": %s,\n" +
+            "  \"category\": {\n" +
+            "    \"id\": %s,\n" +
+            "    \"name\": \"Cleaner\"\n" +
+            "  },\n" +
+            "  \"id\": %s,\n" +
+            "    \"skill1\": \"%s\",\n" +
+            "    \"skill2\": \"\",\n" +
+            "    \"skill3\": \"\",\n" +
+            "    \"skill4\": \"\",\n" +
+            "    \"skills\": [\n" +
+            "    ]\n" +
+            "}";
     public static final String COMMENT="{\n" +
             "    \"content\": \"%s\",\n" +
             "    \"deletedConfirmed\": true,\n" +

@@ -8,7 +8,7 @@ public class Constants {
    // public static String USER_ID = "";
     public static Integer USER_ID ;
     public static String CATEGORY_ID = "102";
-
+    public static String SKILL = "My first cleaning skill";
     public static String EMAIL = "";
     public static  String FIRST_NAME = "";
     public static  String LAST_NAME = "";
@@ -21,6 +21,7 @@ public class Constants {
     public static final String CONTENT_POST = "This is my public post.";
     public static String SEX = "Male";
 
+    public static final String AVAILABILITY = "40";
     public static final String PICTURE_POST = "";
 
     public static final String PUBLIC_POST = "true";
