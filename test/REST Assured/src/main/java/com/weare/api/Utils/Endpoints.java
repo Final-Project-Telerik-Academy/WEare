@@ -10,5 +10,9 @@ public class Endpoints {
     public static final String UPDATE_PERSONAL_PROFILE_ENDPOINT = "/api/users/auth/%s/personal";
     public static final String USER_BY_ID_ENDPOINT = "/api/users/auth/%s";
     public static final String EDIT_POST="/api/post/auth/editor?postId=";
+    public static final String GET_POST="/api/post/";
+    public static final String LIKE_POST= "/api/post/auth/likesUp?postId=";
+    public static final String DELETE_POST= "/api/post/auth/manager?postId=";
+    public static final String CREATE_COMMENT_ENDPOINT= "/api/comment/auth/creator";
 
 }

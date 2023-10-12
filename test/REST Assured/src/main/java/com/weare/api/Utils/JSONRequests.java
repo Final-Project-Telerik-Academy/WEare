@@ -43,4 +43,10 @@ public class JSONRequests {
             "    \"picture\": \"%s\",\n" +
             "    \"public\": %s\n" +
             "}";
+    public static final String COMMENT="{\n" +
+            "    \"content\": \"%s\",\n" +
+            "    \"deletedConfirmed\": true,\n" +
+            "     \"postId\": %d,\n" +
+            "  \"userId\": \"%d\"\n" +
+            "}";
 }
