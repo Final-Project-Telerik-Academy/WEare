@@ -5,6 +5,7 @@ import com.telerikacademy.testframework.UserActions;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import pages.weare.LoginPage;
+import pages.weare.PostPage;
 import pages.weare.RegistrationPage;
 
 public class BaseTest {
@@ -17,6 +18,11 @@ public class BaseTest {
     protected String editedPostMessage = "This is my edited post";
     UserActions actions = new UserActions();
 
+    RegistrationPage registrationPage = new RegistrationPage(actions.getDriver());
+    LoginPage loginPage = new LoginPage(actions.getDriver());
+    PostPage postPage = new PostPage(actions.getDriver());
+//    PersonalProfilePage personalProfilePage = new PersonalProfilePage(actions.getDriver());
+
     @BeforeEach
     public void setUp() {
 
@@ -26,7 +32,7 @@ public class BaseTest {
         email = generateRandomEmail(faker);
 
         register(username, email, password);
-        login(username, password);
+//        login(username, password);
     }
 
     @AfterEach
@@ -55,18 +61,15 @@ public class BaseTest {
     }
 
     private void register(String username, String email, String password) {
-        RegistrationPage registrationPage = new RegistrationPage(actions.getDriver());
         registrationPage.userRegistration(username, email, password);
         registrationPage.assertUserRegistered();
     }
 
     private void login(String username, String password) {
-        LoginPage loginPage = new LoginPage(actions.getDriver());
         loginPage.loginUser(username, password);
         loginPage.assertUserIsLoggedIn();
     }
     public void logout() {
-        LoginPage loginPage = new LoginPage(actions.getDriver());
         loginPage.logoutUser();
         loginPage.assertUserIsLoggedOut();
     }

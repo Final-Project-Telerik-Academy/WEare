@@ -12,7 +12,6 @@ public class PostTests extends BaseTest {
     @Test
     @Order(1)
     public void createPublicPost() {
-        PostPage postPage = new PostPage(actions.getDriver());
         postPage.createPublicPost(publicPostMessage);
         postPage.assertPublicPostCreated();
     }
@@ -20,7 +19,6 @@ public class PostTests extends BaseTest {
     @Test
     @Order(2)
     public void createPrivatePost() {
-        PostPage postPage = new PostPage(actions.getDriver());
         postPage.createPrivatePost(privatePostMessage);
         postPage.assertPrivatePostCreated();
     }
@@ -28,7 +26,6 @@ public class PostTests extends BaseTest {
     @Test
     @Order(3)
     public void createPostWithPhoto() {
-        PostPage postPage = new PostPage(actions.getDriver());
         postPage.createPostWithPhoto();
         postPage.assertPostCreatedWithPhoto();
     }
@@ -36,7 +33,6 @@ public class PostTests extends BaseTest {
     @Test
     @Order(4)
     public void likePost() {
-        PostPage postPage = new PostPage(actions.getDriver());
         postPage.createPublicPost(publicPostMessage);
         postPage.likePost();
         postPage.assertPostIsLiked();
@@ -45,7 +41,6 @@ public class PostTests extends BaseTest {
     @Test
     @Order(5)
     public void dislikePost() {
-        PostPage postPage = new PostPage(actions.getDriver());
         postPage.createPublicPost(publicPostMessage);
         postPage.likePost();
         postPage.dislikePost();
@@ -55,7 +50,6 @@ public class PostTests extends BaseTest {
     @Test
     @Order(6)
     public void editPostContent() {
-        PostPage postPage = new PostPage(actions.getDriver());
         postPage.createPublicPost(publicPostMessage);
         postPage.editPostContent(editedPostMessage);
         postPage.assertPostContentIsEdited();
@@ -63,7 +57,6 @@ public class PostTests extends BaseTest {
     @Test
     @Order(7)
     public void deletePost() {
-        PostPage postPage = new PostPage(actions.getDriver());
         postPage.createPublicPost(publicPostMessage);
         postPage.deletePost();
         postPage.assertPostDeleted();
