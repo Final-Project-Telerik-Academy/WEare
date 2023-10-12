@@ -70,7 +70,7 @@ public class UserTests extends BaseTestSetup {
         String searchUserBody = userService.generateSearchUserRequest(user);
 
         Response response = given()
-                .cookie(cookie.getName(), cookie.getValue())
+                .cookie("JSESSIONID", cookie.getValue())
                 .contentType(ContentType.JSON)
                 .body(searchUserBody)
                 .when()
@@ -129,8 +129,9 @@ public class UserTests extends BaseTestSetup {
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
         //User don't have posts yet
-       /* String postId = response.getBody().jsonPath().getString("postId");
-        Assert.assertTrue(Integer.parseInt(postId) > 0, "Incorrect postId");*/
+        String responseBody = response.getBody().asPrettyString();
+        String postId = response.getBody().jsonPath().getString("[0].postId");
+        Assert.assertEquals(Integer.parseInt(postId), POST_ID, "Incorrect user's post ID");
      /*   String postContent = response.getBody().jsonPath().getString("content");
         Assert.assertEquals(postContent, Constants.CONTENT_POST, "The content of the post is not the same.");*/
     }
@@ -143,7 +144,7 @@ public class UserTests extends BaseTestSetup {
         String updateUserExpertiseBody = userService.generateUpdateExpertiseProfile(user);
 
         Response response = given()
-                .cookie(cookie.getName(), cookie.getValue())
+                .cookie("JSESSIONID", cookie.getValue())
                 .contentType(ContentType.JSON)
                 .body(updateUserExpertiseBody)
                 .when()
