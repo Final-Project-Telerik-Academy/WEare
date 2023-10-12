@@ -188,4 +188,12 @@ public class UserActions {
             Assertions.fail("Element with locator: '" + xpath + "' is still present.");
         }
     }
+
+    public void waitForJavascript() {
+        int defaultTimeout = Integer.parseInt(getConfigPropertyByKey("config.defaultTimeoutSeconds"));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(defaultTimeout));
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+
+        wait.until(webDriver -> (js.executeScript("return document.readyState").equals("complete")));
+    }
 }
