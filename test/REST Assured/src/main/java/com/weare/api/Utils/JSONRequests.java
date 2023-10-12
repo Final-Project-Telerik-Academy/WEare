@@ -78,4 +78,13 @@ public class JSONRequests {
             "     \"postId\": %d,\n" +
             "  \"userId\": \"%d\"\n" +
             "}";
+
+    public static final String CREATE_SKILL = "{\n" +
+            "  \"category\": {\n" +
+            "    \"id\": %s,\n" +
+            "    \"name\": \"%s\"\n" +
+            "  },\n" +
+            "  \"skill\": \"%s\",\n" +
+            "  \"skillId\": 0\n" +
+            "}";
 }

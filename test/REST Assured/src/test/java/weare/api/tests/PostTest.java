@@ -181,7 +181,6 @@ public class PostTest extends BaseTestSetup {
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-
     }
 }
 
