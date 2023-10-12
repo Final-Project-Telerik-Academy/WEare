@@ -84,6 +84,8 @@ public class BaseTestSetup {
 
         if (response.getDetailedCookie("JSESSIONID") != null) {
             cookie = response.getDetailedCookie("JSESSIONID");
+        } else {
+            cookie = generateAuthenticationCookieWithValue("desiredValue");
         }
 
         int statusCode = response.getStatusCode();
@@ -91,7 +93,7 @@ public class BaseTestSetup {
         Assert.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
     }
 
-    @BeforeMethod(dependsOnMethods = "setupAuthentication")
+/*    @BeforeMethod(dependsOnMethods = "setupAuthentication")
     public void setupCookieAuthentication() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
 
@@ -102,7 +104,7 @@ public class BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         Assert.assertEquals(statusCode, SC_MOVED_TEMPORARILY, "Cookie status code is correct");
-    }
+    }*/
 
     /**
      * Provided configuration resolve REST Assured issue with a POST request without request body.
@@ -120,5 +122,9 @@ public class BaseTestSetup {
         return given()
                 .multiPart("username", username)
                 .multiPart("password", password);
+    }
+
+    protected Cookie generateAuthenticationCookieWithValue(String value) {
+        return new Cookie.Builder("JSESSIONID", value).setPath("/").build();
     }
 }

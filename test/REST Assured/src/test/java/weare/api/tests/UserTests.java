@@ -14,7 +14,7 @@ import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
 
 public class UserTests extends BaseTestSetup {
-    @Test
+    @Test(priority = 1)
     public void updatePersonalProfileTest() {
         String formattedEndpoint = String.format(UPDATE_PERSONAL_PROFILE_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL,formattedEndpoint);
@@ -32,7 +32,7 @@ public class UserTests extends BaseTestSetup {
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
     }
 
-    @Test
+    @Test(priority = 2)
     public void getUserByIdTest() {
         String formattedEndpoint = String.format(USER_BY_ID_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
@@ -56,7 +56,7 @@ public class UserTests extends BaseTestSetup {
         Assert.assertEquals(resEmail, user.getEmail(), "Incorrect email");
     }
 
-    @Test
+    @Test(priority = 3)
     public void searchByUserTest() {
         baseURI = format("%s%s", BASE_URL, SEARCH_USER_ENDPOINT);
 
@@ -78,7 +78,9 @@ public class UserTests extends BaseTestSetup {
         Assert.assertEquals(resUsername, user.getUsername(), "Incorrect username");
     }
 
-    @Test
+
+
+    @Test(priority = 4)
     public void searchUserPostsTest() {
         String formattedEndpoint = format(SEARCH_USER_POSTS_ENDPOINT, userId) ;
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
@@ -100,7 +102,7 @@ public class UserTests extends BaseTestSetup {
         Assert.assertEquals(postContent, Constants.CONTENT_POST, "The content of the post is not the same.");
     }
 
-    @Test
+    @Test(priority = 5)
     public void updateUserExpertiseTest() {
         String formattedString = format(UPDATE_USER_EXPERTISE_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL, formattedString);
