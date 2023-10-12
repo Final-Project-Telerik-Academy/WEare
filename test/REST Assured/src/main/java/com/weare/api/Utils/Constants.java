@@ -7,8 +7,9 @@ public class Constants {
     public static  String COOKIE="";
    // public static String USER_ID = "";
     public static Integer USER_ID ;
-    public static String CATEGORY_ID = "102";
-    public static String SKILL = "My first cleaning skill";
+    public static String CATEGORY_ID = "100";
+    public static final String CATEGORY_NAME = "All";
+    public static String SKILL_NAME = "My first cleaning skill";
     public static String EMAIL = "";
     public static  String FIRST_NAME = "";
     public static  String LAST_NAME = "";

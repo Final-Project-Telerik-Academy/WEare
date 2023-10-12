@@ -8,33 +8,32 @@ import com.github.javafaker.Faker;
 
 public class UserService {
     private final Gson gson = new Gson();
-    private static final Faker faker = new Faker();
+    private UserService() {};
 
     public String userToJson(User user) {
         return gson.toJson(user);
     }
-
     public User jsonToUser(String json) {
         return gson.fromJson(json, User.class);
     }
-    public String generateRegistrationRequest(User user) {
+    public static String generateRegistrationRequest(User user) {
         return String.format(JSONRequests.REGISTRATION,
                 user.getAuthority(), user.getCategoryId(), user.getCategoryName(),
                 user.getPassword(), user.getEmail(), user.getPassword(), user.getUsername());
     }
 
-    public String generateUpdatePersonalProfile(User user) {
+    public static String generateUpdatePersonalProfile(User user) {
         return String.format(JSONRequests.UPDATE_PERSONAL_PROFILE,
                 Constants.birthYear, user.getFirstName(), user.getUserId(), user.getLastName(),
                 Constants.CITY, Constants.CITY_ID);
     }
 
-    public String generateSearchUserRequest(User user) {
+    public static String generateSearchUserRequest(User user) {
         return String.format(JSONRequests.SEARCH_USER, user.getFullName());
     }
 
-    public String generateUpdateExpertiseProfile(User user) {
+    public static String generateUpdateExpertiseProfile(User user) {
         return String.format(JSONRequests.UPDATE_USER_EXPERTISE,
-                Constants.AVAILABILITY, user.getCategoryId(), user.getUserId(), Constants.SKILL);
+                Constants.AVAILABILITY, user.getCategoryId(), user.getUserId(), Constants.SKILL_NAME);
     }
 }

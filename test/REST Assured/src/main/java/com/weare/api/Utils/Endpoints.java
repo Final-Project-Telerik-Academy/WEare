@@ -17,5 +17,9 @@ public class Endpoints {
     public static final String LIKE_POST= "/api/post/auth/likesUp?postId=";
     public static final String DELETE_POST= "/api/post/auth/manager?postId=";
     public static final String CREATE_COMMENT_ENDPOINT= "/api/comment/auth/creator";
-
+    public static final String CREATE_SKILL_ENDPOINT = "/api/skill/create";
+    public static final String GET_SKILLS_ENPOINT = "/api/skill";
+    public static final String EDIT_SKILL_ENDPOINT = "/api/skill/edit";
+    public static final String GET_ONE_SKILL_ENDPOINT = "/api/skill/getOne";
+    public static final String DELETE_SKILL_ENDPOINT = "/api/skill/delete";
 }

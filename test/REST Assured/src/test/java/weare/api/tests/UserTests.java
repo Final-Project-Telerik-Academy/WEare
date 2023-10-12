@@ -3,6 +3,7 @@ package weare.api.tests;
 import base.BaseTestSetup;
 import com.weare.api.Models.Post;
 import com.weare.api.Services.PostService;
+import com.weare.api.Services.UserService;
 import com.weare.api.Utils.Constants;
 import com.weare.api.Utils.Helper;
 import com.weare.api.Utils.JSONRequests;
@@ -24,7 +25,7 @@ public class UserTests extends BaseTestSetup {
         String formattedEndpoint = String.format(UPDATE_PERSONAL_PROFILE_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL,formattedEndpoint);
 
-        String updateUserBody = userService.generateUpdatePersonalProfile(user);
+        String updateUserBody = UserService.generateUpdatePersonalProfile(user);
 
         Response response = given()
                 .cookie(cookie.getName(), cookie.getValue())
@@ -63,12 +64,11 @@ public class UserTests extends BaseTestSetup {
 
     @Test(priority = 3)
     public void searchByUserTest() {
-        //baseURI = format("%s%s", BASE_URL, SEARCH_USER_ENDPOINT);
-        baseURI = BASE_URL + SEARCH_USER_ENDPOINT;
-        String searchUserBody = userService.generateSearchUserRequest(user);
+        baseURI = format("%s%s", BASE_URL, SEARCH_USER_ENDPOINT);
+        String searchUserBody = UserService.generateSearchUserRequest(user);
 
         Response response = given()
-                .cookie("JSESSIONID", cookie.getValue())
+                .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
                 .body(searchUserBody)
                 .when()
@@ -93,7 +93,7 @@ public class UserTests extends BaseTestSetup {
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", cookie.getValue())
+                .cookie(cookie.getName(), cookie.getValue())
                 .body(postJsonBody)
                 .when()
                 .post();
@@ -112,7 +112,7 @@ public class UserTests extends BaseTestSetup {
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
 
         Response response = given()
-                .cookie("JSESSIONID", cookie.getValue())
+                .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
                 .body(JSONRequests.SHOW_PROFILE_POSTS)
                 .when()
@@ -121,8 +121,6 @@ public class UserTests extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
-        //User don't have posts yet
-        String responseBody = response.getBody().asPrettyString();
         String resPostId = response.getBody().jsonPath().getString("[0].postId");
         Assert.assertEquals(Integer.parseInt(resPostId), postId, "Incorrect user's post ID");
         String postContent = response.getBody().jsonPath().getString("[0].content");
@@ -134,10 +132,10 @@ public class UserTests extends BaseTestSetup {
         String formattedString = format(UPDATE_USER_EXPERTISE_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL, formattedString);
 
-        String updateUserExpertiseBody = userService.generateUpdateExpertiseProfile(user);
+        String updateUserExpertiseBody = UserService.generateUpdateExpertiseProfile(user);
 
         Response response = given()
-                .cookie("JSESSIONID", cookie.getValue())
+                .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
                 .body(updateUserExpertiseBody)
                 .when()
@@ -146,9 +144,9 @@ public class UserTests extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
-        String resUserId = response.getBody().jsonPath().getString("id");
-        String resCategoryId = response.getBody().jsonPath().getString("category.id");
-        String availability = response.getBody().jsonPath().getString("availability");
+        String resUserId = response.getBody().jsonPath().get("id");
+        String resCategoryId = response.getBody().jsonPath().get("category.id");
+        String availability = response.getBody().jsonPath().get("availability");
 
         Assert.assertEquals(resUserId, user.getUserId(), "User ID does not match the expected value");
         Assert.assertNotNull(resCategoryId, "Missing category ID");
