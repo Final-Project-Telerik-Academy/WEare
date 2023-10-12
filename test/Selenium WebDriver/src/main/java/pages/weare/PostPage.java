@@ -10,159 +10,99 @@ public class PostPage extends BaseWEArePage {
     }
 
     public void createPublicPost(String message) {
-
-        //click Add New Post
+        actions.waitForJavascript();
         actions.hoverOverElement("weare.addNewPostButton");
-        actions.waitForElementPresent("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
-
-        //Select public post
-        actions.waitFor(500);
-
-        actions.waitForElementPresent("weare.selectPublicOrPrivate");
         actions.hoverOverElement("weare.selectPublicOrPrivate");
         actions.clickElement("weare.selectPublicOrPrivate");
-
-        actions.waitForElementPresent("weare.publicPostOption");
         actions.clickElement("weare.publicPostOption");
-
-        //Fill in Post message
-        actions.waitForElementPresent("weare.messageForm");
         actions.typeValueInField(message, "weare.messageForm");
-
         actions.clickElement("weare.submitButton");
     }
 
     public void createPrivatePost(String message) {
-
-        //click Add New Post
+        actions.waitForJavascript();
         actions.hoverOverElement("weare.addNewPostButton");
-        actions.waitForElementPresent("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
-
-        //Select private post
-        actions.waitFor(500);
-
-        actions.waitForElementPresent("weare.selectPublicOrPrivate");
         actions.hoverOverElement("weare.selectPublicOrPrivate");
         actions.clickElement("weare.selectPublicOrPrivate");
-
-        actions.waitForElementPresent("weare.privatePostOption");
         actions.clickElement("weare.privatePostOption");
-
-        //Fill in Post message
-        actions.waitForElementPresent("weare.messageForm");
         actions.typeValueInField(message, "weare.messageForm");
-
         actions.clickElement("weare.submitButton");
     }
 
     public void createPostWithPhoto() {
-        // Get absolute image path
+        actions.waitForJavascript();
         String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo.png").toAbsolutePath().toString();
-
-        actions.waitForElementPresent("weare.addNewPostButton");
         actions.hoverOverElement("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
-
-        // File input
-        actions.waitFor(500);
-
-        actions.waitForElementPresent("weare.fileInput");
+        actions.hoverOverElement("weare.fileInput");
         actions.typeValueInField(imagePath, "weare.fileInput");
-
-        actions.waitFor(5000);
-
-        // Confirm the upload
         actions.clickElement("weare.submitButton");
 
     }
 
     public void likePost() {
-        //click Like
-        actions.waitForElementPresent("weare.likePostButton");
+        actions.waitForJavascript();
         actions.clickElement("weare.likePostButton");
     }
 
     public void dislikePost() {
-        //click dislike
-        actions.waitForElementPresent("weare.dislikePostButton");
+        actions.waitForJavascript();
+        actions.hoverOverElement("weare.dislikePostButton");
         actions.clickElement("weare.dislikePostButton");
     }
 
     public void editPostContent(String editMessage) {
-        //click Explore this post
-        actions.waitForElementPresent("weare.exploreThisPost");
+        actions.waitForJavascript();
         actions.hoverOverElement("weare.exploreThisPost");
         actions.clickElement("weare.exploreThisPost");
-
-        //click Edit post
-        actions.waitForElementClickable("weare.editPostButton");
+        actions.hoverOverElement("weare.editPostButton");
         actions.clickElement("weare.editPostButton");
-
-        //Click and fulfill message form
-        actions.waitFor(500);
-
-        actions.waitForElementPresent("weare.messageForm");
-//        actions.waitFor(1000);
+        actions.hoverOverElement("weare.messageForm");
         actions.typeValueInField(editMessage, "weare.messageForm");
-
-        actions.waitForElementPresent("weare.submitButton");
         actions.clickElement("weare.submitButton");
     }
 
     public void deletePost() {
-        //click Explore this post
-        actions.waitForElementPresent("weare.exploreThisPost");
+        actions.waitForJavascript();
         actions.hoverOverElement("weare.exploreThisPost");
         actions.clickElement("weare.exploreThisPost");
-
-        //click Delete post
-        actions.waitFor(1000);
-
-        actions.waitForElementClickable("weare.deletePostbutton");
         actions.clickElement("weare.deletePostbutton");
-
-        //Confirm delete
-        actions.waitFor(1000);
-        actions.waitForElementPresent("weare.confirmDelete");
+        actions.hoverOverElement("weare.confirmDelete");
         actions.clickElement("weare.confirmDelete");
-
-        //Choose delete
-        actions.waitForElementPresent("weare.deleteOption");
         actions.clickElement("weare.deleteOption");
-
-        //Submit
-        actions.waitForElementPresent("weare.submitButton");
         actions.clickElement("weare.submitButton");
     }
 
     public void assertPublicPostCreated() {
-        actions.waitForElementPresent("weare.assertPostPublic");
-        actions.waitForElementPresent("weare.assertTopic");
+        actions.assertElementPresent("weare.assertPostPublic");
+        actions.assertElementPresent("weare.assertTopic");
     }
 
     public void assertPrivatePostCreated() {
-        actions.waitForElementPresent("weare.assertPostPrivate");
-        actions.waitForElementPresent("weare.assertTopicToPrivatePost");
+        actions.assertElementPresent("weare.assertPostPrivate");
+        actions.assertElementPresent("weare.assertTopicToPrivatePost");
     }
 
     public void assertPostCreatedWithPhoto() {
-        actions.waitForElementPresent("weare.assertPhotoExists");
+        actions.assertElementPresent("weare.assertPhotoExists");
     }
 
     public void assertPostIsLiked() {
-        actions.waitForElementPresent("weare.assertPostLiked");
+        actions.waitForJavascript();
+//        actions.waitForElementPresent("weare.assertPostLiked");
+        actions.assertElementPresent("weare.assertPostLiked");
     }
     public void assertPostIsDisliked() {
-        actions.waitForElementPresent("weare.assertPostDisliked");
+        actions.assertElementPresent("weare.assertPostDisliked");
     }
 
     public void assertPostContentIsEdited() {
-        actions.waitForElementPresent("weare.assertEditedPost");
+        actions.assertElementPresent("weare.assertEditedPost");
     }
     public void assertPostDeleted() {
-        actions.waitForElementPresent("weare.postDeletedSuccessfully");
+        actions.assertElementPresent("weare.postDeletedSuccessfully");
     }
 
 
