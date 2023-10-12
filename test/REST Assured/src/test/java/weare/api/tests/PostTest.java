@@ -78,65 +78,65 @@ public class PostTest extends BaseTestSetup {
         Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
         System.out.println(responseBody);
     }
-//    @Test
-//    public void editPost() {
-//
-//
-//       baseURI = format("%s%s%d", BASE_URL, EDIT_POST,POST_ID);
-//        PostService postService = new PostService();
-//
-//        content = Constants.CONTENT_EDIT_POST;
-//        picture = post.getPicture();
-//        isPublic = post.isPublic();
-//
-//        String editJsonBody = postService.editPostRequest(post);
-//
-//        // Use the previously saved authentication cookie for this request
-//        Response response = given()
-//                .contentType(ContentType.JSON)
-//                .cookie("JSESSIONID", authCookie.getValue()) // Use the saved authentication cookie
-//                .body(editJsonBody)
-//                .when()
-//                .put( baseURI =BASE_URL+  "/api/post/auth/editor?postId="+POST_ID);
-//
-//        int statusCode = response.getStatusCode();
-//        Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-//        // System.out.println(responseBody);
-//    }
-//    @Test
-//    public void getPost() {
-//        baseURI = format("%s%s", BASE_URL, GET_POST);
-//
-//        Response response = given()
-//                .contentType(ContentType.JSON)
-//                .cookie("JSESSIONID", authCookie.getValue())
-//                //.queryParam("principal", user.getUsername())
-//                .when()
-//                .get();
-//
-//        int statusCode = response.getStatusCode();
-//        String responseBody = response.getBody().asString();
-//        System.out.println(responseBody);
-//        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-//
-//    }
-//    @Test
-//    public void likePost() {
-//        baseURI = format("%s%s", BASE_URL, LIKE_POST);
-//
-//        Response response = given()
-//                .contentType(ContentType.JSON)
-//                .cookie("JSESSIONID", authCookie.getValue())
-//                .queryParam("postId", POST_ID)
-//                .when()
-//                .post();
-//
-//        int statusCode = response.getStatusCode();
-//        String responseBody = response.getBody().asString();
-//        System.out.println(responseBody);
-//        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-//
-//    }
+    @Test
+    public void editPost() {
+
+
+       baseURI = format("%s%s%d", BASE_URL, EDIT_POST,POST_ID);
+        PostService postService = new PostService();
+
+        content = Constants.CONTENT_EDIT_POST;
+        picture = post.getPicture();
+        isPublic = post.isPublic();
+
+        String editJsonBody = postService.editPostRequest(post);
+
+        // Use the previously saved authentication cookie for this request
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .cookie("JSESSIONID", authCookie.getValue()) // Use the saved authentication cookie
+                .body(editJsonBody)
+                .when()
+                .put( baseURI =BASE_URL+  "/api/post/auth/editor?postId="+POST_ID);
+
+        int statusCode = response.getStatusCode();
+        Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+        // System.out.println(responseBody);
+    }
+    @Test
+    public void getPost() {
+        baseURI = format("%s%s", BASE_URL, GET_POST);
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .cookie("JSESSIONID", authCookie.getValue())
+                //.queryParam("principal", user.getUsername())
+                .when()
+                .get();
+
+        int statusCode = response.getStatusCode();
+        String responseBody = response.getBody().asString();
+        System.out.println(responseBody);
+        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+    }
+    @Test
+    public void likePost() {
+        baseURI = format("%s%s", BASE_URL, LIKE_POST);
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .cookie("JSESSIONID", authCookie.getValue())
+                .queryParam("postId", POST_ID)
+                .when()
+                .post();
+
+        int statusCode = response.getStatusCode();
+        String responseBody = response.getBody().asString();
+        System.out.println(responseBody);
+        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+   }
     @Test
     public void createComment() {
 
@@ -166,22 +166,22 @@ public class PostTest extends BaseTestSetup {
         Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
         System.out.println(responseBody);
     }
-//    @Test
-//    public void deletePost() {
-//        baseURI = format("%s%s", BASE_URL, DELETE_POST);
-//
-//        Response response = given()
-//                .contentType(ContentType.JSON)
-//                .cookie("JSESSIONID", authCookie.getValue())
-//               .queryParam("postId", POST_ID)
-//                .when()
-//                .delete();
-//
-//        int statusCode = response.getStatusCode();
-//        String responseBody = response.getBody().asString();
-//        System.out.println(responseBody);
-//        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-//
-//    }
+    @Test
+    public void deletePost() {
+        baseURI = format("%s%s", BASE_URL, DELETE_POST);
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .cookie("JSESSIONID", authCookie.getValue())
+               .queryParam("postId", POST_ID)
+                .when()
+                .delete();
+
+        int statusCode = response.getStatusCode();
+        String responseBody = response.getBody().asString();
+        System.out.println(responseBody);
+        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+    }
 }
 
