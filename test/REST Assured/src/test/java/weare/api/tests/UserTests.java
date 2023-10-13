@@ -145,7 +145,7 @@ public class UserTests extends BaseTestSetup {
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
         String resUserId = response.getBody().jsonPath().get("id");
-        String resCategoryId = response.getBody().jsonPath().get("category.id");
+        Integer resCategoryId = response.getBody().jsonPath().get("category.id");
         String availability = response.getBody().jsonPath().get("availability");
 
         Assert.assertEquals(resUserId, user.getUserId(), "User ID does not match the expected value");
