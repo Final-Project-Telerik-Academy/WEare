@@ -149,5 +149,39 @@ public class CommentTest extends BaseTestSetup {
         Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
 
     }
+    @Test(priority = 5,dependsOnMethods = "createComment")
+    public void likeComment() {
+        baseURI = format("%s%s", BASE_URL, LIKE_COMMENT);
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .cookie("JSESSIONID", authCookie.getValue())
+                .queryParam("commentId", COMMENT_ID)
+                .when()
+                .post();
+
+        int statusCode = response.getStatusCode();
+        String responseBody = response.getBody().asString();
+        System.out.println(responseBody);
+        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+    }
+    @Test(priority = 6,dependsOnMethods = "likeComment")
+    public void dislikeComment() {
+        baseURI = format("%s%s", BASE_URL, LIKE_COMMENT);
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .cookie("JSESSIONID", authCookie.getValue())
+                .queryParam("commentId", COMMENT_ID)
+                .when()
+                .post();
+
+        int statusCode = response.getStatusCode();
+        String responseBody = response.getBody().asString();
+        System.out.println(responseBody);
+        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+    }
 
 }
