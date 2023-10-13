@@ -2,7 +2,7 @@ package pages.weare;
 
 import org.openqa.selenium.WebDriver;
 
-public class LoginPage extends BaseWEArePage {
+public class LoginPage extends BasePage {
     public LoginPage(WebDriver driver) {
         super(driver, "weare.homepage");
     }
