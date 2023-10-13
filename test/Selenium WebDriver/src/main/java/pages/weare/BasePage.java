@@ -1,16 +1,17 @@
 package pages.weare;
 
-import com.telerikacademy.testframework.pages.BasePage;
+import com.github.javafaker.Faker;
 import org.openqa.selenium.WebDriver;
 
 import java.security.SecureRandom;
 
-public abstract class BaseWEArePage extends BasePage {
+public abstract class BasePage extends com.telerikacademy.testframework.pages.BasePage {
 
     protected static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-
-    public BaseWEArePage(WebDriver driver, String urlKey) {
+    private final Faker faker;
+    public BasePage(WebDriver driver, String urlKey) {
         super(driver, "weare.homepage");
+        faker = new Faker();
     }
 
     protected static String generateRandomString(int length) {
@@ -24,5 +25,9 @@ public abstract class BaseWEArePage extends BasePage {
         }
 
         return stringBuilder.toString();
+    }
+
+    public String generateRandomMessage() {
+        return faker.lorem().sentence();
     }
 }
