@@ -22,4 +22,5 @@ public class Endpoints {
     public static final String EDIT_SKILL_ENDPOINT = "/api/skill/edit";
     public static final String GET_ONE_SKILL_ENDPOINT = "/api/skill/getOne";
     public static final String DELETE_SKILL_ENDPOINT = "/api/skill/delete";
+    public static final String SHOW_COMMENT = "/api/post/Comments";
 }

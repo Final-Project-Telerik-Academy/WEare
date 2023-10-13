@@ -1,16 +1,18 @@
 package com.weare.api.Models;
 
 
+import com.github.javafaker.Faker;
 import com.weare.api.Utils.Constants;
 
 
 public class Post {
     private String content;
     private String picture;
-    private boolean isPublic=true;
+    private boolean isPublic;
+    Faker faker = new Faker();
 
     public Post(){
-        this.content=Constants.CONTENT_POST;
+        this.content=faker.lorem().sentence();
         this.picture=Constants.PICTURE_POST;
         this.isPublic=isPublic();
     }

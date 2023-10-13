@@ -21,7 +21,7 @@ public class PostService {
     }
     public String editPostRequest(Post post) {
         return String.format(JSONRequests.EDIT_POST,
-                Constants.CONTENT_EDIT_POST,post.getPicture(),post.isPublic());
+                post.getContent(),post.getPicture(),post.isPublic());
     }
 }
 

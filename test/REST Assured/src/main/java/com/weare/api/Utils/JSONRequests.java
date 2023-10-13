@@ -76,7 +76,7 @@ public class JSONRequests {
             "    \"content\": \"%s\",\n" +
             "    \"deletedConfirmed\": true,\n" +
             "     \"postId\": %d,\n" +
-            "  \"userId\": \"%d\"\n" +
+            "  \"userId\": %d\n" +
             "}";
 
     public static final String CREATE_SKILL = "{\n" +
