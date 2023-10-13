@@ -92,6 +92,21 @@ public class PostTests extends BaseTest {
 
     @Test
     @Order(11)
+    public void likeSpecificPost() {
+        login(username, password);
+        postPage.likeSpecificPost();
+        postPage.assertSpecificPostIsLiked();
+    }
+    @Test
+    @Order(12)
+    public void dislikeSpecificPost() {
+        login(username, password);
+        postPage.dislikeSpecificPost();
+        postPage.assertSpecificPostIsDisliked();
+    }
+
+    @Test
+    @Order(13)
     public void editPostContent() {
         login(username, password);
         postPage.createPublicPost(publicPostMessage);
@@ -99,7 +114,7 @@ public class PostTests extends BaseTest {
         postPage.assertPostContentIsEdited();
     }
     @Test
-    @Order(12)
+    @Order(14)
     public void deletePost() {
         login(username, password);
         postPage.createPublicPost(publicPostMessage);

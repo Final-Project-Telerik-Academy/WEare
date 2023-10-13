@@ -50,6 +50,10 @@ public class PostPage extends BaseWEArePage {
     }
     public void createPostWithPngFormatPhoto() {
         String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo.png").toAbsolutePath().toString();
+        photoLogic(imagePath);
+    }
+
+    private void photoLogic(String imagePath) {
         actions.waitForElementPresent("weare.addNewPostButton");
         actions.hoverOverElement("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
@@ -62,26 +66,12 @@ public class PostPage extends BaseWEArePage {
 
     public void createPostWithJpgFormatPhoto() {
         String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo-2.jpg").toAbsolutePath().toString();
-        actions.waitForElementPresent("weare.addNewPostButton");
-        actions.hoverOverElement("weare.addNewPostButton");
-        actions.clickElement("weare.addNewPostButton");
-        actions.waitFor(500);
-        actions.waitForElementPresent("weare.fileInput");
-        actions.typeValueInField(imagePath, "weare.fileInput");
-        actions.waitFor(5000);
-        actions.clickElement("weare.submitButton");
+        photoLogic(imagePath);
     }
 
     public void createPostWithPanoramicPhoto() {
         String imagePath = Paths.get("src", "main", "resources", "images", "panoramic.jpg").toAbsolutePath().toString();
-        actions.waitForElementPresent("weare.addNewPostButton");
-        actions.hoverOverElement("weare.addNewPostButton");
-        actions.clickElement("weare.addNewPostButton");
-        actions.waitFor(500);
-        actions.waitForElementPresent("weare.fileInput");
-        actions.typeValueInField(imagePath, "weare.fileInput");
-        actions.waitFor(5000);
-        actions.clickElement("weare.submitButton");
+        photoLogic(imagePath);
     }
 
     public void createPostWithTextAndPhoto(String message) {
@@ -99,6 +89,33 @@ public class PostPage extends BaseWEArePage {
     }
     public void likePost() {
         actions.clickElement("weare.likePostButton");
+    }
+
+    public void likeSpecificPost() {
+        actions.waitForElementPresent("weare.LatestPostsButton");
+        actions.clickElement("weare.LatestPostsButton");
+        actions.waitForElementPresent("weare.specificPost");
+        actions.hoverOverElement("weare.specificPost");
+
+        if (actions.isElementVisible("weare.dislikeSpeficicPost")) {
+            actions.clickElement("weare.dislikeSpeficicPost");
+        }
+
+        actions.waitForElementVisible("weare.likeSpeficicPost");
+        actions.clickElement("weare.likeSpeficicPost");
+    }
+
+    public void dislikeSpecificPost() {
+        actions.waitForElementPresent("weare.LatestPostsButton");
+        actions.clickElement("weare.LatestPostsButton");
+        actions.waitForElementPresent("weare.specificPost");
+        actions.hoverOverElement("weare.specificPost");
+
+        if (actions.isElementVisible("weare.likeSpeficicPost")) {
+            actions.clickElement("weare.likeSpeficicPost");
+        }
+        actions.waitForElementVisible("weare.dislikeSpeficicPost");
+        actions.clickElement("weare.dislikeSpeficicPost");
     }
 
     public void dislikePost() {
@@ -168,8 +185,6 @@ public class PostPage extends BaseWEArePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-//        actions.waitForJavascript();
-//        actions.waitForElementPresent("weare.assertPostLiked");
         actions.assertElementPresent("weare.assertPostLiked");
     }
     public void assertPostIsDisliked() {
@@ -181,12 +196,28 @@ public class PostPage extends BaseWEArePage {
         actions.assertElementPresent("weare.assertPostDisliked");
     }
 
+    public void assertSpecificPostIsLiked() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        actions.assertElementPresent("weare.specificPost");
+    }
+
+    public void assertSpecificPostIsDisliked() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        actions.assertElementPresent("weare.specificPost2");
+    }
+
     public void assertPostContentIsEdited() {
         actions.assertElementPresent("weare.assertEditedPost");
     }
     public void assertPostDeleted() {
         actions.assertElementPresent("weare.postDeletedSuccessfully");
     }
-
-
 }
