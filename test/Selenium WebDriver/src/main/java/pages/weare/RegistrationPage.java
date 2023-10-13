@@ -2,7 +2,8 @@ package pages.weare;
 
 import org.openqa.selenium.WebDriver;
 
-public class RegistrationPage extends BaseWEArePage{
+public class RegistrationPage extends BasePage {
+
     public RegistrationPage(WebDriver driver) {
         super(driver, "weare.homepage");
     }
@@ -19,6 +20,7 @@ public class RegistrationPage extends BaseWEArePage{
         actions.typeValueInField(password, "weare.confirmPasswordInput");
         actions.clickElement("weare.submitButton");
     }
+
     public void assertUserRegistered() {
         actions.assertElementPresent("weare.welcomeHeader");
         actions.assertElementPresent("weare.pleaseUpdateYourProfileButton");
