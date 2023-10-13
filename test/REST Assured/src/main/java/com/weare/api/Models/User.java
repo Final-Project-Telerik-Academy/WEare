@@ -11,11 +11,11 @@ public class User {
     private String firstName;
     private String lastName;
     private String authority;
-    private String categoryId;
+    private Integer categoryId;
     private String categoryName;
     private String userId;
 
-    private static final Faker faker = new Faker();
+    private final Faker faker = new Faker();
 
     public User(){
         this.userId = getUserId();
@@ -83,11 +83,11 @@ public class User {
         this.authority = authority;
     }
 
-    public String getCategoryId() {
+    public Integer getCategoryId() {
         return categoryId;
     }
 
-    public void setCategoryId(String categoryId) {
+    public void setCategoryId(Integer categoryId) {
         this.categoryId = categoryId;
     }
 
