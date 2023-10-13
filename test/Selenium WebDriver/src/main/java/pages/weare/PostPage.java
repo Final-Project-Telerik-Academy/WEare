@@ -4,12 +4,16 @@ import org.openqa.selenium.WebDriver;
 
 import java.nio.file.Paths;
 
-public class PostPage extends BaseWEArePage {
+public class PostPage extends BasePage {
     public PostPage(WebDriver driver) {
         super(driver, "weare.homepage");
     }
+    private final String randomMessage = generateRandomMessage();
+    private final String randomString1 = generateRandomString(1);
+    private final String randomString999 = generateRandomString(999);
+    private final String randomString1000 = generateRandomString(1000);
 
-    public void createPublicPost(String message) {
+    public void createPublicPost() {
         actions.hoverOverElement("weare.addNewPostButton");
         actions.waitForElementPresent("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
@@ -20,11 +24,11 @@ public class PostPage extends BaseWEArePage {
         actions.waitForElementPresent("weare.publicPostOption");
         actions.clickElement("weare.publicPostOption");
         actions.waitForElementPresent("weare.messageForm");
-        actions.typeValueInField(message, "weare.messageForm");
+        actions.typeValueInField(randomMessage, "weare.messageForm");
         actions.clickElement("weare.submitButton");
     }
 
-    public void createPrivatePost(String message) {
+    public void createPrivatePost() {
         actions.hoverOverElement("weare.addNewPostButton");
         actions.waitForElementPresent("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
@@ -35,17 +39,37 @@ public class PostPage extends BaseWEArePage {
         actions.waitForElementPresent("weare.privatePostOption");
         actions.clickElement("weare.privatePostOption");
         actions.waitForElementPresent("weare.messageForm");
-        actions.typeValueInField(message, "weare.messageForm");
+        actions.typeValueInField(randomMessage, "weare.messageForm");
         actions.clickElement("weare.submitButton");
     }
 
-    public void createPostWithValidCharacters(String message) {
+    public void createPostWithOneCharacter() {
         actions.hoverOverElement("weare.addNewPostButton");
         actions.waitForElementPresent("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
         actions.waitFor(500);
         actions.waitForElementPresent("weare.messageForm");
-        actions.typeValueInField(message, "weare.messageForm");
+        actions.typeValueInField(randomString1, "weare.messageForm");
+        actions.clickElement("weare.submitButton");
+    }
+
+    public void createPostWith999Character() {
+        actions.hoverOverElement("weare.addNewPostButton");
+        actions.waitForElementPresent("weare.addNewPostButton");
+        actions.clickElement("weare.addNewPostButton");
+        actions.waitFor(500);
+        actions.waitForElementPresent("weare.messageForm");
+        actions.typeValueInField(randomString999, "weare.messageForm");
+        actions.clickElement("weare.submitButton");
+    }
+
+    public void createPostWith1000Character() {
+        actions.hoverOverElement("weare.addNewPostButton");
+        actions.waitForElementPresent("weare.addNewPostButton");
+        actions.clickElement("weare.addNewPostButton");
+        actions.waitFor(500);
+        actions.waitForElementPresent("weare.messageForm");
+        actions.typeValueInField(randomString1000, "weare.messageForm");
         actions.clickElement("weare.submitButton");
     }
     public void createPostWithPngFormatPhoto() {
@@ -74,13 +98,13 @@ public class PostPage extends BaseWEArePage {
         photoLogic(imagePath);
     }
 
-    public void createPostWithTextAndPhoto(String message) {
+    public void createPostWithTextAndPhoto() {
         actions.hoverOverElement("weare.addNewPostButton");
         actions.waitForElementPresent("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
         actions.waitFor(500);
         actions.waitForElementPresent("weare.messageForm");
-        actions.typeValueInField(message, "weare.messageForm");
+        actions.typeValueInField(randomMessage, "weare.messageForm");
         String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo-2.jpg").toAbsolutePath().toString();
         actions.waitForElementPresent("weare.fileInput");
         actions.typeValueInField(imagePath, "weare.fileInput");
@@ -103,19 +127,27 @@ public class PostPage extends BaseWEArePage {
 
         actions.waitForElementVisible("weare.likeSpeficicPost");
         actions.clickElement("weare.likeSpeficicPost");
+        actions.waitFor(5000);
+
     }
 
     public void dislikeSpecificPost() {
         actions.waitForElementPresent("weare.LatestPostsButton");
         actions.clickElement("weare.LatestPostsButton");
-        actions.waitForElementPresent("weare.specificPost");
-        actions.hoverOverElement("weare.specificPost");
+        actions.waitForElementPresent("(//div[@class='col-md-12'])[3]");
+        actions.hoverOverElement("(//div[@class='col-md-12'])[3]");
 
-        if (actions.isElementVisible("weare.likeSpeficicPost")) {
-            actions.clickElement("weare.likeSpeficicPost");
+        if (actions.isElementVisible("(//div[@class='text pl-md-4']//input[@value='Like'])[3]")) {
+            // Scenario 1: "Like" button is visible, click it to change to "Dislike"
+            actions.clickElement("(//div[@class='text pl-md-4']//input[@value='Like'])[3]");
+            actions.waitForElementVisible("(//div[@class='text pl-md-4']//input[@value='Dislike'])[3]");
+            actions.clickElement("(//div[@class='text pl-md-4']//input[@value='Dislike'])[3]");
+        } else if (actions.isElementVisible("(//div[@class='text pl-md-4']//input[@value='Dislike'])[3]")) {
+            // Scenario 2: "Dislike" button is visible, click it to change to "Like"
+            actions.clickElement("(//div[@class='text pl-md-4']//input[@value='Dislike'])[3]");
+            actions.waitForElementVisible("(//div[@class='text pl-md-4']//input[@value='Like'])[3]");
+            actions.clickElement("(//div[@class='text pl-md-4']//input[@value='Like'])[3]");
         }
-        actions.waitForElementVisible("weare.dislikeSpeficicPost");
-        actions.clickElement("weare.dislikeSpeficicPost");
     }
 
     public void dislikePost() {
@@ -126,7 +158,7 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.dislikePostButton");
     }
 
-    public void editPostContent(String editMessage) {
+    public void editPostContent() {
         actions.waitForElementPresent("weare.exploreThisPost");
         actions.hoverOverElement("weare.exploreThisPost");
         actions.clickElement("weare.exploreThisPost");
@@ -134,7 +166,7 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.editPostButton");
         actions.waitFor(500);
         actions.waitForElementPresent("weare.messageForm");
-        actions.typeValueInField(editMessage, "weare.messageForm");
+        actions.typeValueInField(randomMessage, "weare.messageForm");
         actions.waitForElementPresent("weare.submitButton");
         actions.clickElement("weare.submitButton");
     }
@@ -157,20 +189,23 @@ public class PostPage extends BaseWEArePage {
 
     public void assertPublicPostCreated() {
         actions.assertElementPresent("weare.assertPostPublic");
-        actions.assertElementPresent("weare.assertTopic");
-    }
+        actions.assertElementPresent("//p[contains(text(), '" + randomMessage + "')]");    }
 
     public void assertPrivatePostCreated() {
         actions.assertElementPresent("weare.assertPostPrivate");
-        actions.assertElementPresent("weare.assertTopicToPrivatePost");
-    }
+        actions.assertElementPresent("//p[contains(text(), '" + randomMessage + "')]");    }
+
 
     public void assertPostWithOneCharacterCreated() {
-        actions.assertElementPresent("weare.assertShortTopic");
+        actions.assertElementPresent("//p[contains(text(), '" + randomString1 + "')]");
     }
 
     public void assertPostWith999CharactersCreated() {
-        actions.assertElementPresent("weare.assertLongTopic");
+        actions.assertElementPresent("//p[contains(text(), '" + randomString999 + "')]");
+    }
+
+    public void assertPostWith1000CharactersCreated() {
+        actions.assertElementPresent("//p[contains(text(), '" + randomString1000 + "')]");
     }
     public void assertPostCreatedWithPhoto() {
         actions.assertElementPresent("weare.assertPhotoExists");
@@ -211,7 +246,7 @@ public class PostPage extends BaseWEArePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        actions.assertElementPresent("weare.specificPost2");
+        actions.assertElementPresent("//input[@type='submit'][@value='Like'][3]");
     }
 
     public void assertPostContentIsEdited() {

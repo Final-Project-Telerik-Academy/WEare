@@ -1,123 +1,127 @@
 package test.cases.weare;
 
-import org.junit.jupiter.api.MethodOrderer;
-import org.junit.jupiter.api.Order;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestMethodOrder;
+import com.telerikacademy.testframework.UserActions;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.junit.jupiter.api.*;
 import pages.weare.PostPage;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 public class PostTests extends BaseTest {
+
+    @BeforeEach
+    public void setupTest() {
+        register();
+        login(username, password);
+    }
+
+    @AfterEach
+    public void performLogout() {
+        logout();
+    }
+
     @Test
     @Order(1)
     public void createPublicPost() {
-        login(username, password);
-        postPage.createPublicPost(publicPostMessage);
+        postPage.createPublicPost();
         postPage.assertPublicPostCreated();
     }
 
     @Test
     @Order(2)
     public void createPrivatePost() {
-        login(username, password);
-        postPage.createPrivatePost(privatePostMessage);
+        postPage.createPrivatePost();
         postPage.assertPrivatePostCreated();
     }
 
     @Test
     @Order(3)
     public void createPostWithOneCharacter() {
-        login(username, password);
-        postPage.createPostWithValidCharacters(postMessageOneCharacters);
+        postPage.createPostWithOneCharacter();
         postPage.assertPostWithOneCharacterCreated();
     }
 
     @Test
     @Order(4)
     public void createPostWith999Characters() {
-        login(username, password);
-        postPage.createPostWithValidCharacters(postMessage999Characters);
+        postPage.createPostWith999Character();
         postPage.assertPostWith999CharactersCreated();
     }
 
     @Test
     @Order(5)
+    public void createPostWith1000Characters() {
+        postPage.createPostWith1000Character();
+        postPage.assertPostWith1000CharactersCreated();
+    }
+
+    @Test
+    @Order(6)
     public void createPostWithPngPhoto() {
-        login(username, password);
         postPage.createPostWithPngFormatPhoto();
         postPage.assertPostCreatedWithPhoto();
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     public void createPostWithJpgPhoto() {
-        login(username, password);
         postPage.createPostWithJpgFormatPhoto();
         postPage.assertPostCreatedWithPhoto();
     }
 
     @Test
-    @Order(7)
+    @Order(8)
     public void createPostWithPanoramicPhoto() {
-        login(username, password);
         postPage.createPostWithPanoramicPhoto();
         postPage.assertPostCreatedWithPhoto();
     }
 
     @Test
-    @Order(8)
+    @Order(9)
     public void createPostWithTextAndPhoto() {
-        login(username, password);
-        postPage.createPostWithTextAndPhoto(publicPostMessage);
+        postPage.createPostWithTextAndPhoto();
         postPage.assertPostCreatedWithTextAndPhoto();
     }
     @Test
-    @Order(9)
+    @Order(10)
     public void likePost() {
-        login(username, password);
-        postPage.createPublicPost(publicPostMessage);
+        postPage.createPublicPost();
         postPage.likePost();
         postPage.assertPostIsLiked();
     }
 
     @Test
-    @Order(10)
+    @Order(11)
     public void dislikePost() {
-        login(username, password);
-        postPage.createPublicPost(publicPostMessage);
+        postPage.createPublicPost();
         postPage.dislikePost();
         postPage.assertPostIsDisliked();
     }
 
     @Test
-    @Order(11)
+    @Order(12)
     public void likeSpecificPost() {
-        login(username, password);
         postPage.likeSpecificPost();
         postPage.assertSpecificPostIsLiked();
     }
     @Test
-    @Order(12)
+    @Order(13)
     public void dislikeSpecificPost() {
-        login(username, password);
         postPage.dislikeSpecificPost();
         postPage.assertSpecificPostIsDisliked();
     }
 
     @Test
-    @Order(13)
+    @Order(14)
     public void editPostContent() {
-        login(username, password);
-        postPage.createPublicPost(publicPostMessage);
-        postPage.editPostContent(editedPostMessage);
+        postPage.createPublicPost();
+        postPage.editPostContent();
         postPage.assertPostContentIsEdited();
     }
     @Test
-    @Order(14)
+    @Order(15)
     public void deletePost() {
-        login(username, password);
-        postPage.createPublicPost(publicPostMessage);
+        postPage.createPublicPost();
         postPage.deletePost();
         postPage.assertPostDeleted();
     }
