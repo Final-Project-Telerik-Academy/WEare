@@ -110,6 +110,44 @@ public class CommentTest extends BaseTestSetup {
         System.out.println(responseBody);
 
     }
+    @Test(priority = 3)
+    public void getComment() {
+        baseURI = format("%s%s", BASE_URL, GET_COMMENT);
 
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .cookie("JSESSIONID", authCookie.getValue())
+                //.queryParam("principal", user.getUsername())
+                .when()
+                .get();
+
+        int statusCode = response.getStatusCode();
+        String responseBody = response.getBody().asString();
+        System.out.println(responseBody);
+        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+    }
+    @Test(priority = 4,dependsOnMethods = "createComment")
+    public void editComment() {
+
+
+        baseURI = format("%s%s", BASE_URL, EDIT_COMMENT);
+        PostService postService = new PostService();
+
+        String editJsonBody = postService.editPostRequest(post);
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .cookie("JSESSIONID", authCookie.getValue())
+                .queryParam("commentId", COMMENT_ID)
+                .queryParam("content",comment.getContent())
+                .body(editJsonBody)
+                .when()
+                .put();
+
+        int statusCode = response.getStatusCode();
+        Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+
+    }
 
 }
