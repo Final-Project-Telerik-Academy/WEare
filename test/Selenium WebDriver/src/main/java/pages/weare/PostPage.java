@@ -10,68 +10,86 @@ public class PostPage extends BaseWEArePage {
     }
 
     public void createPublicPost(String message) {
-        actions.waitForJavascript();
         actions.hoverOverElement("weare.addNewPostButton");
+        actions.waitForElementPresent("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
+        actions.waitFor(500);
+        actions.waitForElementPresent("weare.selectPublicOrPrivate");
         actions.hoverOverElement("weare.selectPublicOrPrivate");
         actions.clickElement("weare.selectPublicOrPrivate");
+        actions.waitForElementPresent("weare.publicPostOption");
         actions.clickElement("weare.publicPostOption");
+        actions.waitForElementPresent("weare.messageForm");
         actions.typeValueInField(message, "weare.messageForm");
         actions.clickElement("weare.submitButton");
     }
 
     public void createPrivatePost(String message) {
-        actions.waitForJavascript();
         actions.hoverOverElement("weare.addNewPostButton");
+        actions.waitForElementPresent("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
+        actions.waitFor(500);
+        actions.waitForElementPresent("weare.selectPublicOrPrivate");
         actions.hoverOverElement("weare.selectPublicOrPrivate");
         actions.clickElement("weare.selectPublicOrPrivate");
+        actions.waitForElementPresent("weare.privatePostOption");
         actions.clickElement("weare.privatePostOption");
+        actions.waitForElementPresent("weare.messageForm");
         actions.typeValueInField(message, "weare.messageForm");
         actions.clickElement("weare.submitButton");
     }
 
     public void createPostWithPhoto() {
-        actions.waitForJavascript();
         String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo.png").toAbsolutePath().toString();
+        actions.waitForElementPresent("weare.addNewPostButton");
         actions.hoverOverElement("weare.addNewPostButton");
         actions.clickElement("weare.addNewPostButton");
-        actions.hoverOverElement("weare.fileInput");
+        actions.waitFor(500);
+        actions.waitForElementPresent("weare.fileInput");
         actions.typeValueInField(imagePath, "weare.fileInput");
+        actions.waitFor(5000);
         actions.clickElement("weare.submitButton");
 
     }
 
     public void likePost() {
-        actions.waitForJavascript();
         actions.clickElement("weare.likePostButton");
     }
 
     public void dislikePost() {
-        actions.waitForJavascript();
-        actions.hoverOverElement("weare.dislikePostButton");
+        if (actions.isElementVisible("weare.likePostButton")) {
+            actions.clickElement("weare.likePostButton");
+        }
+        actions.waitForElementVisible("weare.dislikePostButton");
         actions.clickElement("weare.dislikePostButton");
     }
 
     public void editPostContent(String editMessage) {
-        actions.waitForJavascript();
+        actions.waitForElementPresent("weare.exploreThisPost");
         actions.hoverOverElement("weare.exploreThisPost");
         actions.clickElement("weare.exploreThisPost");
-        actions.hoverOverElement("weare.editPostButton");
+        actions.waitForElementClickable("weare.editPostButton");
         actions.clickElement("weare.editPostButton");
-        actions.hoverOverElement("weare.messageForm");
+        actions.waitFor(500);
+        actions.waitForElementPresent("weare.messageForm");
         actions.typeValueInField(editMessage, "weare.messageForm");
+        actions.waitForElementPresent("weare.submitButton");
         actions.clickElement("weare.submitButton");
     }
 
     public void deletePost() {
-        actions.waitForJavascript();
+        actions.waitForElementPresent("weare.exploreThisPost");
         actions.hoverOverElement("weare.exploreThisPost");
         actions.clickElement("weare.exploreThisPost");
+        actions.waitFor(1000);
+        actions.waitForElementClickable("weare.deletePostbutton");
         actions.clickElement("weare.deletePostbutton");
-        actions.hoverOverElement("weare.confirmDelete");
+        actions.waitFor(1000);
+        actions.waitForElementPresent("weare.confirmDelete");
         actions.clickElement("weare.confirmDelete");
+        actions.waitForElementPresent("weare.deleteOption");
         actions.clickElement("weare.deleteOption");
+        actions.waitForElementPresent("weare.submitButton");
         actions.clickElement("weare.submitButton");
     }
 
@@ -90,11 +108,21 @@ public class PostPage extends BaseWEArePage {
     }
 
     public void assertPostIsLiked() {
-        actions.waitForJavascript();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+//        actions.waitForJavascript();
 //        actions.waitForElementPresent("weare.assertPostLiked");
         actions.assertElementPresent("weare.assertPostLiked");
     }
     public void assertPostIsDisliked() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
         actions.assertElementPresent("weare.assertPostDisliked");
     }
 

@@ -47,7 +47,6 @@ public class PostTests extends BaseTest {
     public void dislikePost() {
         login(username, password);
         postPage.createPublicPost(publicPostMessage);
-        postPage.likePost();
         postPage.dislikePost();
         postPage.assertPostIsDisliked();
     }

@@ -21,7 +21,6 @@ public class BaseTest {
     RegistrationPage registrationPage = new RegistrationPage(actions.getDriver());
     LoginPage loginPage = new LoginPage(actions.getDriver());
     PostPage postPage = new PostPage(actions.getDriver());
-//    PersonalProfilePage personalProfilePage = new PersonalProfilePage(actions.getDriver());
 
     @BeforeEach
     public void setUp() {
@@ -32,7 +31,6 @@ public class BaseTest {
         email = generateRandomEmail(faker);
 
         register(username, email, password);
-//        login(username, password);
     }
 
     @AfterEach
@@ -40,17 +38,12 @@ public class BaseTest {
         logout();
         UserActions.quitDriver();
     }
-
-    protected String generateRandomLowercaseUsername(Faker faker) {
+    private String generateRandomLowercaseUsername(Faker faker) {
         String randomUsername = faker.name().username();
         return removeNonLowercaseLetters(randomUsername);
     }
 
-    protected String generateRandomEmail(Faker faker) {
-        return faker.internet().emailAddress();
-    }
-
-    protected String removeNonLowercaseLetters(String input) {
+        private String removeNonLowercaseLetters(String input) {
         StringBuilder result = new StringBuilder();
         for (char c : input.toCharArray()) {
             if (Character.isLowerCase(c)) {
@@ -58,6 +51,10 @@ public class BaseTest {
             }
         }
         return result.toString();
+    }
+
+    protected String generateRandomEmail(Faker faker) {
+        return faker.internet().emailAddress();
     }
 
     protected void register(String username, String email, String password) {
