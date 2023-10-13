@@ -39,7 +39,16 @@ public class PostPage extends BaseWEArePage {
         actions.clickElement("weare.submitButton");
     }
 
-    public void createPostWithPhoto() {
+    public void createPostWithValidCharacters(String message) {
+        actions.hoverOverElement("weare.addNewPostButton");
+        actions.waitForElementPresent("weare.addNewPostButton");
+        actions.clickElement("weare.addNewPostButton");
+        actions.waitFor(500);
+        actions.waitForElementPresent("weare.messageForm");
+        actions.typeValueInField(message, "weare.messageForm");
+        actions.clickElement("weare.submitButton");
+    }
+    public void createPostWithPngFormatPhoto() {
         String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo.png").toAbsolutePath().toString();
         actions.waitForElementPresent("weare.addNewPostButton");
         actions.hoverOverElement("weare.addNewPostButton");
@@ -49,9 +58,45 @@ public class PostPage extends BaseWEArePage {
         actions.typeValueInField(imagePath, "weare.fileInput");
         actions.waitFor(5000);
         actions.clickElement("weare.submitButton");
-
     }
 
+    public void createPostWithJpgFormatPhoto() {
+        String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo-2.jpg").toAbsolutePath().toString();
+        actions.waitForElementPresent("weare.addNewPostButton");
+        actions.hoverOverElement("weare.addNewPostButton");
+        actions.clickElement("weare.addNewPostButton");
+        actions.waitFor(500);
+        actions.waitForElementPresent("weare.fileInput");
+        actions.typeValueInField(imagePath, "weare.fileInput");
+        actions.waitFor(5000);
+        actions.clickElement("weare.submitButton");
+    }
+
+    public void createPostWithPanoramicPhoto() {
+        String imagePath = Paths.get("src", "main", "resources", "images", "panoramic.jpg").toAbsolutePath().toString();
+        actions.waitForElementPresent("weare.addNewPostButton");
+        actions.hoverOverElement("weare.addNewPostButton");
+        actions.clickElement("weare.addNewPostButton");
+        actions.waitFor(500);
+        actions.waitForElementPresent("weare.fileInput");
+        actions.typeValueInField(imagePath, "weare.fileInput");
+        actions.waitFor(5000);
+        actions.clickElement("weare.submitButton");
+    }
+
+    public void createPostWithTextAndPhoto(String message) {
+        actions.hoverOverElement("weare.addNewPostButton");
+        actions.waitForElementPresent("weare.addNewPostButton");
+        actions.clickElement("weare.addNewPostButton");
+        actions.waitFor(500);
+        actions.waitForElementPresent("weare.messageForm");
+        actions.typeValueInField(message, "weare.messageForm");
+        String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo-2.jpg").toAbsolutePath().toString();
+        actions.waitForElementPresent("weare.fileInput");
+        actions.typeValueInField(imagePath, "weare.fileInput");
+        actions.waitFor(5000);
+        actions.clickElement("weare.submitButton");
+    }
     public void likePost() {
         actions.clickElement("weare.likePostButton");
     }
@@ -103,10 +148,20 @@ public class PostPage extends BaseWEArePage {
         actions.assertElementPresent("weare.assertTopicToPrivatePost");
     }
 
+    public void assertPostWithOneCharacterCreated() {
+        actions.assertElementPresent("weare.assertShortTopic");
+    }
+
+    public void assertPostWith999CharactersCreated() {
+        actions.assertElementPresent("weare.assertLongTopic");
+    }
     public void assertPostCreatedWithPhoto() {
         actions.assertElementPresent("weare.assertPhotoExists");
     }
-
+    public void assertPostCreatedWithTextAndPhoto() {
+        actions.assertElementPresent("weare.assertTopic");
+        actions.assertElementPresent("weare.assertPhotoExists");
+    }
     public void assertPostIsLiked() {
         try {
             Thread.sleep(1000);
