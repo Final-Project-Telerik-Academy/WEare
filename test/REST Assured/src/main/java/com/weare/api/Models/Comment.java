@@ -1,14 +1,16 @@
 package com.weare.api.Models;
 
+import com.github.javafaker.Faker;
 import com.weare.api.Utils.Constants;
 
 public class Comment {
     private String content;
     private Integer postId;
     private Integer userId;
+    Faker faker = new Faker();
     public Comment(){
-        this.content= Constants.CONTENT_COMMENT;
-        this.userId=Constants.USER_ID;
+        this.content= faker.lorem().sentence();
+      //  this.userId=Constants.USER_ID;
         this.postId=Constants.POST_ID;
 
     }

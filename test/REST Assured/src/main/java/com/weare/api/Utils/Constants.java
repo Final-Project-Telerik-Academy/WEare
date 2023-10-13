@@ -4,9 +4,6 @@ public class Constants {
     public static String USERNAME = "";
     public static final String PASSWORD = "P@ssw0rd";
     public static final String AUTHORITIES_USER = "ROLE_USER";
-    public static  String COOKIE="";
-   // public static String USER_ID = "";
-    public static Integer USER_ID ;
     public static Integer CATEGORY_ID = 100;
     public static final String CATEGORY_NAME = "All";
     public static String SKILL_NAME = "";
@@ -24,10 +21,7 @@ public class Constants {
 
     public static final String AVAILABILITY = "40";
     public static final String PICTURE_POST = "";
-
-    public static final String PUBLIC_POST = "true";
     public static Integer POST_ID;
-    public static final String CONTENT_EDIT_POST = "This is my edited post.";
-    public static final String CONTENT_COMMENT = "This is my new comment.";
+    public static Integer COMMENT_ID ;
 
 }

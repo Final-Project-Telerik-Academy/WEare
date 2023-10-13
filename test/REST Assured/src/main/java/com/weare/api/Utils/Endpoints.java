@@ -23,4 +23,13 @@ public class Endpoints {
     public static final String GET_ONE_SKILL_ENDPOINT = "/api/skill/getOne";
     public static final String DELETE_SKILL_ENDPOINT = "/api/skill/delete";
     public static final String SHOW_COMMENT = "/api/post/Comments";
+    public static final String GET_COMMENT = "/api/comment";
+
+    public static final String EDIT_COMMENT = "/api/comment/auth/editor";
+
+    public static final String LIKE_COMMENT =  "/api/comment/auth/likesUp";
+    public static final String FIND_ALL_COMMENTS = "/api/comment/byPost";
+
+    public static final String FIND_ONE_COMMENTS = "/api/comment/single";
+    public static final String DELETE_COMMENTS ="/api/comment/auth/manager";
 }
