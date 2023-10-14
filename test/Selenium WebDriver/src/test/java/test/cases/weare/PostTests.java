@@ -1,9 +1,6 @@
 package test.cases.weare;
 
-import com.telerikacademy.testframework.UserActions;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
-import pages.weare.PostPage;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
@@ -12,7 +9,7 @@ public class PostTests extends BaseTest {
     @BeforeEach
     public void setupTest() {
         register();
-        login(username, password);
+        login();
     }
 
     @AfterEach
@@ -82,6 +79,7 @@ public class PostTests extends BaseTest {
         postPage.createPostWithTextAndPhoto();
         postPage.assertPostCreatedWithTextAndPhoto();
     }
+
     @Test
     @Order(10)
     public void likePost() {
@@ -104,6 +102,7 @@ public class PostTests extends BaseTest {
         postPage.likeSpecificPost();
         postPage.assertSpecificPostIsLiked();
     }
+
     @Test
     @Order(13)
     public void dislikeSpecificPost() {
@@ -118,6 +117,7 @@ public class PostTests extends BaseTest {
         postPage.editPostContent();
         postPage.assertPostContentIsEdited();
     }
+
     @Test
     @Order(15)
     public void deletePost() {

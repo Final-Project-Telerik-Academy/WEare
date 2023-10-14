@@ -8,7 +8,7 @@ public class PostPage extends BasePage {
     public PostPage(WebDriver driver) {
         super(driver, "weare.homepage");
     }
-    private final String randomMessage = generateRandomMessage();
+   private final String randomMessage = generateRandomMessage();
     private final String randomString1 = generateRandomString(1);
     private final String randomString999 = generateRandomString(999);
     private final String randomString1000 = generateRandomString(1000);
@@ -134,8 +134,8 @@ public class PostPage extends BasePage {
     public void dislikeSpecificPost() {
         actions.waitForElementPresent("weare.LatestPostsButton");
         actions.clickElement("weare.LatestPostsButton");
-        actions.waitForElementPresent("(//div[@class='col-md-12'])[3]");
-        actions.hoverOverElement("(//div[@class='col-md-12'])[3]");
+        actions.waitForElementPresent("(//div[@class='text pl-md-4'])[3]");
+        actions.hoverOverElement("(//div[@class='text pl-md-4'])[3]");
 
         if (actions.isElementVisible("(//div[@class='text pl-md-4']//input[@value='Like'])[3]")) {
             // Scenario 1: "Like" button is visible, click it to change to "Dislike"
