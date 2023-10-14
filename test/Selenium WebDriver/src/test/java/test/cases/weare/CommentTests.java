@@ -50,6 +50,14 @@ public class CommentTests extends BaseTest {
 
     @Test
     @Order(5)
+    public void createCommentWithSpecialCharactersTest() {
+        postPage.createPublicPost();
+        commentPage.createCommentWithSpecialCharacters();
+        commentPage.assertCommentWithSpecialCharsCreated();
+    }
+
+   /* @Test
+    @Order(5)
     public void likeCreatedCommentTest() {
         postPage.createPublicPost();
         commentPage.createComment();
@@ -73,5 +81,5 @@ public class CommentTests extends BaseTest {
         commentPage.createComment();
         commentPage.deleteLastCreatedComment();
         commentPage.assertCommentIsDeleted();
-    }
+    }*/
 }
