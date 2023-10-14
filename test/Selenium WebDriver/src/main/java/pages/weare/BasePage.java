@@ -8,7 +8,7 @@ import java.security.SecureRandom;
 public abstract class BasePage extends com.telerikacademy.testframework.pages.BasePage {
 
     protected static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    protected static final String SPECIAL_CHARACTERS = "!@#$%^&*()_-+=<>?/[]{}|\\~`";;
+    protected static final String SPECIAL_CHARACTERS = "!@#$%^&*()_-+=<>?/[]{}|\\~`";
     private final Faker faker;
     public BasePage(WebDriver driver, String urlKey) {
         super(driver, urlKey);
@@ -32,13 +32,13 @@ public abstract class BasePage extends com.telerikacademy.testframework.pages.Ba
         return faker.lorem().sentence();
     }
 
-    public String generateRandomMessageWithSpecialCharacters(int length) {
+    public String generateRandomSpecialCharactersMessage(int length) {
         SecureRandom random = new SecureRandom();
         StringBuilder stringBuilder = new StringBuilder(length);
 
         for (int i = 0; i < length; i++) {
-            int randomIndex = random.nextInt(CHARACTERS.length());
-            char randomChar = CHARACTERS.charAt(randomIndex);
+            int randomIndex = random.nextInt(SPECIAL_CHARACTERS.length());
+            char randomChar = SPECIAL_CHARACTERS.charAt(randomIndex);
             stringBuilder.append(randomChar);
         }
 
