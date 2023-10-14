@@ -18,20 +18,6 @@ public class CommentPage extends BasePage {
     private final String randomStringWithHyperLink = generateRandomHyperlink();
     int commentsCounter;
     public void createComment() {
-        //Create a post
-        actions.hoverOverElement("weare.addNewPostButton");
-        actions.waitForElementPresent("weare.addNewPostButton");
-        actions.clickElement("weare.addNewPostButton");
-        actions.waitFor(500);
-        actions.waitForElementPresent("weare.selectPublicOrPrivate");
-        actions.hoverOverElement("weare.selectPublicOrPrivate");
-        actions.clickElement("weare.selectPublicOrPrivate");
-        actions.waitForElementPresent("weare.publicPostOption");
-        actions.clickElement("weare.publicPostOption");
-        actions.waitForElementPresent("weare.messageForm");
-        actions.typeValueInField(randomMessage, "weare.messageForm");
-        actions.clickElement("weare.submitButton");
-        //Create a comment
         actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
         actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
         actions.waitForElementPresent("weare.messageForm");
@@ -42,20 +28,6 @@ public class CommentPage extends BasePage {
     }
 
     public void createCommentWithOneCharacter() {
-        //Create a post
-        actions.hoverOverElement("weare.addNewPostButton");
-        actions.waitForElementPresent("weare.addNewPostButton");
-        actions.clickElement("weare.addNewPostButton");
-        actions.waitFor(500);
-        actions.waitForElementPresent("weare.selectPublicOrPrivate");
-        actions.hoverOverElement("weare.selectPublicOrPrivate");
-        actions.clickElement("weare.selectPublicOrPrivate");
-        actions.waitForElementPresent("weare.publicPostOption");
-        actions.clickElement("weare.publicPostOption");
-        actions.waitForElementPresent("weare.messageForm");
-        actions.typeValueInField(randomString1, "weare.messageForm");
-        actions.clickElement("weare.submitButton");
-        //Create a comment
         actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
         actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
         actions.waitForElementPresent("weare.messageForm");
@@ -66,20 +38,6 @@ public class CommentPage extends BasePage {
     }
 
     public void createCommentWithWith999Characters() {
-        //Create a post
-        actions.hoverOverElement("weare.addNewPostButton");
-        actions.waitForElementPresent("weare.addNewPostButton");
-        actions.clickElement("weare.addNewPostButton");
-        actions.waitFor(500);
-        actions.waitForElementPresent("weare.selectPublicOrPrivate");
-        actions.hoverOverElement("weare.selectPublicOrPrivate");
-        actions.clickElement("weare.selectPublicOrPrivate");
-        actions.waitForElementPresent("weare.publicPostOption");
-        actions.clickElement("weare.publicPostOption");
-        actions.waitForElementPresent("weare.messageForm");
-        actions.typeValueInField(randomString999, "weare.messageForm");
-        actions.clickElement("weare.submitButton");
-        //Create a comment
         actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
         actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
         actions.waitForElementPresent("weare.messageForm");
@@ -90,20 +48,6 @@ public class CommentPage extends BasePage {
     }
 
     public void createCommentWith1000Characters() {
-        //Create a post
-        actions.hoverOverElement("weare.addNewPostButton");
-        actions.waitForElementPresent("weare.addNewPostButton");
-        actions.clickElement("weare.addNewPostButton");
-        actions.waitFor(500);
-        actions.waitForElementPresent("weare.selectPublicOrPrivate");
-        actions.hoverOverElement("weare.selectPublicOrPrivate");
-        actions.clickElement("weare.selectPublicOrPrivate");
-        actions.waitForElementPresent("weare.publicPostOption");
-        actions.clickElement("weare.publicPostOption");
-        actions.waitForElementPresent("weare.messageForm");
-        actions.typeValueInField(randomString1, "weare.messageForm");
-        actions.clickElement("weare.submitButton");
-        //Create a comment
         actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
         actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
         actions.waitForElementPresent("weare.messageForm");
@@ -114,20 +58,6 @@ public class CommentPage extends BasePage {
     }
 
     public void createCommentWithSpecialCharacters() {
-        //Create a post
-        actions.hoverOverElement("weare.addNewPostButton");
-        actions.waitForElementPresent("weare.addNewPostButton");
-        actions.clickElement("weare.addNewPostButton");
-        actions.waitFor(500);
-        actions.waitForElementPresent("weare.selectPublicOrPrivate");
-        actions.hoverOverElement("weare.selectPublicOrPrivate");
-        actions.clickElement("weare.selectPublicOrPrivate");
-        actions.waitForElementPresent("weare.publicPostOption");
-        actions.clickElement("weare.publicPostOption");
-        actions.waitForElementPresent("weare.messageForm");
-        actions.typeValueInField(randomString1, "weare.messageForm");
-        actions.clickElement("weare.submitButton");
-        //Create a comment
         actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
         actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
         actions.waitForElementPresent("weare.messageForm");
@@ -138,20 +68,6 @@ public class CommentPage extends BasePage {
     }
 
     public void createCommentWithHyperLink() {
-        //Create a post
-        actions.hoverOverElement("weare.addNewPostButton");
-        actions.waitForElementPresent("weare.addNewPostButton");
-        actions.clickElement("weare.addNewPostButton");
-        actions.waitFor(500);
-        actions.waitForElementPresent("weare.selectPublicOrPrivate");
-        actions.hoverOverElement("weare.selectPublicOrPrivate");
-        actions.clickElement("weare.selectPublicOrPrivate");
-        actions.waitForElementPresent("weare.publicPostOption");
-        actions.clickElement("weare.publicPostOption");
-        actions.waitForElementPresent("weare.messageForm");
-        actions.typeValueInField(randomString999, "weare.messageForm");
-        actions.clickElement("weare.submitButton");
-        //Create a comment
         actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
         actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
         actions.waitForElementPresent("weare.messageForm");
@@ -161,7 +77,20 @@ public class CommentPage extends BasePage {
         actions.clickElement("weare.postCommentBtn");
     }
 
+    public void createCommentWith1000CharsSpecialCharsAndHyperLinkTest() {
+        actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
+        actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
+        actions.waitForElementPresent("weare.messageForm");
+        actions.waitFor(500);
+        actions.typeValueInField(randomMessage, "weare.messageForm");
+        actions.typeValueInField(randomStringWithSpecialCharacters, "weare.messageForm");
+        actions.typeValueInField(randomStringWithHyperLink, "weare.messageForm");
+        actions.waitForElementPresent("weare.postCommentBtn");
+        actions.clickElement("weare.postCommentBtn");
+    }
+
     public void likeSpecificComment() {
+        actions.waitForElementPresent("weare.showCommentsBtn");
         actions.hoverOverElement("weare.showCommentsBtn");
         actions.clickElement("weare.showCommentsBtn");
 
@@ -223,7 +152,6 @@ public class CommentPage extends BasePage {
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertCommentsWithHyperLink"), randomStringWithHyperLink));
     }
 
-
     public void assertCommentIsLiked() {
         try {
             Thread.sleep(1000);
@@ -241,5 +169,13 @@ public class CommentPage extends BasePage {
     }
     public void assertCommentIsDeleted() {
         actions.assertElementPresent("weare.assertCommentIsDeleted");
+    }
+
+    public void assertCommentWithMessageHyperLinkAndSpecialChars() {
+        String ranMessgage = randomMessage;
+        String ranMesWithSpecChars = randomStringWithSpecialCharacters;
+        String radMesWithHyperlink = randomStringWithHyperLink;
+        String appendedStrging = ranMessgage + ranMesWithSpecChars + radMesWithHyperlink;
+        actions.assertElementPresent(format(getUIMappingByKey("weare.assertCommentsWithEveryTypeChars"), appendedStrging));
     }
 }
