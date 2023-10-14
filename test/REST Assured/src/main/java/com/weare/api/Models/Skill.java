@@ -7,7 +7,7 @@ import com.weare.api.Utils.Constants;
 public class Skill {
     private Integer id;
     private String name;
-    private final Faker faker = new Faker();
+    private Faker faker = new Faker();
 
     public Skill() {
         this.id = getId();

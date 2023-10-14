@@ -6,9 +6,11 @@ import org.junit.jupiter.api.*;
 
 public class CommentTests extends BaseTest {
     @BeforeEach
-    public void setupTest() {
-        register();
-        login();
+    public void setupTest(TestInfo testInfo) {
+        if (!"anonymousUserCantCreateComment".equals(testInfo.getTestMethod().get().getName())) {
+            register();
+            login();
+        }
     }
 
     @AfterEach
@@ -21,7 +23,8 @@ public class CommentTests extends BaseTest {
     public void createCommentTest() {
         postPage.createPublicPost();
         commentPage.createComment();
-        commentPage.assertCommentCreated();
+        commentPage.assertNewCommentCreated();
+        commentPage.asserCreatedCommentContent();
     }
 
     @Test
@@ -29,7 +32,7 @@ public class CommentTests extends BaseTest {
     public void createCommentWithOneCharacterTest() {
         postPage.createPublicPost();
         commentPage.createCommentWithOneCharacter();
-        commentPage.assertCommentCreated();
+        commentPage.assertNewCommentCreated();
     }
 
     @Test
@@ -37,7 +40,7 @@ public class CommentTests extends BaseTest {
     public void createCommentWith999CharactersTest() {
         postPage.createPublicPost();
         commentPage.createCommentWithWith999Characters();
-        commentPage.assertCommentCreated();
+        commentPage.assertNewCommentCreated();
     }
 
     @Test
@@ -45,7 +48,7 @@ public class CommentTests extends BaseTest {
     public void createCommentWith1000CharactersTest() {
         postPage.createPublicPost();
         commentPage.createCommentWith1000Characters();
-        commentPage.assertCommentCreated();
+        commentPage.assertNewCommentCreated();
     }
 
     @Test
@@ -97,5 +100,20 @@ public class CommentTests extends BaseTest {
         commentPage.createComment();
         commentPage.deleteLastCreatedComment();
         commentPage.assertCommentIsDeleted();
+    }
+
+    @Test
+    @Order(11)
+    public void createCommentWith1001Characters() {
+        postPage.createPublicPost();
+        commentPage.createCommentWith1001Characters();
+        commentPage.assertCommentWith1001CharsNotCreated();
+    }
+
+    @Test
+    @Order(12)
+    public void anonymousUserCantCreateCommentTest() {
+        commentPage.anonymousUserCantCreateComment();
+        commentPage.assertMissingCommentTextAreaForAnonymous();
     }
 }

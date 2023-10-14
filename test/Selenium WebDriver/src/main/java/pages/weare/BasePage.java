@@ -57,7 +57,7 @@ public abstract class BasePage extends com.telerikacademy.testframework.pages.Ba
         return url;
     }
 
-    public String generateSlug() {
+    private String generateSlug() {
         List<String> words = faker.lorem().words(2);
         return String.join("-", words);
     }

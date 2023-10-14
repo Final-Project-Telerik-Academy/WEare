@@ -15,7 +15,7 @@ public class User {
     private String categoryName;
     private String userId;
 
-    private final Faker faker = new Faker();
+    private Faker faker = new Faker();
 
     public User(){
         this.userId = getUserId();

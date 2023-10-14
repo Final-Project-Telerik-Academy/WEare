@@ -1,6 +1,11 @@
 package pages.weare;
 
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+
+import java.util.List;
 
 import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
 import static java.lang.String.format;
@@ -132,10 +137,38 @@ public class CommentPage extends BasePage {
         actions.clickElement("weare.submitBtnForDelete");
     }
 
-    public void assertCommentCreated() {
+    public void createCommentWith1001Characters() {
+        actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
+        actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
+        actions.waitForElementPresent("weare.messageForm");
+        actions.waitFor(500);
+        actions.typeValueInField(randomString1000 + "A", "weare.messageForm");
+        actions.waitForElementPresent("weare.postCommentBtn");
+        actions.clickElement("weare.postCommentBtn");
+    }
+    @Test
+    public void anonymousUserCantCreateComment() {
+        actions.waitForElementPresent("weare.LatestPostsButton");
+        actions.hoverOverElement("weare.LatestPostsButton");
+        actions.clickElement("weare.LatestPostsButton");
+        actions.waitForElementPresent("weare.firstCreatedPostExploreThisPostBtn");
+        actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
+        actions.waitForElementPresent("weare.showCommentsBtn");
+        actions.hoverOverElement("weare.showCommentsBtn");
+        actions.clickElement("weare.showCommentsBtn");
+    }
+
+    public void assertNewCommentCreated() {
         ++commentsCounter;
         String numberAsString = Integer.toString(commentsCounter);
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertCommentsNumber"), numberAsString));
+    }
+
+    public void asserCreatedCommentContent() {
+        actions.waitForElementPresent("weare.showCommentsBtn");
+        actions.hoverOverElement("weare.showCommentsBtn");
+        actions.clickElement("weare.showCommentsBtn");
+        actions.assertElementPresent(format(getUIMappingByKey("weare.assertComment"), randomMessage));
     }
 
     public void assertCommentWithSpecialCharsCreated() {
@@ -177,5 +210,16 @@ public class CommentPage extends BasePage {
         String radMesWithHyperlink = randomStringWithHyperLink;
         String appendedStrging = ranMessgage + ranMesWithSpecChars + radMesWithHyperlink;
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertCommentsWithEveryTypeChars"), appendedStrging));
+    }
+
+    public void assertCommentWith1001CharsNotCreated() {
+        actions.assertElementPresent("weare.assertCommentWith1001CharsNotCreated");
+    }
+
+    public void assertMissingCommentTextAreaForAnonymous() {
+        List<WebElement> textareas = driver.findElements(By.xpath(getUIMappingByKey("weare.messageForm")));
+        if(!textareas.isEmpty()) {
+            throw new AssertionError("Textarea for comments is visible for an anonymous user.");
+        }
     }
 }

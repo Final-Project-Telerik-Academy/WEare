@@ -81,7 +81,6 @@ public class BaseTest {
         return password.toString();
     }
 
-
     protected static String generateTwoCharacterUsername() {
         Faker faker = new Faker();
         return faker.lorem().characters(2, false, false);
