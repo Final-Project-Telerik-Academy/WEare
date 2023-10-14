@@ -8,8 +8,6 @@ import pages.weare.LoginPage;
 import pages.weare.PostPage;
 import pages.weare.RegistrationPage;
 
-import java.security.SecureRandom;
-
 public class BaseTest {
 
     protected String password;
@@ -26,27 +24,28 @@ public class BaseTest {
 
 
     @BeforeEach
-    public void setUp() {
+    protected void setUp() {
         UserActions.loadBrowser("weare.homepage");
     }
 
     @AfterEach
-    public void tearDown() {
+    protected void tearDown() {
         UserActions.quitDriver();
     }
 
     protected void register() {
         username = generateRandomUsername();
         email = generateRandomEmail();
-        password = generateEightSymbolsPassword();
+        password = generatePassword();
         registrationPage.userRegistration(username, email, password);
         registrationPage.assertUserRegistered();
     }
 
-    protected void login(String username, String password) {
+    protected void login() {
         loginPage.loginUser(username, password);
         loginPage.assertUserIsLoggedIn();
     }
+
     protected void logout() {
         loginPage.logoutUser();
         loginPage.assertUserIsLoggedOut();
@@ -56,21 +55,21 @@ public class BaseTest {
         return faker.internet().emailAddress();
     }
 
-    public String generateRandomUsername() {
+    protected String generateRandomUsername() {
         String username = faker.lorem().characters(2, 20, false, false);
         return username.toLowerCase();
     }
 
-    protected String generateEightSymbolsPassword() {
-        return faker.internet().password(8, 20,  true, true, true);
+    protected String generatePassword() {
+        return faker.internet().password(8, 20, true, true, true);
     }
 
-    public static String generateTwoCharacterUsername() {
+    protected static String generateTwoCharacterUsername() {
         Faker faker = new Faker();
         return faker.lorem().characters(2, false, false);
     }
 
-    public static String generateTwentyCharacterUsername() {
+    protected static String generateTwentyCharacterUsername() {
         Faker faker = new Faker();
         return faker.lorem().characters(20, false, false);
     }
