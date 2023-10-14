@@ -8,7 +8,7 @@
       <jdbc-url>jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11652028</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="wearedb@windowmaker.myqnapcloud.com" uuid="33f2953d-aed0-4b39-9789-bf154e5c2d56">
+    <data-source source="LOCAL" name="MariaDB windowmaker.myqnapcloud.com" uuid="af95dfe6-77f0-4a19-8e56-7ef6ca4c81be">
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>

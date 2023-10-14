@@ -2,8 +2,10 @@ package test.cases.weare;
 
 import com.github.javafaker.Faker;
 import com.telerikacademy.testframework.UserActions;
+import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import pages.weare.CommentPage;
 import pages.weare.LoginPage;
 import pages.weare.PostPage;
 import pages.weare.RegistrationPage;
@@ -20,6 +22,7 @@ public class BaseTest {
     RegistrationPage registrationPage = new RegistrationPage(actions.getDriver());
     LoginPage loginPage = new LoginPage(actions.getDriver());
     PostPage postPage = new PostPage(actions.getDriver());
+    CommentPage commentPage = new CommentPage((actions.getDriver()));
     Faker faker = new Faker();
 
 

@@ -71,7 +71,7 @@ public class SkillTests extends BaseTestSetup {
         Assert.assertEquals(categoryName, Constants.CATEGORY_NAME, "The category name in the response don't match the expected value.");
     }
 
-    @Test(priority = 3, dependsOnMethods = "createASkillTest")
+    @Test(priority = 3)
     public void editASkillTest() {
         baseURI = format("%s%s", BASE_URL, EDIT_SKILL_ENDPOINT);
 
