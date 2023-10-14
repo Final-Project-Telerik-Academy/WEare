@@ -118,35 +118,30 @@ public class PostPage extends BasePage {
     public void likeSpecificPost() {
         actions.waitForElementPresent("weare.LatestPostsButton");
         actions.clickElement("weare.LatestPostsButton");
-        actions.waitForElementPresent("weare.specificPost");
-        actions.hoverOverElement("weare.specificPost");
+        actions.waitForElementPresent("weare.secondPost");
+        actions.hoverOverElement("weare.secondPost");
 
-        if (actions.isElementVisible("weare.dislikeSpeficicPost")) {
-            actions.clickElement("weare.dislikeSpeficicPost");
+        if (actions.isElementVisible("weare.likeSecondPost")) {
+            actions.clickElement("weare.likeSecondPost");
+        } else if (actions.isElementVisible("weare.dislikeSecondPost")) {
+            actions.clickElement("weare.dislikeSecondPost");
+            actions.waitForElementPresent("weare.likeSecondPost");
+            actions.clickElement("weare.likeSecondPost");
         }
-
-        actions.waitForElementVisible("weare.likeSpeficicPost");
-        actions.clickElement("weare.likeSpeficicPost");
-        actions.waitFor(5000);
-
     }
 
     public void dislikeSpecificPost() {
         actions.waitForElementPresent("weare.LatestPostsButton");
         actions.clickElement("weare.LatestPostsButton");
-        actions.waitForElementPresent("(//div[@class='text pl-md-4'])[3]");
-        actions.hoverOverElement("(//div[@class='text pl-md-4'])[3]");
+        actions.waitForElementPresent("weare.firstPost");
+        actions.hoverOverElement("weare.firstPost");
 
-        if (actions.isElementVisible("(//div[@class='text pl-md-4']//input[@value='Like'])[3]")) {
-            // Scenario 1: "Like" button is visible, click it to change to "Dislike"
-            actions.clickElement("(//div[@class='text pl-md-4']//input[@value='Like'])[3]");
-            actions.waitForElementVisible("(//div[@class='text pl-md-4']//input[@value='Dislike'])[3]");
-            actions.clickElement("(//div[@class='text pl-md-4']//input[@value='Dislike'])[3]");
-        } else if (actions.isElementVisible("(//div[@class='text pl-md-4']//input[@value='Dislike'])[3]")) {
-            // Scenario 2: "Dislike" button is visible, click it to change to "Like"
-            actions.clickElement("(//div[@class='text pl-md-4']//input[@value='Dislike'])[3]");
-            actions.waitForElementVisible("(//div[@class='text pl-md-4']//input[@value='Like'])[3]");
-            actions.clickElement("(//div[@class='text pl-md-4']//input[@value='Like'])[3]");
+        if (actions.isElementVisible("weare.likeFirstPost")) {
+            actions.clickElement("weare.likeFirstPost");
+            actions.waitForElementPresent("weare.dislikeFirstPost");
+            actions.clickElement("weare.dislikeFirstPost");
+        } else if (actions.isElementVisible("weare.dislikeFirstPost")) {
+            actions.clickElement("weare.dislikeFirstPost");
         }
     }
 
@@ -211,7 +206,7 @@ public class PostPage extends BasePage {
         actions.assertElementPresent("weare.assertPhotoExists");
     }
     public void assertPostCreatedWithTextAndPhoto() {
-        actions.assertElementPresent("weare.assertTopic");
+        actions.assertElementPresent("//p[contains(text(), '" + randomMessage + "')]");
         actions.assertElementPresent("weare.assertPhotoExists");
     }
     public void assertPostIsLiked() {
@@ -237,7 +232,7 @@ public class PostPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        actions.assertElementPresent("weare.specificPost");
+        actions.assertElementPresent("weare.dislikeSecondPost");
     }
 
     public void assertSpecificPostIsDisliked() {
@@ -246,11 +241,11 @@ public class PostPage extends BasePage {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        actions.assertElementPresent("//input[@type='submit'][@value='Like'][3]");
+        actions.assertElementPresent("weare.likeFirstPost");
     }
 
     public void assertPostContentIsEdited() {
-        actions.assertElementPresent("weare.assertEditedPost");
+        actions.assertElementPresent("//p[contains(text(), '" + randomMessage + "')]");
     }
     public void assertPostDeleted() {
         actions.assertElementPresent("weare.postDeletedSuccessfully");
