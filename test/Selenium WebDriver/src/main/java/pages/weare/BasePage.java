@@ -10,7 +10,6 @@ public abstract class BasePage extends com.telerikacademy.testframework.pages.Ba
     protected static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     protected static final String SPECIAL_CHARACTERS = "!@#$%^&*()_-+=<>?/[]{}|\\~`";;
     private final Faker faker;
-
     public BasePage(WebDriver driver, String urlKey) {
         super(driver, urlKey);
         faker = new Faker();

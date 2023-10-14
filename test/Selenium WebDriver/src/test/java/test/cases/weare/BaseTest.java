@@ -67,6 +67,21 @@ public class BaseTest {
         return faker.internet().password(8, 20, true, true, true);
     }
 
+    protected String generatePasswordEightSymbols() {
+        StringBuilder password = new StringBuilder();
+        String symbols = "1234567890!@#$%^&*";
+
+        String fakeWords = faker.lorem().characters(8 - symbols.length());
+        password.append(fakeWords);
+
+        for (int i = 0; i < 8 - fakeWords.length(); i++) {
+            int index = faker.random().nextInt(symbols.length());
+            password.append(symbols.charAt(index));
+        }
+        return password.toString();
+    }
+
+
     protected static String generateTwoCharacterUsername() {
         Faker faker = new Faker();
         return faker.lorem().characters(2, false, false);
