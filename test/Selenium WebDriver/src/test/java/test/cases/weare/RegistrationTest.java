@@ -22,4 +22,13 @@ public class RegistrationTest extends BaseTest {
         registrationPage.assertUserRegistered();
     }
 
+    @Test
+    public void registerWithEightCharactersForPassword() {
+        username = generateRandomUsername();
+        email = generateRandomEmail();
+        password = generatePasswordEightSymbols();
+        registrationPage.userRegistration(username, email, password);
+        registrationPage.assertUserRegistered();
+    }
+
 }
