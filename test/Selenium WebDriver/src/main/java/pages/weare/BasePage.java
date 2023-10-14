@@ -44,4 +44,20 @@ public abstract class BasePage extends com.telerikacademy.testframework.pages.Ba
 
         return stringBuilder.toString();
     }
+
+
+    public String generateRandomHyperlink() {
+        String domain = faker.internet().domainName();
+        String path = generateSlug();
+       // String path = faker.lorem().slug();
+
+        String url = "http://" + domain + "/" + path;
+
+        return url;
+    }
+
+    private String generateSlug() {
+        String[] words = faker.lorem().words(2).toArray(new String[0]);
+        return String.join("-", words);
+    }
 }

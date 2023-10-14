@@ -56,8 +56,16 @@ public class CommentTests extends BaseTest {
         commentPage.assertCommentWithSpecialCharsCreated();
     }
 
-   /* @Test
-    @Order(5)
+    @Test
+    @Order(6)
+    public void createCommentWithHyperLinkTest() {
+        postPage.createPublicPost();
+        commentPage.createCommentWithHyperLink();
+        commentPage.assertCommentWithHyperlinkCreated();
+    }
+
+    @Test
+    @Order(7)
     public void likeCreatedCommentTest() {
         postPage.createPublicPost();
         commentPage.createComment();
@@ -66,7 +74,7 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(6)
+    @Order(8)
     public void editLastCreatedCommentTest() {
         postPage.createPublicPost();
         commentPage.createComment();
@@ -75,11 +83,11 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(7)
+    @Order(9)
     public void deleteLastCreatedComment() {
         postPage.createPublicPost();
         commentPage.createComment();
         commentPage.deleteLastCreatedComment();
         commentPage.assertCommentIsDeleted();
-    }*/
+    }
 }
