@@ -4,6 +4,7 @@ import com.github.javafaker.Faker;
 import org.openqa.selenium.WebDriver;
 
 import java.security.SecureRandom;
+import java.util.List;
 
 public abstract class BasePage extends com.telerikacademy.testframework.pages.BasePage {
 
@@ -56,8 +57,8 @@ public abstract class BasePage extends com.telerikacademy.testframework.pages.Ba
         return url;
     }
 
-    private String generateSlug() {
-        String[] words = faker.lorem().words(2).toArray(new String[0]);
+    public String generateSlug() {
+        List<String> words = faker.lorem().words(2);
         return String.join("-", words);
     }
 }
