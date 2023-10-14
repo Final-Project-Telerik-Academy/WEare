@@ -8,7 +8,7 @@ public class RegistrationTest extends BaseTest {
     public void registerWithTwoCharactersForUsername() {
         username = generateTwoCharacterUsername();
         email = generateRandomEmail();
-        password = generateEightSymbolsPassword();
+        password = generatePassword();
         registrationPage.userRegistration(username, email, password);
         registrationPage.assertUserRegistered();
     }
@@ -17,8 +17,9 @@ public class RegistrationTest extends BaseTest {
     public void registerWithTwentyCharactersForUsername() {
         username = generateTwentyCharacterUsername();
         email = generateRandomEmail();
-        password = generateEightSymbolsPassword();
+        password = generatePassword();
         registrationPage.userRegistration(username, email, password);
         registrationPage.assertUserRegistered();
     }
+
 }
