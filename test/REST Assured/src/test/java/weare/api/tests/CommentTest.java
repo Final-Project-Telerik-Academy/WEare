@@ -217,6 +217,40 @@ public class CommentTest extends BaseTestSetup {
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
     }
+    @Test(priority = 9,dependsOnMethods = "createComment")
+    public void deleteComment() {
+        baseURI = format("%s%s", BASE_URL, DELETE_COMMENTS);
 
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .cookie("JSESSIONID", authCookie.getValue())
+                .queryParam("commentId", COMMENT_ID)
+                .when()
+                .delete();
+
+        int statusCode = response.getStatusCode();
+        String responseBody = response.getBody().asString();
+        System.out.println(responseBody);
+        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+    }
+    @Test(priority = 10)
+    public void deletePost() {
+        baseURI = format("%s%s", BASE_URL, DELETE_POST);
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .cookie("JSESSIONID", authCookie.getValue())
+                //  .cookie(cookie.getName(), cookie.getValue())
+                .queryParam("postId", POST_ID)
+                .when()
+                .delete();
+
+        int statusCode = response.getStatusCode();
+        String responseBody = response.getBody().asString();
+        System.out.println(responseBody);
+        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+    }
 
 }
