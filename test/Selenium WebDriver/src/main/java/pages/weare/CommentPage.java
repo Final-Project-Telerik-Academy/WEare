@@ -1,11 +1,8 @@
 package pages.weare;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-
-import java.util.List;
 
 import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
 import static java.lang.String.format;
@@ -147,15 +144,12 @@ public class CommentPage extends BasePage {
         actions.clickElement("weare.postCommentBtn");
     }
     @Test
-    public void anonymousUserCantCreateComment() {
+    public void anonymousUserTryToCreateComment() {
         actions.waitForElementPresent("weare.LatestPostsButton");
         actions.hoverOverElement("weare.LatestPostsButton");
         actions.clickElement("weare.LatestPostsButton");
         actions.waitForElementPresent("weare.firstCreatedPostExploreThisPostBtn");
         actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
-        actions.waitForElementPresent("weare.showCommentsBtn");
-        actions.hoverOverElement("weare.showCommentsBtn");
-        actions.clickElement("weare.showCommentsBtn");
     }
 
     public void assertNewCommentCreated() {
@@ -217,9 +211,12 @@ public class CommentPage extends BasePage {
     }
 
     public void assertMissingCommentTextAreaForAnonymous() {
-        List<WebElement> textareas = driver.findElements(By.xpath(getUIMappingByKey("weare.messageForm")));
-        if(!textareas.isEmpty()) {
-            throw new AssertionError("Textarea for comments is visible for an anonymous user.");
-        }
+        boolean result = actions.isElementNotVisible("weare.messageForm", 4);
+        Assertions.assertTrue(result, "The comment text area is still visible for an anonymous user.");
+    }
+
+    public void assertMissingCreateCommentButtonForAnonymous() {
+        boolean result = actions.isElementNotVisible("weare.postCommentBtn", 4);
+        Assertions.assertTrue(result, "The post comment button is still visible for an anonymous user.");
     }
 }

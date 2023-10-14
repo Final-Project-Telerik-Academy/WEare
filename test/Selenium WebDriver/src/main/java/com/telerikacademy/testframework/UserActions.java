@@ -1,10 +1,7 @@
 package com.telerikacademy.testframework;
 
 import org.junit.jupiter.api.Assertions;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -212,6 +209,19 @@ public class UserActions {
             wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(xpath)));
             return true;
         } catch (Exception exception) {
+            return false;
+        }
+    }
+
+    public boolean isElementNotVisible(String locator, int seconds, Object... locatorArguments) {
+        Duration timeout = Duration.ofSeconds(seconds);
+        WebDriverWait wait = new WebDriverWait(driver, timeout);
+        String xpath = getLocatorValueByKey(locator, locatorArguments);
+
+        try {
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.xpath(xpath)));
+            return true;
+        } catch (TimeoutException e) {
             return false;
         }
     }

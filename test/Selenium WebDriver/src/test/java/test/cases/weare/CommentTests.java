@@ -7,15 +7,17 @@ import org.junit.jupiter.api.*;
 public class CommentTests extends BaseTest {
     @BeforeEach
     public void setupTest(TestInfo testInfo) {
-        if (!"anonymousUserCantCreateComment".equals(testInfo.getTestMethod().get().getName())) {
+        if (!"commentTextAreaNotVisibleForAnonymousUserTest".equals(testInfo.getTestMethod().get().getName())) {
             register();
             login();
         }
     }
 
     @AfterEach
-    public void performLogout() {
-        logout();
+    public void performLogout(TestInfo testInfo) {
+        if (!"commentTextAreaNotVisibleForAnonymousUserTest".equals(testInfo.getTestMethod().get().getName())) {
+            logout();
+        }
     }
 
     @Test
@@ -112,8 +114,9 @@ public class CommentTests extends BaseTest {
 
     @Test
     @Order(12)
-    public void anonymousUserCantCreateCommentTest() {
-        commentPage.anonymousUserCantCreateComment();
+    public void anonymousUserCantCreateComment() {
+        commentPage.anonymousUserTryToCreateComment();
         commentPage.assertMissingCommentTextAreaForAnonymous();
+        commentPage.assertMissingCreateCommentButtonForAnonymous();
     }
 }
