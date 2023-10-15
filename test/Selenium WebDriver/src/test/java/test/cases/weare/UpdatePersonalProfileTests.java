@@ -1,15 +1,20 @@
 package test.cases.weare;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import pages.weare.UpdatePersonalProfilePage;
 
 public class UpdatePersonalProfileTests extends BaseTest{
 
+    @AfterEach
+    public void performLogout() {
+        logout();
+    }
+
     @Test
     public void updateUserProfile() {
         register();
         login();
-        UpdatePersonalProfilePage updatePersonalProfilePage = new UpdatePersonalProfilePage(actions.getDriver());
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
     }
 
@@ -17,12 +22,17 @@ public class UpdatePersonalProfileTests extends BaseTest{
     public void sendFriendRequest() {
         register();
         login();
-        UpdatePersonalProfilePage updatePersonalProfilePage = new UpdatePersonalProfilePage(actions.getDriver());
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         logout();
         updatePersonalProfilePage.backToHome();
         register();
         login();
         updatePersonalProfilePage.sendFriendRequest();
+    }
+
+    @Test
+    public void approveRequest() {
+        sendFriendRequest();
+        updatePersonalProfilePage.approveFriendRequest();
     }
 }

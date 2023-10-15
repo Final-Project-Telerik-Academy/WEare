@@ -41,6 +41,16 @@ public class UpdatePersonalProfilePage extends BasePage {
         actions.waitForElementPresent("//input[@type='submit' and @value='connect']");
         actions.clickElement("//input[@type='submit' and @value='connect']");
     }
+
+    public void approveFriendRequest() {
+        actions.waitFor(5000);
+        actions.waitForElementPresent("//a[contains(@href, 'profile/editor') and contains(@class, 'nav-link') and contains(text(), 'edit')");
+        actions.clickElementWithJavaScriptExecutor("//a[contains(@href, 'profile/editor') and contains(@class, 'nav-link') and contains(text(), 'edit')");
+        actions.waitForElementPresent("//input[@type='submit' and @value='New Friend Requsts']");
+        actions.clickElement("//input[@type='submit' and @value='New Friend Requsts']");
+        actions.waitForElementPresent("//input[@type='submit' and @value='Approve Request']");
+        actions.clickElement("//input[@type='submit' and @value='Approve Request']");
+    }
     public void backToHome() {
         actions.waitFor(2000);
         actions.waitForElementPresent("weare.homeButton");

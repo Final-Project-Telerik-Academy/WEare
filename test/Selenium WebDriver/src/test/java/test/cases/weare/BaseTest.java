@@ -5,11 +5,7 @@ import com.telerikacademy.testframework.UserActions;
 import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import pages.weare.CommentPage;
-import pages.weare.LoginPage;
-import pages.weare.PostPage;
-import pages.weare.RegistrationPage;
-import pages.weare.AdminPage;
+import pages.weare.*;
 
 public class BaseTest {
 
@@ -27,6 +23,8 @@ public class BaseTest {
     AdminPage adminPage = new AdminPage(actions.getDriver());
     PostPage postPage = new PostPage(actions.getDriver());
     CommentPage commentPage = new CommentPage((actions.getDriver()));
+    UpdatePersonalProfilePage updatePersonalProfilePage = new UpdatePersonalProfilePage(actions.getDriver());
+
     Faker faker = new Faker();
 
 
