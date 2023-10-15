@@ -7,7 +7,10 @@ import com.weare.api.Utils.Constants;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import weare.api.tests.Utils.AssertHelper;
 
 import static com.weare.api.Utils.Endpoints.*;
 import static io.restassured.RestAssured.*;
@@ -16,6 +19,16 @@ import static org.apache.http.HttpStatus.SC_OK;
 
 public class SkillTests extends BaseTestSetup {
     protected Skill skill;
+    @BeforeMethod
+    public void setupTest() {
+        register();
+        login();
+    }
+
+    @AfterMethod
+    public void tearDownAfterTest() {
+        logout();
+    }
 
     @Test(priority = 1)
     public void createASkillTest() {
@@ -32,7 +45,7 @@ public class SkillTests extends BaseTestSetup {
                 .post();
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
 
         Integer skillId = response.getBody().jsonPath().get("skillId");
         skill.setId(skillId);
@@ -41,10 +54,10 @@ public class SkillTests extends BaseTestSetup {
         Integer categoryId = response.getBody().jsonPath().get("category.id");
         String categoryName = response.getBody().jsonPath().get("category.name");
 
-        Assert.assertNotNull(skillId, "Missing skill ID");
-        Assert.assertEquals(skillName, skill.getName(), "Mismatch between the actual skill name and expected skill name.");
-        Assert.assertEquals(categoryId, Constants.CATEGORY_ID, "Invalid category ID");
-        Assert.assertEquals(categoryName, Constants.CATEGORY_NAME, "The category name in the response don't match the expected value.");
+        AssertHelper.assertSkillIdNotNull(skillId);
+        AssertHelper.assertSkillNameMatches(skillName, skill.getName());
+        AssertHelper.assertCategoryIdsMatch(categoryId, Constants.CATEGORY_ID);
+        AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
 
     @Test(priority = 2)
@@ -65,10 +78,10 @@ public class SkillTests extends BaseTestSetup {
         Integer categoryId = response.getBody().jsonPath().get("[0].category.id");
         String categoryName = response.getBody().jsonPath().get("[0].category.name");
 
-        Assert.assertNotNull(skillId, "Missing skill ID");
-        Assert.assertNotNull(skillName, "The skill name is missing.");
-        Assert.assertEquals(categoryId, Constants.CATEGORY_ID, "Invalid category ID");
-        Assert.assertEquals(categoryName, Constants.CATEGORY_NAME, "The category name in the response don't match the expected value.");
+        AssertHelper.assertSkillIdNotNull(skillId);
+        AssertHelper.assertSkillNameNotNull(skillName);
+        AssertHelper.assertCategoryIdsMatch(categoryId, Constants.CATEGORY_ID);
+        AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
 
     @Test(priority = 3)
@@ -83,8 +96,8 @@ public class SkillTests extends BaseTestSetup {
                 .put();
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-        Assert.assertNotNull(response.getBody(), "Response body is empty.");
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        AssertHelper.assertResponseBodyNotNull(response.getBody());
     }
 
     @Test(priority = 4)
@@ -98,17 +111,17 @@ public class SkillTests extends BaseTestSetup {
                 .get();
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
 
         Integer skillId = response.getBody().jsonPath().get("skillId");
         String skillName = response.getBody().jsonPath().get("skill");
         Integer categoryId = response.getBody().jsonPath().get("category.id");
         String categoryName = response.getBody().jsonPath().get("category.name");
 
-        Assert.assertEquals(skillId, skill.getId(), "Invalid skill ID");
-        Assert.assertEquals(skillName, skill.getName(), "The skill name is missing.");
-        Assert.assertEquals(categoryId, Constants.CATEGORY_ID, "Invalid category ID");
-        Assert.assertEquals(categoryName, Constants.CATEGORY_NAME, "The category name in the response don't match the expected value.");
+        AssertHelper.assertSkillIdMatches(skillId, skill.getId());
+        AssertHelper.assertSkillNameMatches(skillName, skill.getName());
+        AssertHelper.assertCategoryIdsMatch(categoryId, Constants.CATEGORY_ID);
+        AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
 
     @Test(priority = 5)
@@ -123,7 +136,7 @@ public class SkillTests extends BaseTestSetup {
                 .put();
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-        Assert.assertNotNull(response.getBody(), "Response body is empty.");
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        AssertHelper.assertResponseBodyNotNull(response.getBody());
     }
 }

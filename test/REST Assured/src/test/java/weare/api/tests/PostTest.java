@@ -192,7 +192,7 @@ public class PostTest extends BaseTestSetup {
         commentService = new CommentService();
         comment = new Comment();
 
-        userId = Integer.parseInt(user.getUserId());
+        userId = user.getUserId();
 
         comment.setUserId(userId);
 

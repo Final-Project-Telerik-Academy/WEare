@@ -3,7 +3,6 @@ package base;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 import com.weare.api.Models.User;
 import com.weare.api.Services.UserService;
 import io.restassured.http.ContentType;
@@ -21,12 +20,11 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.*;
-import static org.testng.Assert.assertTrue;
 
 public class BaseTestSetup {
     protected String username;
     protected String password;
-    protected String userId;
+    protected Integer userId;
     protected User user;
     protected Cookie cookie;
 
@@ -55,13 +53,13 @@ public class BaseTestSetup {
         Matcher matcher = Pattern.compile(regex).matcher(responseBody);
         if (matcher.find()) {
             username = matcher.group(1);
-            userId = matcher.group(3);
+            userId = Integer.parseInt(matcher.group(3));
         }
 
         user.setUserId(userId);
 
         Assert.assertEquals(username, user.getUsername(), "Username does not match expected value");
-        Assert.assertTrue(Integer.parseInt(userId) > 0, "The user ID should be a positiveinteger");
+        Assert.assertTrue(userId > 0, "The user ID should be a positiveinteger");
         System.out.println(response.asString());
     }
 
@@ -91,6 +89,7 @@ public class BaseTestSetup {
     protected Cookie createAuthenticationCookieWithValue(String value) {
         return new Cookie.Builder("JSESSIONID", value).setPath("/").build();
     }
+
     /**
      * Provided configuration resolve REST Assured issue with a POST request without request body.
      * Missing configuration leads to response status code 415 (Unsupported Media Type)
@@ -102,10 +101,6 @@ public class BaseTestSetup {
 
         RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
     }
-
-
-
-
 
     public RequestSpecification getApplicationAuthentication() {
         return given()
