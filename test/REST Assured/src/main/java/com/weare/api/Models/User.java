@@ -13,9 +13,9 @@ public class User {
     private String authority;
     private Integer categoryId;
     private String categoryName;
-    private String userId;
+    private Integer userId;
 
-    private Faker faker = new Faker();
+    private final Faker faker = new Faker();
 
     public User(){
         this.userId = getUserId();
@@ -27,11 +27,11 @@ public class User {
         this.authority = Constants.AUTHORITIES_USER;
         this.categoryId = Constants.CATEGORY_ID;
     }
-    public String getUserId() {
+    public Integer getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Integer userId) {
         this.userId = userId;
     }
 

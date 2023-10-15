@@ -71,10 +71,9 @@ public class UserTests extends BaseTestSetup {
 
         AssertHelper.assertStatusCode(statusCode, SC_OK);
         AssertHelper.assertResponseBodyNotNull(response.getBody());
-        AssertHelper.assertUserIdEquals(Integer.parseInt(resUserId), Integer.parseInt(user.getUserId()));
+        AssertHelper.assertUserIdEquals(Integer.parseInt(resUserId), user.getUserId());
         AssertHelper.assertUsernameEquals(resUsername, user.getUsername());
-        AssertHelper.assertUsernameEquals(resEmail, user.getEmail());
-        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        AssertHelper.assertEmailEquals(resEmail, user.getEmail());
     }
 
     @Test(priority = 3)
@@ -90,12 +89,13 @@ public class UserTests extends BaseTestSetup {
                 .post();
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
 
         String resUserId = response.getBody().jsonPath().getString("[0].userId");
         String resUsername = response.getBody().jsonPath().getString("[0].username");
-        Assert.assertEquals(resUserId, user.getUserId(), "User ID does not match the expected value");
-        Assert.assertEquals(resUsername, user.getUsername(), "Incorrect username");
+
+        AssertHelper.assertUserIdEquals(Integer.parseInt(resUserId), user.getUserId());
+        AssertHelper.assertUsernameEquals(resUsername, user.getUsername());
     }
 
     @Test(priority = 4)
@@ -118,11 +118,11 @@ public class UserTests extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         String contentPost=response.getBody().jsonPath().get("content");
         Boolean privatePost=response.getBody().jsonPath().get("public");
-        System.out.println(responseBody);
-        Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-        Assert.assertTrue(privatePost,"This post is not a public");
-        Assert.assertNotNull(ContentType.JSON);
-        Assert.assertEquals(contentPost, post.getContent());
+
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        AssertHelper.assertPostIsPrivate(privatePost);
+        AssertHelper.assertContentTypeNotNull(ContentType.JSON);
+        AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
 
     @Test(priority = 5)
@@ -138,8 +138,8 @@ public class UserTests extends BaseTestSetup {
                 .get();
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-        String reponseBody = response.getBody().prettyPrint();
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        String responseBody = response.getBody().prettyPrint();
 
         //no post id and post content problem
       /*  String resPostId = response.getBody().jsonPath().getString("[0].postId");
@@ -165,14 +165,14 @@ public class UserTests extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
-        String resUserId = response.getBody().jsonPath().get("id");
+        Integer resUserId = response.getBody().jsonPath().get("id");
         Integer resCategoryId = response.getBody().jsonPath().get("category.id");
         String availability = response.getBody().jsonPath().get("availability");
 
-        Assert.assertEquals(resUserId, user.getUserId(), "User ID does not match the expected value");
-        Assert.assertNotNull(resCategoryId, "Missing category ID");
-        Assert.assertEquals(resCategoryId, user.getCategoryId(), "Expected category ID don't match user's category ID.");
-        Assert.assertEquals(availability, Constants.AVAILABILITY, "Mismatch between actual and expected availability.");
+        AssertHelper.assertUserIdEquals(resUserId, user.getUserId());
+        AssertHelper.assertCategoryIdNotNull(resCategoryId);
+        AssertHelper.assertCategoryIdsMatch(resCategoryId, user.getCategoryId());
+        AssertHelper.assertAvailabilityMatches(availability, Constants.AVAILABILITY);
     }
 }
 
