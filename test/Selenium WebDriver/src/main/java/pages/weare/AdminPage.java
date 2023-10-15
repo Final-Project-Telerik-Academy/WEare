@@ -76,9 +76,6 @@ public class AdminPage extends BasePage {
     }
 
     public void editUserPost() {
-     /*   actions.waitForElementPresent("weare.selectPublicOrPrivate");
-        actions.waitFor(500);
-        actions.clickElement("weare.selectPublicOrPrivate");*/
         actions.waitForElementPresent("weare.editPostButton");
         actions.waitFor(500);
         actions.clickElement("weare.editPostButton");
