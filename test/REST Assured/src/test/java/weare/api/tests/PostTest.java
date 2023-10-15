@@ -29,7 +29,7 @@ public class PostTest extends BaseTestSetup {
     private  Cookie authCookie;
     protected Integer userId;
 
-    @BeforeMethod
+ /*   @BeforeMethod
     @Test
     public void authenticationTest() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
@@ -44,7 +44,7 @@ public class PostTest extends BaseTestSetup {
         System.out.println("Response body: " + response.getBody().asString());
         int statusCode = response.getStatusCode();
         Assert.assertEquals(statusCode, SC_MOVED_TEMPORARILY, "Cookie status code is correct");
-    }
+    }*/
 
     @Test (priority = 1)
     public void createPrivatePost() {
@@ -59,7 +59,7 @@ public class PostTest extends BaseTestSetup {
         Response response = given()
 
                 .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue()) // Use the saved authentication cookie
+                .cookie("JSESSIONID", cookie.getValue()) // Use the saved authentication cookie
                 // .cookie(cookie.getName(), cookie.getValue())
                 .body(postJsonBody)
                 .when()
@@ -93,7 +93,7 @@ public class PostTest extends BaseTestSetup {
         Response response = given()
                 .contentType(ContentType.JSON)
                 // .cookie(cookie.getName(), cookie.getValue())
-                .cookie("JSESSIONID", authCookie.getValue()) // Use the saved authentication cookie
+                .cookie("JSESSIONID", cookie.getValue()) // Use the saved authentication cookie
                 .body(postJsonBody)
                 .when()
                 .post();
@@ -122,7 +122,7 @@ public class PostTest extends BaseTestSetup {
         Response response = given()
                 // .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
+                .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("postId", POST_ID)
                 .body(editJsonBody)
                 .when()
@@ -137,7 +137,7 @@ public class PostTest extends BaseTestSetup {
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
+                .cookie("JSESSIONID", cookie.getValue())
                 // .cookie(cookie.getName(), cookie.getValue())
                 .when()
                 .get();
@@ -154,7 +154,7 @@ public class PostTest extends BaseTestSetup {
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
+                .cookie("JSESSIONID", cookie.getValue())
                 //.cookie(cookie.getName(), cookie.getValue())
                 .queryParam("postId", POST_ID)
                 .when()
@@ -173,7 +173,7 @@ public class PostTest extends BaseTestSetup {
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
+                .cookie("JSESSIONID", cookie.getValue())
                 // .cookie(cookie.getName(), cookie.getValue())
                 .queryParam("postId", POST_ID)
                 .when()
@@ -200,7 +200,7 @@ public class PostTest extends BaseTestSetup {
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue()) // Use the saved authentication cookie
+                .cookie("JSESSIONID", cookie.getValue()) // Use the saved authentication cookie
                 //  .cookie(cookie.getName(), cookie.getValue())
                 .body(commentJsonBody)
                 .when()
@@ -221,7 +221,7 @@ public class PostTest extends BaseTestSetup {
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
+                .cookie("JSESSIONID", cookie.getValue())
                 //.cookie(cookie.getName(), cookie.getValue())
                 .queryParam("postId", POST_ID)
                 .when()
@@ -240,7 +240,7 @@ public class PostTest extends BaseTestSetup {
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
+                .cookie("JSESSIONID", cookie.getValue())
                 //  .cookie(cookie.getName(), cookie.getValue())
                 .queryParam("postId", POST_ID)
                 .when()

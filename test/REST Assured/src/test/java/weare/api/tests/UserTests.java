@@ -88,22 +88,26 @@ public class UserTests extends BaseTestSetup {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
         PostService postService = new PostService();
         Post post = new Post();
-
+        post.setPublic(true);
         String postJsonBody = postService.generatePostRequest(post);
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .cookie(cookie.getName(), cookie.getValue())
+                .cookie(cookie.getName(), cookie.getValue()) // Use the saved authentication cookie
                 .body(postJsonBody)
                 .when()
                 .post();
 
-        postId = response.getBody().jsonPath().get("postId");
-        String postContent = response.getBody().jsonPath().get("content");
+        String responseBody = response.getBody().asString();
+        POST_ID = response.getBody().jsonPath().get("postId");
         int statusCode = response.getStatusCode();
+        String contentPost=response.getBody().jsonPath().get("content");
+        Boolean privatePost=response.getBody().jsonPath().get("public");
+        System.out.println(responseBody);
         Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-        Assert.assertNotNull(postId, "Post ID is missing in the response.");
-        Assert.assertEquals(postContent, post.getContent(), "Mismatch between actual post content and expected content.");
+        Assert.assertTrue(privatePost,"This post is not a public");
+        Assert.assertNotNull(ContentType.JSON);
+        Assert.assertEquals(contentPost, post.getContent());
     }
 
     @Test(priority = 5)
@@ -121,11 +125,12 @@ public class UserTests extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
         String reponseBody = response.getBody().prettyPrint();
-            //no post id and post content problem
-       /* String resPostId = response.getBody().jsonPath().getString("[0].postId");
+
+        //no post id and post content problem
+        String resPostId = response.getBody().jsonPath().getString("[0].postId");
         Assert.assertEquals(Integer.parseInt(resPostId), postId, "Incorrect user's post ID");
         String postContent = response.getBody().jsonPath().getString("[0].content");
-        Assert.assertEquals(postContent, Constants.CONTENT_POST, "The content of the post is not the same.");*/
+        Assert.assertEquals(postContent, Constants.CONTENT_POST, "The content of the post is not the same.");
     }
 
     @Test(priority = 6)
