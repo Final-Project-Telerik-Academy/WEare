@@ -4,9 +4,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 
-import com.weare.api.Models.Skill;
 import com.weare.api.Models.User;
-import com.weare.api.Services.SkillService;
 import com.weare.api.Services.UserService;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
@@ -31,8 +29,8 @@ public class BaseTestSetup {
     protected String userId;
     protected User user;
     protected Cookie cookie;
-    @BeforeClass
-    public void setupUser() {
+
+    protected void register() {
         baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
         user = new User();
 
@@ -63,11 +61,11 @@ public class BaseTestSetup {
         user.setUserId(userId);
 
         Assert.assertEquals(username, user.getUsername(), "Username does not match expected value");
-        Assert.assertTrue(Integer.parseInt(userId) > 0, "The user ID should be a positive integer");
+        Assert.assertTrue(Integer.parseInt(userId) > 0, "The user ID should be a positiveinteger");
+        System.out.println(response.asString());
     }
 
-    @BeforeMethod
-    public void setupAuthentication() {
+    public void login() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
 
         Response response = getApplicationAuthentication()
@@ -83,8 +81,16 @@ public class BaseTestSetup {
         int statusCode = response.getStatusCode();
         boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
         Assert.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
+        System.out.println("User 1 authenticated successfully - Username: " + user.getUsername() + " - Cookie: " + cookie.getValue());
     }
 
+    protected void logout() {
+        cookie = null;
+    }
+
+    protected Cookie createAuthenticationCookieWithValue(String value) {
+        return new Cookie.Builder("JSESSIONID", value).setPath("/").build();
+    }
     /**
      * Provided configuration resolve REST Assured issue with a POST request without request body.
      * Missing configuration leads to response status code 415 (Unsupported Media Type)
@@ -97,13 +103,13 @@ public class BaseTestSetup {
         RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
     }
 
+
+
+
+
     public RequestSpecification getApplicationAuthentication() {
         return given()
                 .multiPart("username", username)
                 .multiPart("password", password);
-    }
-
-    protected Cookie createAuthenticationCookieWithValue(String value) {
-        return new Cookie.Builder("JSESSIONID", value).setPath("/").build();
     }
 }
