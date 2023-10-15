@@ -2,9 +2,8 @@ package test.cases.weare;
 
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import pages.weare.UpdatePersonalProfilePage;
 
-public class UpdatePersonalProfileTests extends BaseTest{
+public class PersonalProfileTests extends BaseTest{
 
     @AfterEach
     public void performLogout() {
@@ -33,6 +32,8 @@ public class UpdatePersonalProfileTests extends BaseTest{
     @Test
     public void approveRequest() {
         sendFriendRequest();
+        logout();
+        updatePersonalProfilePage.backToHome();
         updatePersonalProfilePage.approveFriendRequest();
     }
 }
