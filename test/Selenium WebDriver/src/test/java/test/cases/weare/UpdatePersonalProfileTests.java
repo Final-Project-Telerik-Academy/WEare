@@ -12,4 +12,17 @@ public class UpdatePersonalProfileTests extends BaseTest{
         UpdatePersonalProfilePage updatePersonalProfilePage = new UpdatePersonalProfilePage(actions.getDriver());
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
     }
+
+    @Test
+    public void sendFriendRequest() {
+        register();
+        login();
+        UpdatePersonalProfilePage updatePersonalProfilePage = new UpdatePersonalProfilePage(actions.getDriver());
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        logout();
+        updatePersonalProfilePage.backToHome();
+        register();
+        login();
+        updatePersonalProfilePage.sendFriendRequest();
+    }
 }

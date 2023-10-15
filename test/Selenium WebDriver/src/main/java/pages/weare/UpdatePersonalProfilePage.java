@@ -29,6 +29,25 @@ public class UpdatePersonalProfilePage extends BasePage {
         fillPersonalDetails(firstName, lastName, randomBirthday);
     }
 
+    public void sendFriendRequest() {
+        actions.waitFor(5000);
+        actions.waitForElementPresent("weare.searchUserByName");
+        actions.clickElementWithJavaScriptExecutor("weare.searchUserByName");
+        actions.typeValueInField(firstName, lastName, "weare.searchUserByName");
+        actions.waitForElementPresent("weare.searchUserButton");
+        actions.clickElement("weare.searchUserButton");
+        actions.waitForElementPresent("//a[contains(@href, '/profile') and contains(text(), 'See Profile')]");
+        actions.clickElement("//a[contains(@href, '/profile') and contains(text(), 'See Profile')]");
+        actions.waitForElementPresent("//input[@type='submit' and @value='connect']");
+        actions.clickElement("//input[@type='submit' and @value='connect']");
+    }
+    public void backToHome() {
+        actions.waitFor(2000);
+        actions.waitForElementPresent("weare.homeButton");
+        actions.clickElement("weare.homeButton");
+
+    }
+
     public void fillPersonalDetails(String firstName, String lastName, LocalDate birthday) {
         String formattedBirthday = birthday.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         fillFieldById("weare.firstName", firstName);
