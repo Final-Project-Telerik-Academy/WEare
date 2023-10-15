@@ -26,6 +26,8 @@ public class BaseTest {
 
     UpdatePersonalProfilePage updatePersonalProfilePage = new UpdatePersonalProfilePage(actions.getDriver());
     HomePage homePage=new HomePage(actions.getDriver());
+    PersonalProfilePage updatePersonalProfilePage = new PersonalProfilePage(actions.getDriver());
+
     Faker faker = new Faker();
 
 

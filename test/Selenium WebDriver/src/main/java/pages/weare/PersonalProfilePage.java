@@ -7,7 +7,7 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
-public class UpdatePersonalProfilePage extends BasePage {
+public class PersonalProfilePage extends BasePage {
 
     LocalDate randomBirthday = generateRandomBirthday();
     private String firstName = generateRandomFirstName();
@@ -16,43 +16,56 @@ public class UpdatePersonalProfilePage extends BasePage {
     private String fullName = firstName + " " + lastName;
 
 
-    public UpdatePersonalProfilePage(WebDriver driver) {
+    public PersonalProfilePage(WebDriver driver) {
         super(driver, "weare.homepage");
     }
 
     public void updatePersonalInfoAfterRegistration() {
-        actions.waitForElementPresent("//a[@class ='nav-link' and contains(@href, '/profile')]");
-        actions.clickElement("//a[@class ='nav-link' and contains(@href, '/profile')]");
-        actions.waitForElementPresent("//a[contains(@href, 'profile/editor') and contains(@class, 'nav-link') and contains(text(), 'edit')]");
-        actions.clickElement("//a[contains(@href, 'profile/editor') and contains(@class, 'nav-link') and contains(text(), 'edit')]");
-
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+        actions.waitForElementPresent("weare.editProfileButton");
+        actions.clickElement("weare.editProfileButton");
         fillPersonalDetails(firstName, lastName, randomBirthday);
+        actions.hoverOverElement("weare.updateMyProfileFirstButton");
+        actions.waitForElementPresent("weare.updateMyProfileFirstButton");
+        actions.clickElement("weare.updateMyProfileFirstButton");
+    }
+
+    public void changeProfessionalCategory() {
+        actions.waitForElementPresent("//select[@id='category.id']");
+        actions.clickElement("//select[@id='category.id']");
+        actions.waitForElementPresent("//option[@value='102']");
+        actions.clickElement("//option[@value='102']");
+
+        actions.waitForElementPresent("(//button[@type='submit' and contains(text(), 'Update')])[2]");
+        actions.clickElement("(//button[@type='submit' and contains(text(), 'Update')])[2]");
     }
 
     public void sendFriendRequest() {
         actions.waitFor(5000);
         actions.waitForElementPresent("weare.searchUserByName");
         actions.clickElementWithJavaScriptExecutor("weare.searchUserByName");
-        actions.typeValueInField(firstName, lastName, "weare.searchUserByName");
+        actions.typeValueInField(fullName, "weare.searchUserByName");
         actions.waitForElementPresent("weare.searchUserButton");
         actions.clickElement("weare.searchUserButton");
-        actions.waitForElementPresent("//a[contains(@href, '/profile') and contains(text(), 'See Profile')]");
-        actions.clickElement("//a[contains(@href, '/profile') and contains(text(), 'See Profile')]");
-        actions.waitForElementPresent("//input[@type='submit' and @value='connect']");
-        actions.clickElement("//input[@type='submit' and @value='connect']");
+        actions.waitForElementPresent("weare.seeUserProfileButton");
+        actions.clickElement("weare.seeUserProfileButton");
+        actions.waitForElementPresent("weare.connectButton");
+        actions.clickElement("weare.connectButton");
     }
 
     public void approveFriendRequest() {
         actions.waitFor(5000);
-        actions.waitForElementPresent("//a[contains(@href, 'profile/editor') and contains(@class, 'nav-link') and contains(text(), 'edit')");
-        actions.clickElementWithJavaScriptExecutor("//a[contains(@href, 'profile/editor') and contains(@class, 'nav-link') and contains(text(), 'edit')");
-        actions.waitForElementPresent("//input[@type='submit' and @value='New Friend Requsts']");
-        actions.clickElement("//input[@type='submit' and @value='New Friend Requsts']");
-        actions.waitForElementPresent("//input[@type='submit' and @value='Approve Request']");
-        actions.clickElement("//input[@type='submit' and @value='Approve Request']");
+
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElementWithJavaScriptExecutor("weare.personalProfileButton");
+        actions.waitForElementPresent("weare.openRequestButton");
+        actions.clickElement("weare.openRequestButton");
+        actions.waitForElementPresent("weare.approveRequest");
+        actions.clickElement("weare.approveRequest");
     }
     public void backToHome() {
-        actions.waitFor(2000);
+//        actions.waitFor(2000);
         actions.waitForElementPresent("weare.homeButton");
         actions.clickElement("weare.homeButton");
 
