@@ -120,8 +120,9 @@ public class UserTests extends BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-            //no post id and post content
-      /*  String resPostId = response.getBody().jsonPath().getString("[0].postId");
+        String reponseBody = response.getBody().prettyPrint();
+            //no post id and post content problem
+       /* String resPostId = response.getBody().jsonPath().getString("[0].postId");
         Assert.assertEquals(Integer.parseInt(resPostId), postId, "Incorrect user's post ID");
         String postContent = response.getBody().jsonPath().getString("[0].content");
         Assert.assertEquals(postContent, Constants.CONTENT_POST, "The content of the post is not the same.");*/

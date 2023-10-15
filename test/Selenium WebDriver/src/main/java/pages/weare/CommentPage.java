@@ -94,6 +94,7 @@ public class CommentPage extends BasePage {
     public void likeSpecificComment() {
         actions.waitForElementPresent("weare.showCommentsBtn");
         actions.hoverOverElement("weare.showCommentsBtn");
+        actions.waitFor(500);
         actions.clickElement("weare.showCommentsBtn");
 
         if (actions.isElementVisible("weare.likeBtnFirstComment")) {
@@ -108,11 +109,13 @@ public class CommentPage extends BasePage {
     public void editLastCreatedComment() {
         actions.waitForElementPresent("weare.showCommentsBtn");
         actions.hoverOverElement("weare.showCommentsBtn");
+        actions.waitFor(500);
         actions.clickElement("weare.showCommentsBtn");
         actions.waitForElementPresent("weare.editLastCreatedCommentButton");
         actions.hoverOverElement("weare.editLastCreatedCommentButton");
         actions.clickElement("weare.editLastCreatedCommentButton");
         actions.waitForElementPresent("weare.messageForm");
+        actions.waitFor(500);
         actions.typeValueInField(randomMessage, "weare.messageForm");
         actions.waitForElementPresent("weare.createCommentEditBtn");
         actions.clickElement("weare.createCommentEditBtn");
@@ -161,6 +164,7 @@ public class CommentPage extends BasePage {
     public void asserCreatedCommentContent() {
         actions.waitForElementPresent("weare.showCommentsBtn");
         actions.hoverOverElement("weare.showCommentsBtn");
+        actions.waitFor(500);
         actions.clickElement("weare.showCommentsBtn");
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertComment"), randomMessage));
     }
@@ -168,6 +172,7 @@ public class CommentPage extends BasePage {
     public void assertCommentWithSpecialCharsCreated() {
         actions.waitForElementPresent("weare.showCommentsBtn");
         actions.hoverOverElement("weare.showCommentsBtn");
+        actions.waitFor(500);
         actions.clickElement("weare.showCommentsBtn");
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertCommentsWithSpecChars"), randomStringWithSpecialCharacters));
     }
@@ -175,6 +180,7 @@ public class CommentPage extends BasePage {
     public void assertCommentWithHyperlinkCreated() {
         actions.waitForElementPresent("weare.showCommentsBtn");
         actions.hoverOverElement("weare.showCommentsBtn");
+        actions.waitFor(500);
         actions.clickElement("weare.showCommentsBtn");
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertCommentsWithHyperLink"), randomStringWithHyperLink));
     }
@@ -191,6 +197,7 @@ public class CommentPage extends BasePage {
     public void assertCommentContentIsEdited() {
         actions.waitForElementPresent("weare.showCommentsBtn");
         actions.hoverOverElement("weare.showCommentsBtn");
+        actions.waitFor(500);
         actions.clickElement("weare.showCommentsBtn");
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertCommentIsEdited"), randomMessage));
     }
