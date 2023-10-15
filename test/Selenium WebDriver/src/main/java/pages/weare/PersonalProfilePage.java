@@ -31,6 +31,16 @@ public class PersonalProfilePage extends BasePage {
         actions.clickElement("weare.updateMyProfileFirstButton");
     }
 
+    public void changeProfessionalCategory() {
+        actions.waitForElementPresent("//select[@id='category.id']");
+        actions.clickElement("//select[@id='category.id']");
+        actions.waitForElementPresent("//option[@value='102']");
+        actions.clickElement("//option[@value='102']");
+
+        actions.waitForElementPresent("(//button[@type='submit' and contains(text(), 'Update')])[2]");
+        actions.clickElement("(//button[@type='submit' and contains(text(), 'Update')])[2]");
+    }
+
     public void sendFriendRequest() {
         actions.waitFor(5000);
         actions.waitForElementPresent("weare.searchUserByName");

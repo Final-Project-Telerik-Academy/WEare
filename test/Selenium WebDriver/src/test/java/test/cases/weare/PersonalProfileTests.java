@@ -18,6 +18,12 @@ public class PersonalProfileTests extends BaseTest{
     }
 
     @Test
+    public void changeProfessionalCategory() {
+        updateUserProfile();
+        updatePersonalProfilePage.changeProfessionalCategory();
+    }
+
+    @Test
     public void sendFriendRequest() {
         register();
         login();
