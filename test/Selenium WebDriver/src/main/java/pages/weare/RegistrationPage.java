@@ -25,4 +25,9 @@ public class RegistrationPage extends BasePage {
         actions.assertElementPresent("weare.welcomeHeader");
         actions.assertElementPresent("weare.pleaseUpdateYourProfileButton");
     }
+
+    public void assertAdminRegistered() {
+        actions.assertElementPresent("weare.assertWelcomeMessage");
+        actions.assertElementPresent("weare.pleaseUpdateYourProfileButton");
+    }
 }
