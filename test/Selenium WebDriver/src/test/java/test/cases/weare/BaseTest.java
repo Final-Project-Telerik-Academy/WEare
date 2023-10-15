@@ -23,8 +23,9 @@ public class BaseTest {
     AdminPage adminPage = new AdminPage(actions.getDriver());
     PostPage postPage = new PostPage(actions.getDriver());
     CommentPage commentPage = new CommentPage((actions.getDriver()));
-    UpdatePersonalProfilePage updatePersonalProfilePage = new UpdatePersonalProfilePage(actions.getDriver());
 
+    UpdatePersonalProfilePage updatePersonalProfilePage = new UpdatePersonalProfilePage(actions.getDriver());
+    HomePage homePage=new HomePage(actions.getDriver());
     Faker faker = new Faker();
 
 
