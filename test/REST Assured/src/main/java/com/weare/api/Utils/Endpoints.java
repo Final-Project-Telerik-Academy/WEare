@@ -32,4 +32,10 @@ public class Endpoints {
 
     public static final String FIND_ONE_COMMENTS = "/api/comment/single";
     public static final String DELETE_COMMENTS ="/api/comment/auth/manager";
+
+    public static final String SEND_REQUEST = "/api/auth/request";
+
+    public static final String GET_USER_REQUESTS = "/api/auth/users/%s/request/";
+    public static final String APPROVE_REQUESTS = "/api/auth/users/%s/request/approve?requestId=%s";
+
 }
