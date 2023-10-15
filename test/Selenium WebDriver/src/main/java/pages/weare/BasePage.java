@@ -33,6 +33,14 @@ public abstract class BasePage extends com.telerikacademy.testframework.pages.Ba
         return faker.lorem().sentence();
     }
 
+    public String generateRandomFirstName() {
+        return faker.name().firstName();
+    }
+
+    public String generateRandomLastName() {
+        return faker.name().firstName();
+    }
+
     public String generateRandomSpecialCharactersMessage(int length) {
         SecureRandom random = new SecureRandom();
         StringBuilder stringBuilder = new StringBuilder(length);
