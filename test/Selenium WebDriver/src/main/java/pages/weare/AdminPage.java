@@ -57,8 +57,6 @@ public class AdminPage extends BasePage {
         if (actions.isElementVisible("weare.enableButton")) {
             actions.assertElementPresent("weare.enableButton");
         }
-        /*actions.waitForElementPresent("weare.enableButton");
-        actions.waitFor(500);*/
     }
 
     public void assertUserIsUnlocked() {
