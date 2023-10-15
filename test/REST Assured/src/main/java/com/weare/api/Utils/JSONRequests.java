@@ -87,4 +87,11 @@ public class JSONRequests {
             "  \"skill\": \"%s\",\n" +
             "  \"skillId\": 0\n" +
             "}";
+
+    public static final String SEND_REQUEST_BODY = "{\n" +
+            "    \"id\": %d,\n" +
+            "    \"username\": \"%s\"\n" +
+            "}";
+
+
 }
