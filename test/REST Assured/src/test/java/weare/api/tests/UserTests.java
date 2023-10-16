@@ -9,7 +9,7 @@ import com.weare.api.Utils.JSONRequests;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
-import weare.api.tests.Utils.AssertHelper;
+import com.weare.api.Utils.AssertHelper;
 
 import static com.weare.api.Utils.Constants.POST_ID;
 import static com.weare.api.Utils.Endpoints.*;

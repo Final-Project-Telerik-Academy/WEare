@@ -8,7 +8,6 @@ import com.weare.api.Services.PostService;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
-import org.apache.logging.log4j.core.util.Assert;
 import org.junit.jupiter.api.*;
 
 
