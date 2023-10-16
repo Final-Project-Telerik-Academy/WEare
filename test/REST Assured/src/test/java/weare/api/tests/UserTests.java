@@ -66,6 +66,7 @@ public class UserTests extends BaseTestSetup {
         String resUserId = response.getBody().jsonPath().getString("id");
         String resUsername = response.getBody().jsonPath().getString("username");
         String resEmail = response.getBody().jsonPath().getString("email");
+
         AssertHelper.assertStatusCode(statusCode, SC_OK);
         AssertHelper.assertResponseBodyNotNull(response.getBody());
         AssertHelper.assertUserIdEquals(Integer.parseInt(resUserId), user.getUserId());
@@ -87,6 +88,7 @@ public class UserTests extends BaseTestSetup {
 
         String resUserId = response.getBody().jsonPath().getString("[0].userId");
         String resUsername = response.getBody().jsonPath().getString("[0].username");
+
         AssertHelper.assertUserIdEquals(Integer.parseInt(resUserId), user.getUserId());
         AssertHelper.assertUsernameEquals(resUsername, user.getUsername());
     }
@@ -105,6 +107,7 @@ public class UserTests extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         String contentPost = response.getBody().jsonPath().get("content");
         Boolean privatePost = response.getBody().jsonPath().get("public");
+
         AssertHelper.assertStatusCode(statusCode, SC_OK);
         AssertHelper.assertPostIsPrivate(privatePost);
         AssertHelper.assertContentTypeNotNull(ContentType.JSON);
