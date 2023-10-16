@@ -68,11 +68,9 @@ public class CommentTest extends BaseTestSetup {
 
 
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
-        postService = new PostService();
         post = new Post();
 
-
-        String postJsonBody = postService.generatePostRequest(post);
+        String postJsonBody = PostService.generatePostRequest(post);
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -150,12 +148,9 @@ public class CommentTest extends BaseTestSetup {
     @Test
     @Order(4)
     public void editComment() {
-
-
         baseURI = format("%s%s", BASE_URL, EDIT_COMMENT);
-        PostService postService = new PostService();
 
-        String editJsonBody = postService.editPostRequest(post);
+        String editJsonBody = PostService.editPostRequest(post);
 
         Response response = given()
                 .contentType(ContentType.JSON)

@@ -43,15 +43,15 @@ public class PostTest extends BaseTestSetup {
     public void tearDownAfterTest() {
         logout();
     }
+
     @Test
     @Order(1)
 //    @Test (priority = 1)
     public void createPrivatePost() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
-        postService = new PostService();
         post = new Post();
 
-        String postJsonBody = postService.generatePostRequest(post);
+        String postJsonBody = PostService.generatePostRequest(post);
 
         Response response = given()
 
@@ -79,10 +79,9 @@ public class PostTest extends BaseTestSetup {
 //    @Test(priority = 2)
     public void createPublicPost() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
-        postService = new PostService();
         post = new Post();
         post.setPublic(true);
-        String postJsonBody = postService.generatePostRequest(post);
+        String postJsonBody = PostService.generatePostRequest(post);
 
         Response response = given()
                 .contentType(ContentType.JSON)
@@ -108,9 +107,8 @@ public class PostTest extends BaseTestSetup {
 //    @Test(priority = 2,dependsOnMethods = "createPublicPost")
     public void editPost() {
         baseURI = format("%s%s", BASE_URL, EDIT_POST);
-        PostService postService = new PostService();
 
-        String editJsonBody = postService.editPostRequest(post);
+        String editJsonBody = PostService.editPostRequest(post);
 
         Response response = given()
                 // .cookie(cookie.getName(), cookie.getValue())
