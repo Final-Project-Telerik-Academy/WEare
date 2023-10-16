@@ -5,11 +5,11 @@ import com.weare.api.Models.Comment;
 import com.weare.api.Models.Post;
 import com.weare.api.Services.CommentService;
 import com.weare.api.Services.PostService;
-import com.weare.api.Utils.AssertHelper;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
+import com.weare.api.Utils.AssertHelper;
 
 import static com.weare.api.Utils.Constants.*;
 import static com.weare.api.Utils.Endpoints.*;
@@ -29,28 +29,10 @@ public class PostTest extends BaseTestSetup {
     protected static Comment comment;
     protected static PostService postService;
     protected static CommentService commentService;
-    private  Cookie authCookie;
     protected Integer userId;
 
- /*   @BeforeMethod
-    @Test
-    public void authenticationTest() {
-        baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
-
-        Response response = getApplicationAuthentication()
-                .when()
-                .post();
-
-        authCookie = response.getDetailedCookie("JSESSIONID");
-        System.out.println("JSESSIONID cookie: " + response.getCookie("JSESSIONID"));
-        System.out.println("Response code: " + response.getStatusCode());
-        System.out.println("Response body: " + response.getBody().asString());
-        int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_MOVED_TEMPORARILY, "Cookie status code is correct");
-    }*/
-
+    //    @BeforeMethod
     @BeforeEach
-//    @BeforeMethod
     public void setupTest() {
         register();
         login();
@@ -61,14 +43,13 @@ public class PostTest extends BaseTestSetup {
     public void tearDownAfterTest() {
         logout();
     }
+
+
     @Test
     @Order(1)
 //    @Test (priority = 1)
     public void createPrivatePost() {
-
-
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
-        postService = new PostService();
         post = new Post();
 
         String postJsonBody = postService.generatePostRequest(post);
@@ -236,6 +217,9 @@ public class PostTest extends BaseTestSetup {
         String responseBody = response.getBody().asString();
         String contentComment=response.getBody().jsonPath().get("content");
         int statusCode = response.getStatusCode();
+        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+        Assertions.assertNotNull(ContentType.JSON);
+        Assertions.assertEquals(contentComment, comment.getContent(),"Content does not match");
         System.out.println(responseBody);
 
         AssertHelper.assertStatusCode(statusCode,SC_OK);
