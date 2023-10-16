@@ -39,6 +39,7 @@ public class AdminTests extends BaseTest {
         adminPage.editUserPost();
         adminPage.assertUserPostIsEdited();
     }
+
     @Test
     @Order(4)
     public void deleteLastCreatedUserPostTest() {

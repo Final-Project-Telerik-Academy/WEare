@@ -2,8 +2,13 @@ package test.cases.weare;
 
 import org.junit.jupiter.api.Test;
 
+import static com.telerikacademy.testframework.RandomGenerator.*;
+
 
 public class RegistrationTest extends BaseTest {
+
+//    RandomGenerator randomGenerator = new RandomGenerator(new Faker());
+
     @Test
     public void registerWithTwoCharactersForUsername() {
         username = generateTwoCharacterUsername();

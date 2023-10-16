@@ -6,6 +6,10 @@ import org.checkerframework.checker.units.qual.C;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import pages.weare.*;
+import com.telerikacademy.testframework.RandomGenerator;
+
+import static com.telerikacademy.testframework.RandomGenerator.*;
+
 
 public class BaseTest {
 
@@ -17,6 +21,7 @@ public class BaseTest {
     protected String adminEmail;
 
     UserActions actions = new UserActions();
+//    RandomGenerator randomGenerator = new RandomGenerator(new Faker());
 
     RegistrationPage registrationPage = new RegistrationPage(actions.getDriver());
     LoginPage loginPage = new LoginPage(actions.getDriver());
@@ -71,41 +76,41 @@ public class BaseTest {
         loginPage.assertUserIsLoggedOut();
     }
 
-    protected String generateRandomEmail() {
-        return faker.internet().emailAddress();
-    }
-
-    protected String generateRandomUsername() {
-        String username = faker.lorem().characters(2, 20, false, false);
-        return username.toLowerCase();
-    }
-
-    protected String generatePassword() {
-        return faker.internet().password(8, 20, true, true, true);
-    }
-
-    protected String generatePasswordEightSymbols() {
-        StringBuilder password = new StringBuilder();
-        String symbols = "1234567890!@#$%^&*";
-
-        String fakeWords = faker.lorem().characters(8 - symbols.length());
-        password.append(fakeWords);
-
-        for (int i = 0; i < 8 - fakeWords.length(); i++) {
-            int index = faker.random().nextInt(symbols.length());
-            password.append(symbols.charAt(index));
-        }
-        return password.toString();
-    }
-
-    protected static String generateTwoCharacterUsername() {
-        Faker faker = new Faker();
-        return faker.lorem().characters(2, false, false);
-    }
-
-    protected static String generateTwentyCharacterUsername() {
-        Faker faker = new Faker();
-        return faker.lorem().characters(20, false, false);
-    }
+//    protected String generateRandomEmail() {
+//        return faker.internet().emailAddress();
+//    }
+//
+//    protected String generateRandomUsername() {
+//        String username = faker.lorem().characters(2, 20, false, false);
+//        return username.toLowerCase();
+//    }
+//
+//    protected String generatePassword() {
+//        return faker.internet().password(8, 20, true, true, true);
+//    }
+//
+//    protected String generatePasswordEightSymbols() {
+//        StringBuilder password = new StringBuilder();
+//        String symbols = "1234567890!@#$%^&*";
+//
+//        String fakeWords = faker.lorem().characters(8 - symbols.length());
+//        password.append(fakeWords);
+//
+//        for (int i = 0; i < 8 - fakeWords.length(); i++) {
+//            int index = faker.random().nextInt(symbols.length());
+//            password.append(symbols.charAt(index));
+//        }
+//        return password.toString();
+//    }
+//
+//    protected static String generateTwoCharacterUsername() {
+//        Faker faker = new Faker();
+//        return faker.lorem().characters(2, false, false);
+//    }
+//
+//    protected static String generateTwentyCharacterUsername() {
+//        Faker faker = new Faker();
+//        return faker.lorem().characters(20, false, false);
+//    }
 }
 

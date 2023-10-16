@@ -3,15 +3,15 @@ package pages.weare;
 import org.openqa.selenium.WebDriver;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.Random;
+
+import static com.telerikacademy.testframework.RandomGenerator.*;
 
 public class PersonalProfilePage extends BasePage {
 
     LocalDate randomBirthday = generateRandomBirthday();
     private String firstName = generateRandomFirstName();
-    private String lastName = generateRandomFirstName();
+    private String lastName = generateRandomLastName();
 
     private String fullName = firstName + " " + lastName;
 
@@ -64,6 +64,7 @@ public class PersonalProfilePage extends BasePage {
         actions.waitForElementPresent("weare.approveRequest");
         actions.clickElement("weare.approveRequest");
     }
+
     public void backToHome() {
 //        actions.waitFor(2000);
         actions.waitForElementPresent("weare.homeButton");
@@ -81,17 +82,6 @@ public class PersonalProfilePage extends BasePage {
     private void fillFieldById(String locator, String value) {
         actions.waitForElementPresent(locator);
         actions.typeValueInField(value, locator);
-    }
-
-    public static LocalDate generateRandomBirthday() {
-        Random random = new Random();
-
-        int year = 1900 + random.nextInt(124);
-        int monthValue = 1 + random.nextInt(12);
-        Month month = Month.of(monthValue);
-        int day = 1 + random.nextInt(28);
-
-        return LocalDate.of(year, month, day);
     }
 }
 

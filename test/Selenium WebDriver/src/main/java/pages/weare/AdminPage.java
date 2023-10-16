@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import static com.telerikacademy.testframework.RandomGenerator.generateRandomMessage;
 import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
 import static java.lang.String.format;
 
@@ -13,6 +14,7 @@ public class AdminPage extends BasePage {
     String updatedEmail;
     String editedContent;
     private final String randomMessage = generateRandomMessage();
+
     public AdminPage(WebDriver driver) {
         super(driver, "weare.homepage");
     }
@@ -68,7 +70,7 @@ public class AdminPage extends BasePage {
         actions.waitFor(500);
         clearEmailField();
         updatedEmail = faker.internet().emailAddress();
-        actions.typeValueInField(updatedEmail,"weare.emailProfileField");
+        actions.typeValueInField(updatedEmail, "weare.emailProfileField");
         changeBirthdayDate();
         actions.waitForElementPresent("weare.updateProfileButton");
         actions.waitFor(500);
@@ -125,7 +127,7 @@ public class AdminPage extends BasePage {
     }
 
     public void disableProfile() {
-        if (actions.isElementVisible("weare.enableButton")){
+        if (actions.isElementVisible("weare.enableButton")) {
             actions.clickElement("weare.enableButton");
         }
         actions.waitForElementVisible("weare.disableButton");

@@ -3,7 +3,7 @@ package test.cases.weare;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
-public class PersonalProfileTests extends BaseTest{
+public class PersonalProfileTests extends BaseTest {
 
     @AfterEach
     public void performLogout() {

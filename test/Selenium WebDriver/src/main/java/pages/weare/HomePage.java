@@ -7,10 +7,11 @@ import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
 
+import static com.telerikacademy.testframework.RandomGenerator.generateRandomFirstName;
 import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
 import static java.lang.String.format;
 
-public class HomePage extends BasePage{
+public class HomePage extends BasePage {
 
     LocalDate randomBirthday = generateRandomBirthday();
     private String firstName = generateRandomFirstName();
@@ -34,16 +35,18 @@ public class HomePage extends BasePage{
         actions.clickElement("weare.updateMyProfileFirstButton");
     }
 
-    public void searchUserByProfession(){
+    public void searchUserByProfession() {
         actions.waitForElementClickable("weare.searchProfessionField");
-        actions.typeValueInField("Actor","weare.searchProfessionField");
+        actions.typeValueInField("Actor", "weare.searchProfessionField");
 
         actions.waitForElementVisible("weare.searchButton");
         actions.clickElement("weare.searchButton");
     }
-    public void assertResultSearch(){
+
+    public void assertResultSearch() {
         actions.assertElementPresent("weare.assertSearchResult");
     }
+
     public void searchUserByFullname() {
         actions.waitForElementVisible("weare.homeButton");
         actions.clickElement("weare.homeButton");
@@ -53,6 +56,7 @@ public class HomePage extends BasePage{
         actions.clickElement("weare.searchUserButton");
 
     }
+
     public void searchUserByFirstname() {
         actions.waitForElementVisible("weare.homeButton");
         actions.clickElement("weare.homeButton");
@@ -61,24 +65,28 @@ public class HomePage extends BasePage{
         actions.waitForElementPresent("weare.searchUserButton");
         actions.clickElement("weare.searchUserButton");
     }
-    public void fillPersonalDetails (String firstName, String lastName, LocalDate birthday){
+
+    public void fillPersonalDetails(String firstName, String lastName, LocalDate birthday) {
         String formattedBirthday = birthday.format(DateTimeFormatter.ofPattern("dd/MM/yyyy"));
         fillFieldById("weare.firstName", firstName);
         fillFieldById("weare.lastName", lastName);
         fillFieldById("weare.birthday", formattedBirthday);
     }
-    private void fillFieldById (String locator, String value){
+
+    private void fillFieldById(String locator, String value) {
         actions.waitForElementPresent(locator);
         actions.typeValueInField(value, locator);
     }
 
-    public void assertUserResultSearch () {
+    public void assertUserResultSearch() {
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertFullnameSearch"), fullName));
     }
-    public void assertUserResulFirstSearch () {
+
+    public void assertUserResulFirstSearch() {
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertFullnameSearch"), firstName));
     }
-     LocalDate generateRandomBirthday () {
+
+    LocalDate generateRandomBirthday() {
         Random random = new Random();
 
         int year = 1900 + random.nextInt(124);

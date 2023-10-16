@@ -4,11 +4,15 @@ import org.openqa.selenium.WebDriver;
 
 import java.nio.file.Paths;
 
+import static com.telerikacademy.testframework.RandomGenerator.generateRandomMessage;
+import static com.telerikacademy.testframework.RandomGenerator.generateRandomString;
+
 public class PostPage extends BasePage {
     public PostPage(WebDriver driver) {
         super(driver, "weare.homepage");
     }
-   private final String randomMessage = generateRandomMessage();
+
+    private final String randomMessage = generateRandomMessage();
     private final String randomString1 = generateRandomString(1);
     private final String randomString999 = generateRandomString(999);
     private final String randomString1000 = generateRandomString(1000);
@@ -72,6 +76,7 @@ public class PostPage extends BasePage {
         actions.typeValueInField(randomString1000, "weare.messageForm");
         actions.clickElement("weare.submitButton");
     }
+
     public void createPostWithPngFormatPhoto() {
         String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo.png").toAbsolutePath().toString();
         photoLogic(imagePath);
@@ -111,6 +116,7 @@ public class PostPage extends BasePage {
         actions.waitFor(5000);
         actions.clickElement("weare.submitButton");
     }
+
     public void likePost() {
         actions.clickElement("weare.likePostButton");
     }
@@ -184,11 +190,13 @@ public class PostPage extends BasePage {
 
     public void assertPublicPostCreated() {
         actions.assertElementPresent("weare.assertPostPublic");
-        actions.assertElementPresent("//p[contains(text(), '" + randomMessage + "')]");    }
+        actions.assertElementPresent("//p[contains(text(), '" + randomMessage + "')]");
+    }
 
     public void assertPrivatePostCreated() {
         actions.assertElementPresent("weare.assertPostPrivate");
-        actions.assertElementPresent("//p[contains(text(), '" + randomMessage + "')]");    }
+        actions.assertElementPresent("//p[contains(text(), '" + randomMessage + "')]");
+    }
 
 
     public void assertPostWithOneCharacterCreated() {
@@ -202,13 +210,16 @@ public class PostPage extends BasePage {
     public void assertPostWith1000CharactersCreated() {
         actions.assertElementPresent("//p[contains(text(), '" + randomString1000 + "')]");
     }
+
     public void assertPostCreatedWithPhoto() {
         actions.assertElementPresent("weare.assertPhotoExists");
     }
+
     public void assertPostCreatedWithTextAndPhoto() {
         actions.assertElementPresent("//p[contains(text(), '" + randomMessage + "')]");
         actions.assertElementPresent("weare.assertPhotoExists");
     }
+
     public void assertPostIsLiked() {
         try {
             Thread.sleep(1000);
@@ -217,6 +228,7 @@ public class PostPage extends BasePage {
         }
         actions.assertElementPresent("weare.assertPostLiked");
     }
+
     public void assertPostIsDisliked() {
         try {
             Thread.sleep(1000);
@@ -247,6 +259,7 @@ public class PostPage extends BasePage {
     public void assertPostContentIsEdited() {
         actions.assertElementPresent("//p[contains(text(), '" + randomMessage + "')]");
     }
+
     public void assertPostDeleted() {
         actions.assertElementPresent("weare.postDeletedSuccessfully");
     }

@@ -71,7 +71,7 @@ public class CommentTests extends BaseTest {
 
     @Test
     @Order(7)
-    public void createCommentWith1000CharsSpecialCharsAndHyperLinkTest(){
+    public void createCommentWith1000CharsSpecialCharsAndHyperLinkTest() {
         postPage.createPublicPost();
         commentPage.createCommentWith1000CharsSpecialCharsAndHyperLinkTest();
         commentPage.assertCommentWithMessageHyperLinkAndSpecialChars();

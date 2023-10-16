@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 
+import static com.telerikacademy.testframework.RandomGenerator.*;
 import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
 import static java.lang.String.format;
 
@@ -19,6 +20,7 @@ public class CommentPage extends BasePage {
     private final String randomStringWithSpecialCharacters = generateRandomSpecialCharactersMessage(30);
     private final String randomStringWithHyperLink = generateRandomHyperlink();
     int commentsCounter;
+
     public void createComment() {
         actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
         actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
@@ -99,7 +101,7 @@ public class CommentPage extends BasePage {
 
         if (actions.isElementVisible("weare.likeBtnFirstComment")) {
             actions.clickElement("weare.likeBtnFirstComment");
-        } else if(actions.isElementVisible("weare.dislikeBtnFirstComment")) {
+        } else if (actions.isElementVisible("weare.dislikeBtnFirstComment")) {
             actions.clickElement("weare.dislikeBtnFirstComment");
             actions.waitForElementClickable("weare.likeBtnFirstComment");
             actions.clickElement("weare.likeBtnFirstComment");
@@ -146,6 +148,7 @@ public class CommentPage extends BasePage {
         actions.waitForElementPresent("weare.postCommentBtn");
         actions.clickElement("weare.postCommentBtn");
     }
+
     @Test
     public void anonymousUserTryToCreateComment() {
         actions.waitForElementPresent("weare.LatestPostsButton");
@@ -201,6 +204,7 @@ public class CommentPage extends BasePage {
         actions.clickElement("weare.showCommentsBtn");
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertCommentIsEdited"), randomMessage));
     }
+
     public void assertCommentIsDeleted() {
         actions.assertElementPresent("weare.assertCommentIsDeleted");
     }

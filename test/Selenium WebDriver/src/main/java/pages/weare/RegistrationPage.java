@@ -7,6 +7,7 @@ public class RegistrationPage extends BasePage {
     public RegistrationPage(WebDriver driver) {
         super(driver, "weare.homepage");
     }
+
     public void userRegistration(String username, String email, String password) {
         actions.waitForElementPresent("weare.registerButton");
         actions.clickElement("weare.registerButton");
