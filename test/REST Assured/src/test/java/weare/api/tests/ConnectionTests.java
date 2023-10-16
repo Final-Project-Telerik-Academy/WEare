@@ -4,6 +4,7 @@ import base.BaseTestSetup;
 import com.weare.api.Models.UserC;
 import com.weare.api.Services.ConnectionService;
 import com.weare.api.Services.UserServiceC;
+import com.weare.api.Utils.AssertHelper;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
@@ -36,7 +37,6 @@ public class ConnectionTests extends BaseTestSetup {
 
     @Test
     @Order(1)
-//    @Test(priority = 1)
     public void registerUser1() {
         baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
         user = new UserC();
@@ -51,9 +51,6 @@ public class ConnectionTests extends BaseTestSetup {
 
         String responseBody = response.getBody().asString();
 
-        int statusCode = response.getStatusCode();
-        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-        Assertions.assertFalse(responseBody.trim().isEmpty());
 
         String regex = "name (\\w+)(.*)id (\\d+)";
         Matcher matcher = Pattern.compile(regex).matcher(responseBody);
@@ -62,18 +59,20 @@ public class ConnectionTests extends BaseTestSetup {
             user.setUserId(Integer.valueOf(matcher.group(3)));
         }
 
-        Assertions.assertEquals(user.getUsername(), user.getUsername(), "Username does not match the expected value");
-        Assertions.assertTrue(user.getUserId() > 0, "The user ID should be a positive integer");
+     int statusCode = response.getStatusCode();
+
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        AssertHelper.assertUsername(user.getUsername(), user.getUsername());
+        AssertHelper.assertPositiveUserId(user.getUserId());
         String expectedResponseBody = String.format("User with name %s and id %d was created", user.getUsername(), user.getUserId());
-        Assertions.assertEquals(responseBody, expectedResponseBody, "Response body does not match the expected value");
+        AssertHelper.assertUserCreationResponse(expectedResponseBody, responseBody);
+        AssertHelper.assertNotEmptyResponse(responseBody);
 
         System.out.println(response.asString());
-
     }
 
     @Test
     @Order(2)
-//    @Test(priority = 2)
     public void registerUser2() {
         baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
         user2 = new UserC();
@@ -88,9 +87,6 @@ public class ConnectionTests extends BaseTestSetup {
 
         String responseBody = response.getBody().asString();
 
-        int statusCode = response.getStatusCode();
-        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-        Assertions.assertFalse(responseBody.trim().isEmpty());
 
         String regex = "name (\\w+)(.*)id (\\d+)";
         Matcher matcher = Pattern.compile(regex).matcher(responseBody);
@@ -98,17 +94,18 @@ public class ConnectionTests extends BaseTestSetup {
             user2.setUsername(matcher.group(1));
             user2.setUserId(Integer.valueOf(matcher.group(3)));
         }
+        int statusCode = response.getStatusCode();
 
-        Assertions.assertEquals(user2.getUsername(), user2.getUsername(), "Username does not match the expected value");
-        Assertions.assertTrue(user2.getUserId() > 0, "The user ID should be a positive integer");
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        AssertHelper.assertUsername(user.getUsername(), user.getUsername());
+        AssertHelper.assertPositiveUserId(user.getUserId());
         String expectedResponseBody = String.format("User with name %s and id %d was created", user2.getUsername(), user2.getUserId());
-        Assertions.assertEquals(responseBody, expectedResponseBody, "Response body does not match the expected value");
+        AssertHelper.assertUserCreationResponse(expectedResponseBody, responseBody);
+        AssertHelper.assertNotEmptyResponse(responseBody);
         System.out.println(response.asString());
-
     }
     @Test
     @Order(3)
-//    @Test(priority = 3)
     public void authenticateUser1() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
 
@@ -126,14 +123,14 @@ public class ConnectionTests extends BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
-        Assertions.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
+        AssertHelper.assertValidStatusCode(isValidStatusCode);
+
         System.out.println(response.asString());
 
         System.out.println("User 1 authenticated successfully - Username: " + user.getUsername() + " - Cookie: " + cookie1.getValue());
     }
     @Test
     @Order(5)
-//    @Test(priority = 5)
     public void authenticateUser2() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
 
@@ -151,16 +148,14 @@ public class ConnectionTests extends BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
-        Assertions.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
+        AssertHelper.assertValidStatusCode(isValidStatusCode);
         System.out.println(response.asString());
 
         System.out.println("User 2 authenticated successfully - Username: " + user2.getUsername() + " - Cookie: " + cookie2.getValue());
     }
     @Test
     @Order(4)
-//    @Test(priority = 4)
     public void sendConnectionRequest() {
-
         baseURI = format("%s%s", BASE_URL, SEND_REQUEST);
 
         String sendRequestJsonBody = ConnectionService.generateSendRequest(user2.getUserId(), user2.getUsername());
@@ -174,16 +169,17 @@ public class ConnectionTests extends BaseTestSetup {
 
         System.out.println(response.asString());
 
+        String responseBody = response.getBody().asString();
+
         int statusCode = response.getStatusCode();
         Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
         String expectedResponseBody = String.format("%s send friend request to %s", user.getUsername(), user2.getUsername());
-        Assertions.assertEquals(response.getBody().asString(), expectedResponseBody, "Response body does not match the expected value.");
+        AssertHelper.assertResponseBodyEquals(expectedResponseBody, responseBody);
     }
 
     @Test
     @Order(6)
-//    @Test(priority = 6)
     public void getUserRequests() {
         baseURI = format("http://localhost:8081/api/auth/users/%d/request/", user2.getUserId());
 
@@ -206,18 +202,16 @@ public class ConnectionTests extends BaseTestSetup {
 
             JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-            Assertions.assertTrue(jsonObject.has("id"), "Field 'id' not found in the response.");
-            Assertions.assertTrue(jsonObject.has("approved"), "Field 'approved' not found in the response.");
-            Assertions.assertTrue(jsonObject.has("seen"), "Field 'seen' not found in the response.");
-            Assertions.assertTrue(jsonObject.has("timeStamp"), "Field 'timeStamp' not found in the response.");
+            AssertHelper.assertJsonFieldExists(jsonObject, "id", "Field 'id' not found in the response.");
+            AssertHelper.assertJsonFieldExists(jsonObject, "approved", "Field 'approved' not found in the response.");
+            AssertHelper.assertJsonFieldExists(jsonObject, "seen", "Field 'seen' not found in the response.");
+            AssertHelper.assertJsonFieldExists(jsonObject, "timeStamp", "Field 'timeStamp' not found in the response.");
         } else {
             System.out.println("No items found in the response or ID not found.");
         }
     }
-
     @Test
     @Order(7)
-//    @Test(priority = 7)
     public void approveConnectionRequest() {
         baseURI = String.format("http://localhost:8081/api/auth/users/%s/request/approve", user2.getUserId());
 
@@ -233,8 +227,7 @@ public class ConnectionTests extends BaseTestSetup {
 
         String responseBody = response.getBody().asString();
         String expectedResponseBody = String.format("%s approved request of %s", user2.getUsername(), user.getUsername());
-        Assertions.assertEquals(responseBody, expectedResponseBody, "Response body does not match the expected value.");
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-
+        AssertHelper.assertResponseBodyEquals(expectedResponseBody, responseBody);
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 }
