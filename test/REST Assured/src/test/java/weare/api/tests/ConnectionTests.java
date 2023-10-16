@@ -9,8 +9,8 @@ import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.*;
+
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -22,6 +22,9 @@ import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_MOVED_TEMPORARILY;
 import static org.apache.http.HttpStatus.SC_OK;
 
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
 public class ConnectionTests extends BaseTestSetup {
 
     protected static UserC user;
@@ -31,7 +34,9 @@ public class ConnectionTests extends BaseTestSetup {
     protected static int requestId;
 
 
-    @Test(priority = 1)
+    @Test
+    @Order(1)
+//    @Test(priority = 1)
     public void registerUser1() {
         baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
         user = new UserC();
@@ -47,8 +52,8 @@ public class ConnectionTests extends BaseTestSetup {
         String responseBody = response.getBody().asString();
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-        Assert.assertFalse(responseBody.trim().isEmpty());
+        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+        Assertions.assertFalse(responseBody.trim().isEmpty());
 
         String regex = "name (\\w+)(.*)id (\\d+)";
         Matcher matcher = Pattern.compile(regex).matcher(responseBody);
@@ -57,16 +62,18 @@ public class ConnectionTests extends BaseTestSetup {
             user.setUserId(Integer.valueOf(matcher.group(3)));
         }
 
-        Assert.assertEquals(user.getUsername(), user.getUsername(), "Username does not match the expected value");
-        Assert.assertTrue(user.getUserId() > 0, "The user ID should be a positive integer");
+        Assertions.assertEquals(user.getUsername(), user.getUsername(), "Username does not match the expected value");
+        Assertions.assertTrue(user.getUserId() > 0, "The user ID should be a positive integer");
         String expectedResponseBody = String.format("User with name %s and id %d was created", user.getUsername(), user.getUserId());
-        Assert.assertEquals(responseBody, expectedResponseBody, "Response body does not match the expected value");
+        Assertions.assertEquals(responseBody, expectedResponseBody, "Response body does not match the expected value");
 
         System.out.println(response.asString());
 
     }
 
-    @Test(priority = 2)
+    @Test
+    @Order(2)
+//    @Test(priority = 2)
     public void registerUser2() {
         baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
         user2 = new UserC();
@@ -82,8 +89,8 @@ public class ConnectionTests extends BaseTestSetup {
         String responseBody = response.getBody().asString();
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-        Assert.assertFalse(responseBody.trim().isEmpty());
+        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+        Assertions.assertFalse(responseBody.trim().isEmpty());
 
         String regex = "name (\\w+)(.*)id (\\d+)";
         Matcher matcher = Pattern.compile(regex).matcher(responseBody);
@@ -92,15 +99,16 @@ public class ConnectionTests extends BaseTestSetup {
             user2.setUserId(Integer.valueOf(matcher.group(3)));
         }
 
-        Assert.assertEquals(user2.getUsername(), user2.getUsername(), "Username does not match the expected value");
-        Assert.assertTrue(user2.getUserId() > 0, "The user ID should be a positive integer");
+        Assertions.assertEquals(user2.getUsername(), user2.getUsername(), "Username does not match the expected value");
+        Assertions.assertTrue(user2.getUserId() > 0, "The user ID should be a positive integer");
         String expectedResponseBody = String.format("User with name %s and id %d was created", user2.getUsername(), user2.getUserId());
-        Assert.assertEquals(responseBody, expectedResponseBody, "Response body does not match the expected value");
+        Assertions.assertEquals(responseBody, expectedResponseBody, "Response body does not match the expected value");
         System.out.println(response.asString());
 
     }
-
-    @Test(priority = 3)
+    @Test
+    @Order(3)
+//    @Test(priority = 3)
     public void authenticateUser1() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
 
@@ -118,13 +126,14 @@ public class ConnectionTests extends BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
-        Assert.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
+        Assertions.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
         System.out.println(response.asString());
 
         System.out.println("User 1 authenticated successfully - Username: " + user.getUsername() + " - Cookie: " + cookie1.getValue());
     }
-
-    @Test(priority = 5)
+    @Test
+    @Order(5)
+//    @Test(priority = 5)
     public void authenticateUser2() {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
 
@@ -142,13 +151,14 @@ public class ConnectionTests extends BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
-        Assert.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
+        Assertions.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
         System.out.println(response.asString());
 
         System.out.println("User 2 authenticated successfully - Username: " + user2.getUsername() + " - Cookie: " + cookie2.getValue());
     }
-
-    @Test(priority = 4)
+    @Test
+    @Order(4)
+//    @Test(priority = 4)
     public void sendConnectionRequest() {
 
         baseURI = format("%s%s", BASE_URL, SEND_REQUEST);
@@ -165,13 +175,15 @@ public class ConnectionTests extends BaseTestSetup {
         System.out.println(response.asString());
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
         String expectedResponseBody = String.format("%s send friend request to %s", user.getUsername(), user2.getUsername());
-        Assert.assertEquals(response.getBody().asString(), expectedResponseBody, "Response body does not match the expected value.");
+        Assertions.assertEquals(response.getBody().asString(), expectedResponseBody, "Response body does not match the expected value.");
     }
 
-    @Test(priority = 6)
+    @Test
+    @Order(6)
+//    @Test(priority = 6)
     public void getUserRequests() {
         baseURI = format("http://localhost:8081/api/auth/users/%d/request/", user2.getUserId());
 
@@ -184,7 +196,7 @@ public class ConnectionTests extends BaseTestSetup {
         System.out.println(response.asString());
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
         JSONArray jsonArray = new JSONArray(response.asString());
 
@@ -194,16 +206,18 @@ public class ConnectionTests extends BaseTestSetup {
 
             JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-            Assert.assertTrue(jsonObject.has("id"), "Field 'id' not found in the response.");
-            Assert.assertTrue(jsonObject.has("approved"), "Field 'approved' not found in the response.");
-            Assert.assertTrue(jsonObject.has("seen"), "Field 'seen' not found in the response.");
-            Assert.assertTrue(jsonObject.has("timeStamp"), "Field 'timeStamp' not found in the response.");
+            Assertions.assertTrue(jsonObject.has("id"), "Field 'id' not found in the response.");
+            Assertions.assertTrue(jsonObject.has("approved"), "Field 'approved' not found in the response.");
+            Assertions.assertTrue(jsonObject.has("seen"), "Field 'seen' not found in the response.");
+            Assertions.assertTrue(jsonObject.has("timeStamp"), "Field 'timeStamp' not found in the response.");
         } else {
             System.out.println("No items found in the response or ID not found.");
         }
     }
 
-    @Test(priority = 7)
+    @Test
+    @Order(7)
+//    @Test(priority = 7)
     public void approveConnectionRequest() {
         baseURI = String.format("http://localhost:8081/api/auth/users/%s/request/approve", user2.getUserId());
 
@@ -219,8 +233,8 @@ public class ConnectionTests extends BaseTestSetup {
 
         String responseBody = response.getBody().asString();
         String expectedResponseBody = String.format("%s approved request of %s", user2.getUsername(), user.getUsername());
-        Assert.assertEquals(responseBody, expectedResponseBody, "Response body does not match the expected value.");
-        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        Assertions.assertEquals(responseBody, expectedResponseBody, "Response body does not match the expected value.");
+        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
     }
 }

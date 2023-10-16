@@ -6,10 +6,8 @@ import com.weare.api.Services.SkillService;
 import com.weare.api.Utils.Constants;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+
+import org.junit.jupiter.api.*;
 import weare.api.tests.Utils.AssertHelper;
 
 import static com.weare.api.Utils.Endpoints.*;
@@ -17,20 +15,27 @@ import static io.restassured.RestAssured.*;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
+
 public class SkillTests extends BaseTestSetup {
     protected Skill skill;
-    @BeforeMethod
+//    @BeforeMethod
+    @BeforeEach
     public void setupTest() {
         register();
         login();
     }
 
-    @AfterMethod
+    @AfterEach
+//    @AfterMethod
     public void tearDownAfterTest() {
         logout();
     }
 
-    @Test(priority = 1)
+    @Test
+    @Order(1)
+//    @Test(priority = 1)
     public void createASkillTest() {
         baseURI = format("%s%s", BASE_URL, CREATE_SKILL_ENDPOINT);
         skill = new Skill();
@@ -60,7 +65,9 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
 
-    @Test(priority = 2)
+    @Test
+    @Order(2)
+//    @Test(priority = 2)
     public void getSkillsTest() {
         baseURI = format("%s%s", BASE_URL, GET_SKILLS_ENPOINT);
 
@@ -71,7 +78,7 @@ public class SkillTests extends BaseTestSetup {
                 .get();
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
         Integer skillId = response.getBody().jsonPath().get("[0].skillId");
         String skillName = response.getBody().jsonPath().get("[0].skill");
@@ -84,7 +91,9 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
 
-    @Test(priority = 3)
+    @Test
+    @Order(3)
+//    @Test(priority = 3)
     public void editASkillTest() {
         baseURI = format("%s%s", BASE_URL, EDIT_SKILL_ENDPOINT);
 
@@ -100,7 +109,9 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertResponseBodyNotNull(response.getBody());
     }
 
-    @Test(priority = 4)
+    @Test
+    @Order(4)
+//    @Test(priority = 4)
     public void getOneSkillTest() {
         baseURI = format("%s%s", BASE_URL, GET_ONE_SKILL_ENDPOINT);
 
@@ -124,7 +135,9 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
 
-    @Test(priority = 5)
+    @Test
+    @Order(5)
+//    @Test(priority = 5)
     public void deleteASkillTest() {
 
         baseURI = format("%s%s", BASE_URL, DELETE_SKILL_ENDPOINT);
