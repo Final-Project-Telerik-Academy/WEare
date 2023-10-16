@@ -1,54 +1,54 @@
 package com.weare.api.Utils;
-import org.testng.Assert;
+import org.junit.jupiter.api.Assertions;
 
 public class AssertHelper {
     public static void assertStatusCode(int expected, int actual) {
-        Assert.assertEquals(actual, expected, "Incorrect status code. Expected Status 200.");
+        Assertions.assertEquals(expected, actual, "Incorrect status code. Expected Status 200.");
     }
     public static void assertResponseBodyNotNull(Object responseBody) {
-        Assert.assertNotNull(responseBody, "Response body is empty.");
+        Assertions.assertNotNull(responseBody, "Response body is empty.");
     }
     public static void assertUserIdEquals(int expectedUserId, int actualUserId) {
-        Assert.assertEquals(actualUserId, expectedUserId, "User ID does not match the expected value.");
+        Assertions.assertEquals(expectedUserId, actualUserId, "User ID does not match the expected value.");
     }
     public static void assertUsernameEquals(String actualUsername, String expectedUsername) {
-        Assert.assertEquals(actualUsername, expectedUsername, "Incorrect username.");
+        Assertions.assertEquals(expectedUsername, actualUsername, "Incorrect username.");
     }
-    public static void assertEmailEquals(String actualEmail, String expectedEmail) {
-        Assert.assertEquals(actualEmail, expectedEmail, "Incorrect email.");
+    public static void assertEmailEquals(String expectedEmail, String actualEmail) {
+        Assertions.assertEquals(expectedEmail, actualEmail, "Incorrect email.");
     }
     public static void assertPostIsPrivate(boolean condition) {
-        Assert.assertTrue(condition,"This post is not a public");
+        Assertions.assertTrue(condition,"This post is not a public");
     }
     public static void assertContentTypeNotNull(Object contentType) {
-        Assert.assertNotNull(contentType, "Content type is null.");
+        Assertions.assertNotNull(contentType, "Content type is null.");
     }
-    public static void assertContentEquals(String actualContent, String expectedContent) {
-        Assert.assertEquals(actualContent, expectedContent, "Mismatch between actual and expected content.");
+    public static void assertContentEquals(String expectedContent, String actualContent) {
+        Assertions.assertEquals(expectedContent, actualContent, "Mismatch between actual and expected content.");
     }
     public static void assertCategoryIdNotNull(Object categoryId) {
-        Assert.assertNotNull(categoryId, "Missing category ID.");
+        Assertions.assertNotNull(categoryId, "Missing category ID.");
     }
-    public static void assertCategoryIdsMatch(Object actualCategoryId, Object expectedCategoryId) {
-        Assert.assertEquals(actualCategoryId, expectedCategoryId, "Expected category ID doesn't match user's category ID.");
+    public static void assertCategoryIdsMatch(Object expectedCategoryId, Object actualCategoryId) {
+        Assertions.assertEquals(expectedCategoryId, actualCategoryId, "Expected category ID doesn't match user's category ID.");
     }
-    public static void assertAvailabilityMatches(String actualAvailability, String expectedAvailability) {
-        Assert.assertEquals(actualAvailability, expectedAvailability, "Mismatch between actual and expected availability.");
+    public static void assertAvailabilityMatches(String expectedAvailability, String actualAvailability) {
+        Assertions.assertEquals(expectedAvailability, actualAvailability, "Mismatch between actual and expected availability.");
     }
     public static void assertSkillIdNotNull(Object skillId) {
-        Assert.assertNotNull(skillId, "Missing skill ID.");
+        Assertions.assertNotNull(skillId, "Missing skill ID.");
     }
     public static void assertSkillNameNotNull(String skillName) {
-        Assert.assertNotNull(skillName, "The skill name is missing.");
+        Assertions.assertNotNull(skillName, "The skill name is missing.");
     }
-    public static void assertSkillNameMatches(String actualSkillName, String expectedSkillName) {
-        Assert.assertEquals(actualSkillName, expectedSkillName, "Mismatch between the actual skill name and expected skill name.");
+    public static void assertSkillNameMatches(String expectedSkillName, String actualSkillName) {
+        Assertions.assertEquals(expectedSkillName, actualSkillName, "Mismatch between the actual skill name and expected skill name.");
     }
-    public static void assertCategoryNameMatches(String actualCategoryName, String expectedCategoryName) {
-        Assert.assertEquals(actualCategoryName, expectedCategoryName, "Mismatch between actual and expected category name.");
+    public static void assertCategoryNameMatches(String expectedCategoryName, String actualCategoryName) {
+        Assertions.assertEquals(expectedCategoryName, actualCategoryName, "Mismatch between actual and expected category name.");
     }
-    public static void assertSkillIdMatches(Integer actualSkillId, Integer expectedSkillId) {
-        Assert.assertEquals(actualSkillId, expectedSkillId, "Invalid skill ID.");
+    public static void assertSkillIdMatches(Integer expectedSkillId, Integer actualSkillId) {
+        Assertions.assertEquals(expectedSkillId, actualSkillId, "Invalid skill ID.");
     }
 }
 
