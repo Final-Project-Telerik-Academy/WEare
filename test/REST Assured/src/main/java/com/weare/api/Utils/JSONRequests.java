@@ -58,19 +58,28 @@ public class JSONRequests {
             "  \"size\": 5\n" +
             "}";
 
+//    public static final String UPDATE_USER_EXPERTISE = "{\n" +
+//            "  \"availability\": %s,\n" +
+//            "  \"category\": {\n" +
+//            "    \"id\": %s,\n" +
+//            "    \"name\": \"Cleaner\"\n" +
+//            "  },\n" +
+//            "  \"id\": %s,\n" +
+//            "    \"skill1\": \"%s\",\n" +
+//            "    \"skill2\": \"\",\n" +
+//            "    \"skill3\": \"\",\n" +
+//            "    \"skill4\": \"\",\n" +
+//            "    \"skills\": [\n" +
+//            "    ]\n" +
+//            "}";
+
     public static final String UPDATE_USER_EXPERTISE = "{\n" +
             "  \"availability\": %s,\n" +
             "  \"category\": {\n" +
-            "    \"id\": %s,\n" +
-            "    \"name\": \"Cleaner\"\n" +
+            "    \"id\": %s\n" +
             "  },\n" +
             "  \"id\": %s,\n" +
-            "    \"skill1\": \"%s\",\n" +
-            "    \"skill2\": \"\",\n" +
-            "    \"skill3\": \"\",\n" +
-            "    \"skill4\": \"\",\n" +
-            "    \"skills\": [\n" +
-            "    ]\n" +
+            "  \"skill1\": \"skill_%s\"\n" +
             "}";
     public static final String COMMENT="{\n" +
             "    \"content\": \"%s\",\n" +

@@ -2,6 +2,7 @@ package com.weare.api.Services;
 
 import com.google.gson.Gson;
 import com.weare.api.Models.User;
+import com.weare.api.Models.Skill;
 import com.weare.api.Utils.Constants;
 import com.weare.api.Utils.JSONRequests;
 import com.github.javafaker.Faker;
@@ -32,8 +33,8 @@ public class UserService {
         return String.format(JSONRequests.SEARCH_USER, user.getFullName());
     }
 
-    public static String generateUpdateExpertiseProfile(User user) {
+    public static String generateUpdateExpertiseProfile(User user, Skill skill) {
         return String.format(JSONRequests.UPDATE_USER_EXPERTISE,
-                Constants.AVAILABILITY, user.getCategoryId(), user.getUserId(), Constants.SKILL_NAME);
+                Constants.AVAILABILITY, user.getCategoryId(), user.getUserId(), skill.getName());
     }
 }

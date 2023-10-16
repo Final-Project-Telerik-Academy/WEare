@@ -9,7 +9,7 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
-
+import com.weare.api.Utils.AssertHelper;
 
 import static com.weare.api.Utils.Constants.COMMENT_ID;
 import static com.weare.api.Utils.Constants.POST_ID;
@@ -30,8 +30,17 @@ public class CommentTest extends BaseTestSetup {
     private Cookie authCookie;
     protected Integer userId;
 
-//    @BeforeMethod
-//    @Test
+    @BeforeEach
+    public void setupTest() {
+        register();
+        login();
+    }
+
+    @AfterEach
+//    @AfterMethod
+    public void tearDownAfterTest() {
+        logout();
+    }
 
     @BeforeEach
     @Test
@@ -53,7 +62,6 @@ public class CommentTest extends BaseTestSetup {
 //    @BeforeMethod
 //    @Test(priority = 1)
 
-    @BeforeEach
     @Test
     @Order(1)
     public void createPost() {
@@ -80,7 +88,7 @@ public class CommentTest extends BaseTestSetup {
         System.out.println(responseBody);
         int statusCode = response.getStatusCode();
 
-        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+        AssertHelper.assertStatusCode(SC_OK, statusCode);
         Assertions.assertFalse(privatePost,"This post is not a public");
         Assertions.assertNotNull(ContentType.JSON);
         Assertions.assertEquals(contentPost, post.getContent());
