@@ -60,7 +60,7 @@ public class UserTests extends BaseTestSetup {
         String formattedEndpoint = String.format(USER_BY_ID_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
 
-        Response response = getUserById(cookie, user);
+        Response response = getUserById(cookie, user.getUsername());
 
         int statusCode = response.getStatusCode();
         String resUserId = response.getBody().jsonPath().getString("id");
