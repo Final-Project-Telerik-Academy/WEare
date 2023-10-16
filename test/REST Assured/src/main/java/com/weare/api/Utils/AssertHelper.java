@@ -33,7 +33,7 @@ public class AssertHelper {
     public static void assertCategoryIdsMatch(Object expectedCategoryId, Object actualCategoryId) {
         Assertions.assertEquals(expectedCategoryId, actualCategoryId, "Expected category ID doesn't match user's category ID.");
     }
-    public static void assertAvailabilityMatches(String expectedAvailability, String actualAvailability) {
+    public static void assertAvailabilityMatches(Float expectedAvailability, Float actualAvailability) {
         Assertions.assertEquals(expectedAvailability, actualAvailability, "Mismatch between actual and expected availability.");
     }
     public static void assertSkillIdNotNull(Object skillId) {

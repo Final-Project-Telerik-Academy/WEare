@@ -144,13 +144,14 @@ public class UserTests extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
+        String resBody = response.getBody().asString();
         Integer resUserId = response.getBody().jsonPath().get("id");
         Integer resCategoryId = response.getBody().jsonPath().get("category.id");
-        String availability = response.getBody().jsonPath().get("availability");
+        Float availability = response.getBody().jsonPath().get("availability");
         AssertHelper.assertUserIdEquals(resUserId, user.getUserId());
         AssertHelper.assertCategoryIdNotNull(resCategoryId);
         AssertHelper.assertCategoryIdsMatch(resCategoryId, user.getCategoryId());
-        AssertHelper.assertAvailabilityMatches(availability, Constants.AVAILABILITY);
+        AssertHelper.assertAvailabilityMatches(availability, Float.parseFloat(Constants.AVAILABILITY));
     }
 }
 
