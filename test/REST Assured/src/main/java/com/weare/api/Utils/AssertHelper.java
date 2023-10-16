@@ -1,14 +1,14 @@
-package weare.api.tests.Utils;
+package com.weare.api.Utils;
 import org.testng.Assert;
 
 public class AssertHelper {
-    public static void assertStatusCode(int actual, int expected) {
+    public static void assertStatusCode(int expected, int actual) {
         Assert.assertEquals(actual, expected, "Incorrect status code. Expected Status 200.");
     }
     public static void assertResponseBodyNotNull(Object responseBody) {
         Assert.assertNotNull(responseBody, "Response body is empty.");
     }
-    public static void assertUserIdEquals(int actualUserId, int expectedUserId) {
+    public static void assertUserIdEquals(int expectedUserId, int actualUserId) {
         Assert.assertEquals(actualUserId, expectedUserId, "User ID does not match the expected value.");
     }
     public static void assertUsernameEquals(String actualUsername, String expectedUsername) {

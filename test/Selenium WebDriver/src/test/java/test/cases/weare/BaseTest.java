@@ -24,7 +24,6 @@ public class BaseTest {
     PostPage postPage = new PostPage(actions.getDriver());
     CommentPage commentPage = new CommentPage((actions.getDriver()));
 
-    UpdatePersonalProfilePage updatePersonalProfilePage = new UpdatePersonalProfilePage(actions.getDriver());
     HomePage homePage=new HomePage(actions.getDriver());
     PersonalProfilePage updatePersonalProfilePage = new PersonalProfilePage(actions.getDriver());
 
