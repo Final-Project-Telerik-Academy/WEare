@@ -1,4 +1,4 @@
-package com.weare.api.Utils;
+package com.weare.api.utils;
 
 public class Constants {
     public static String USERNAME = "";

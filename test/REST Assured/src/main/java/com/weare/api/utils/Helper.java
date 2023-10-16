@@ -1,4 +1,4 @@
-package com.weare.api.Utils;
+package com.weare.api.utils;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -3,8 +3,8 @@ package base;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.weare.api.Models.User;
-import com.weare.api.Services.UserService;
+import com.weare.api.models.User;
+import com.weare.api.services.UserService;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import org.junit.jupiter.api.*;
@@ -14,7 +14,7 @@ import io.restassured.config.EncoderConfig;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
-import static com.weare.api.Utils.Endpoints.*;
+import static com.weare.api.utils.Endpoints.*;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;

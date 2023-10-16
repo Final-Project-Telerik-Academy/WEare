@@ -1,19 +1,22 @@
 package weare.api.tests;
 
 import base.BaseTestSetup;
-import com.weare.api.Models.Comment;
-import com.weare.api.Models.Post;
-import com.weare.api.Services.CommentService;
-import com.weare.api.Services.PostService;
+import com.weare.api.models.Comment;
+import com.weare.api.models.Post;
+import com.weare.api.services.CommentService;
+import com.weare.api.services.PostService;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
-import com.weare.api.Utils.AssertHelper;
+import com.weare.api.utils.AssertHelper;
 
-import static com.weare.api.Utils.Constants.COMMENT_ID;
-import static com.weare.api.Utils.Constants.POST_ID;
-import static com.weare.api.Utils.Endpoints.*;
+import static com.weare.api.services.CommentService.*;
+import static com.weare.api.services.PostService.deletePostApi;
+import static com.weare.api.services.UserService.createPostApi;
+import static com.weare.api.utils.Constants.COMMENT_ID;
+import static com.weare.api.utils.Constants.POST_ID;
+import static com.weare.api.utils.Endpoints.*;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
@@ -25,8 +28,6 @@ import static org.apache.http.HttpStatus.SC_OK;
 public class CommentTest extends BaseTestSetup {
     protected static Post post;
     protected static Comment comment;
-    protected static PostService postService;
-    protected static CommentService commentService;
     private Cookie authCookie;
     protected Integer userId;
 
@@ -41,24 +42,6 @@ public class CommentTest extends BaseTestSetup {
         logout();
     }
 
-    @BeforeEach
-    @Test
-    public void authenticationTest() {
-        baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
-
-        Response response = getApplicationAuthentication()
-                .when()
-                .post();
-
-        authCookie = response.getDetailedCookie("JSESSIONID");
-        System.out.println("JSESSIONID cookie: " + response.getCookie("JSESSIONID"));
-        System.out.println("Response code: " + response.getStatusCode());
-
-        System.out.println("Response body: " + response.getBody().asString());
-        int statusCode = response.getStatusCode();
-        Assertions.assertEquals(statusCode, SC_MOVED_TEMPORARILY, "Cookie status code is correct");
-    }
-
     @Test
     @Order(1)
     public void createPost() {
@@ -66,58 +49,38 @@ public class CommentTest extends BaseTestSetup {
         post = new Post();
 
         String postJsonBody = PostService.generatePostRequest(post);
+        Response response = createPostApi(postJsonBody, cookie);
 
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
-                .body(postJsonBody)
-                .when()
-                .post();
-
-        String responseBody = response.getBody().asString();
         POST_ID = response.getBody().jsonPath().get("postId");
         String contentPost=response.getBody().jsonPath().get("content");
         Boolean privatePost=response.getBody().jsonPath().get("public");
-        System.out.println(responseBody);
+
         int statusCode = response.getStatusCode();
-
         AssertHelper.assertStatusCode(SC_OK, statusCode);
-        Assertions.assertFalse(privatePost,"This post is not a public");
-        Assertions.assertNotNull(ContentType.JSON);
-        Assertions.assertEquals(contentPost, post.getContent());
-
+        AssertHelper.assertPostIsPrivate(privatePost);
+        AssertHelper.assertContentTypeNotNull(ContentType.JSON);
+        AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
 
     @Test
     @Order(2)
     public void createComment() {
-
         baseURI = format("%s%s", BASE_URL, CREATE_COMMENT_ENDPOINT);
-        commentService = new CommentService();
         comment = new Comment();
 
         userId = user.getUserId();
-
         comment.setUserId(userId);
 
-        String commentJsonBody = commentService.generateCommentRequest(comment);
+        String commentJsonBody = CommentService.generateCommentRequest(comment);
+        Response response = createCommentApi(commentJsonBody, cookie);
 
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
-                .body(commentJsonBody)
-                .when()
-                .post();
-
-        String responseBody = response.getBody().asString();
         COMMENT_ID = response.getBody().jsonPath().get("commentId");
-        String contentComment=response.getBody().jsonPath().get("content");
+        String contentComment = response.getBody().jsonPath().get("content");
 
         int statusCode = response.getStatusCode();
-        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-        Assertions.assertNotNull(ContentType.JSON);
-        Assertions.assertEquals(contentComment, comment.getContent(),"Content does not match");
-        System.out.println(responseBody);
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        AssertHelper.assertContentTypeNotNull(ContentType.JSON);
+        AssertHelper.assertContentEquals(contentComment, comment.getContent());
     }
 
     @Test
@@ -125,18 +88,10 @@ public class CommentTest extends BaseTestSetup {
     public void getComment() {
         baseURI = format("%s%s", BASE_URL, GET_COMMENT);
 
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
-                //.queryParam("principal", user.getUsername())
-                .when()
-                .get();
+        Response response = getCommentApi(cookie);
 
         int statusCode = response.getStatusCode();
-        String responseBody = response.getBody().asString();
-        System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 //    @Test(priority = 4,dependsOnMethods = "createComment")
     @Test
@@ -148,7 +103,7 @@ public class CommentTest extends BaseTestSetup {
 
         Response response = given()
                 .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
+                .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("commentId", COMMENT_ID)
                 .queryParam("content",comment.getContent())
                 .body(editJsonBody)
@@ -156,8 +111,7 @@ public class CommentTest extends BaseTestSetup {
                 .put();
 
         int statusCode = response.getStatusCode();
-        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 //    @Test(priority = 5,dependsOnMethods = "createComment")
     @Test
@@ -165,18 +119,10 @@ public class CommentTest extends BaseTestSetup {
     public void likeComment() {
         baseURI = format("%s%s", BASE_URL, LIKE_COMMENT);
 
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
-                .queryParam("commentId", COMMENT_ID)
-                .when()
-                .post();
+        Response response = likeCommentApi(cookie, COMMENT_ID);
 
         int statusCode = response.getStatusCode();
-        String responseBody = response.getBody().asString();
-        System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 //    @Test(priority = 6,dependsOnMethods = "likeComment")
     @Test
@@ -184,18 +130,10 @@ public class CommentTest extends BaseTestSetup {
     public void dislikeComment() {
         baseURI = format("%s%s", BASE_URL, LIKE_COMMENT);
 
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
-                .queryParam("commentId", COMMENT_ID)
-                .when()
-                .post();
+        Response response = diskCommentApi(cookie, COMMENT_ID);
 
         int statusCode = response.getStatusCode();
-        String responseBody = response.getBody().asString();
-        System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
     @Test
@@ -203,18 +141,10 @@ public class CommentTest extends BaseTestSetup {
     public void getAllComment() {
         baseURI = format("%s%s", BASE_URL, FIND_ALL_COMMENTS);
 
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
-                .queryParam("postId", POST_ID)
-                .when()
-                .get();
+        Response response = getAllCommentApi(cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
-        String responseBody = response.getBody().asString();
-        System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
     @Test
@@ -222,18 +152,10 @@ public class CommentTest extends BaseTestSetup {
     public void getOneComment() {
         baseURI = format("%s%s", BASE_URL, FIND_ONE_COMMENTS);
 
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
-                .queryParam("commentId", COMMENT_ID)
-                .when()
-                .get();
+        Response response = getOneCommentApi(cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
-        String responseBody = response.getBody().asString();
-        System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 //    @Test(priority = 9,dependsOnMethods = "createComment")
     @Test
@@ -241,18 +163,12 @@ public class CommentTest extends BaseTestSetup {
     public void deleteComment() {
         baseURI = format("%s%s", BASE_URL, DELETE_COMMENTS);
 
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
-                .queryParam("commentId", COMMENT_ID)
-                .when()
-                .delete();
+        Response response =deleteCommentApi(cookie, COMMENT_ID);
 
         int statusCode = response.getStatusCode();
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
     @Test
@@ -260,17 +176,11 @@ public class CommentTest extends BaseTestSetup {
     public void deletePost() {
         baseURI = format("%s%s", BASE_URL, DELETE_POST);
 
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", authCookie.getValue())
-                //  .cookie(cookie.getName(), cookie.getValue())
-                .queryParam("postId", POST_ID)
-                .when()
-                .delete();
+        Response response = deletePostApi(cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 }

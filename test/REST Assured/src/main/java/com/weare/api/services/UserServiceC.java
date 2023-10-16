@@ -1,10 +1,10 @@
-package com.weare.api.Services;
+package com.weare.api.services;
 
 import com.google.gson.Gson;
-import com.weare.api.Models.User;
-import com.weare.api.Models.UserC;
-import com.weare.api.Utils.Constants;
-import com.weare.api.Utils.JSONRequests;
+import com.weare.api.models.User;
+import com.weare.api.models.UserC;
+import com.weare.api.utils.Constants;
+import com.weare.api.utils.JSONRequests;
 
 public class UserServiceC {
     private final Gson gson = new Gson();

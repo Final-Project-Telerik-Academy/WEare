@@ -1,9 +1,10 @@
-package com.weare.api.Models;
+package com.weare.api.models;
+
+import com.weare.api.utils.Constants;
 
 import com.github.javafaker.Faker;
-import com.weare.api.Utils.Constants;
 
-public class UserC {
+public class User {
     private String username;
     private String password;
     private String email;
@@ -14,9 +15,9 @@ public class UserC {
     private String categoryName;
     private Integer userId;
 
-    private Faker faker = new Faker();
+    private final Faker faker = new Faker();
 
-    public UserC(){
+    public User(){
         this.userId = getUserId();
         this.username = randomUsername();
         this.password = Constants.PASSWORD;
@@ -26,8 +27,6 @@ public class UserC {
         this.authority = Constants.AUTHORITIES_USER;
         this.categoryId = Constants.CATEGORY_ID;
     }
-
-
     public Integer getUserId() {
         return userId;
     }

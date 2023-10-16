@@ -1,4 +1,4 @@
-package com.weare.api.Utils;
+package com.weare.api.utils;
 
 import static java.lang.String.format;
 

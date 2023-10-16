@@ -1,18 +1,16 @@
 package weare.api.tests;
 
 import base.BaseTestSetup;
-import com.weare.api.Models.Skill;
-import com.weare.api.Services.SkillService;
-import com.weare.api.Utils.Constants;
-import io.restassured.http.ContentType;
-import io.restassured.http.Cookie;
+import com.weare.api.models.Skill;
+import com.weare.api.services.SkillService;
+import com.weare.api.utils.Constants;
 import io.restassured.response.Response;
 
 import org.junit.jupiter.api.*;
-import com.weare.api.Utils.AssertHelper;
+import com.weare.api.utils.AssertHelper;
 
-import static com.weare.api.Utils.Endpoints.*;
-import static com.weare.api.Utils.ResponseHelper.*;
+import static com.weare.api.services.SkillService.*;
+import static com.weare.api.utils.Endpoints.*;
 import static io.restassured.RestAssured.*;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
@@ -21,7 +19,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 
 
 public class SkillTests extends BaseTestSetup {
-    private Skill skill = new Skill();
+    Skill skill = new Skill();
 
     @BeforeEach
     public void setupTest() {
@@ -35,12 +33,11 @@ public class SkillTests extends BaseTestSetup {
     }
 
     @Test
-    @Order(1)
     public void createASkillTest() {
         baseURI = format("%s%s", BASE_URL, CREATE_SKILL_ENDPOINT);
 
         String createSkillBody = SkillService.generateCreateSkill(skill);
-        Response response = createASkill(createSkillBody, cookie);
+        Response response = createASkillApi(createSkillBody, cookie);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
@@ -59,12 +56,11 @@ public class SkillTests extends BaseTestSetup {
     }
 
     @Test
-    @Order(2)
 //    @Test(priority = 2)
     public void getSkillsTest() {
         baseURI = format("%s%s", BASE_URL, GET_SKILLS_ENPOINT);
 
-        Response response = getSkill(cookie);
+        Response response = getSkillApi(cookie);
 
         int statusCode = response.getStatusCode();
         Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
@@ -80,12 +76,11 @@ public class SkillTests extends BaseTestSetup {
     }
 
     @Test
-    @Order(3)
     public void editASkillTest() {
         createASkillTest();
         baseURI = format("%s%s", BASE_URL, EDIT_SKILL_ENDPOINT);
 
-        Response response = editASkill(cookie, skill.getName(), skill.getId());
+        Response response = editASkillApi(cookie, skill.getName(), skill.getId());
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(SC_OK, statusCode);
@@ -93,12 +88,11 @@ public class SkillTests extends BaseTestSetup {
     }
 
     @Test
-    @Order(4)
     public void getOneSkillTest() {
         createASkillTest();
         baseURI = format("%s%s", BASE_URL, GET_ONE_SKILL_ENDPOINT);
 
-        Response response = getOneSKill(cookie, skill.getId());
+        Response response = getOneSKillApi(cookie, skill.getId());
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
@@ -115,12 +109,11 @@ public class SkillTests extends BaseTestSetup {
     }
 
     @Test
-    @Order(5)
     public void deleteASkillTest() {
         createASkillTest();
         baseURI = format("%s%s", BASE_URL, DELETE_SKILL_ENDPOINT);
 
-        Response response = deleteSkill(cookie, skill.getId());
+        Response response = deleteSkillApi(cookie, skill.getId());
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);

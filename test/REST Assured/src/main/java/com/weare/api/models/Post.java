@@ -1,8 +1,8 @@
-package com.weare.api.Models;
+package com.weare.api.models;
 
 
 import com.github.javafaker.Faker;
-import com.weare.api.Utils.Constants;
+import com.weare.api.utils.Constants;
 
 
 public class Post {

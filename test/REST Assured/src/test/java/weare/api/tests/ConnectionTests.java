@@ -1,10 +1,10 @@
 package weare.api.tests;
 
 import base.BaseTestSetup;
-import com.weare.api.Models.UserC;
-import com.weare.api.Services.ConnectionService;
-import com.weare.api.Services.UserServiceC;
-import com.weare.api.Utils.AssertHelper;
+import com.weare.api.models.UserC;
+import com.weare.api.services.ConnectionService;
+import com.weare.api.services.UserServiceC;
+import com.weare.api.utils.AssertHelper;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
@@ -16,7 +16,7 @@ import org.junit.jupiter.api.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static com.weare.api.Utils.Endpoints.*;
+import static com.weare.api.utils.Endpoints.*;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;

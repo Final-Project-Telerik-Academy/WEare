@@ -1,4 +1,4 @@
-package com.weare.api.Utils;
+package com.weare.api.utils;
 
 public class JSONRequests {
     public static final String REGISTRATION = "{\n" +

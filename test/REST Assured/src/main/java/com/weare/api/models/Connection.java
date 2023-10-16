@@ -1,4 +1,4 @@
-package com.weare.api.Models;
+package com.weare.api.models;
 
 public class Connection {
 

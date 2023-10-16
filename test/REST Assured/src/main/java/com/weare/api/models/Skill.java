@@ -1,7 +1,6 @@
-package com.weare.api.Models;
+package com.weare.api.models;
 
 import com.github.javafaker.Faker;
-import com.weare.api.Utils.Constants;
 
 
 public class Skill {
