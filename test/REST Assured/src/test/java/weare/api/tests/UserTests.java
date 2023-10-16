@@ -115,6 +115,7 @@ public class UserTests extends BaseTestSetup {
     @Order(5)
 //    @Test(priority = 5)
     public void searchUserPostsTest() {
+        createPostTest();
         String formattedEndpoint = format(SEARCH_USER_POSTS_ENDPOINT, userId) ;
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
 
@@ -122,12 +123,12 @@ public class UserTests extends BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
-/*
+
         //no post id and post content problem
-      *//*  String resPostId = response.getBody().jsonPath().getString("[0].postId");
-        Assert.assertEquals(Integer.parseInt(resPostId), postId, "Incorrect user's post ID");
+        String resPostId = response.getBody().jsonPath().getString("[0].postId");
+        Assertions.assertEquals(Integer.parseInt(resPostId), postId, "Incorrect user's post ID");
         String postContent = response.getBody().jsonPath().getString("[0].content");
-        Assert.assertEquals(postContent, Constants.CONTENT_POST, "The content of the post is not the same.");*/
+        Assertions.assertEquals(postContent, Constants.CONTENT_POST, "The content of the post is not the same.");
     }
 
     @Test

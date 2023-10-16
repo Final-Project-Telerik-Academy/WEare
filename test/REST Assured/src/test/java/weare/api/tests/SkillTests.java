@@ -75,7 +75,6 @@ public class SkillTests extends BaseTestSetup {
         String skillName = response.getBody().jsonPath().get("[0].skill");
         Integer categoryId = response.getBody().jsonPath().get("[0].category.id");
         String categoryName = response.getBody().jsonPath().get("[0].category.name");
-
         AssertHelper.assertSkillIdNotNull(skillId);
         AssertHelper.assertSkillNameNotNull(skillName);
         AssertHelper.assertCategoryIdsMatch(categoryId, Constants.CATEGORY_ID);
