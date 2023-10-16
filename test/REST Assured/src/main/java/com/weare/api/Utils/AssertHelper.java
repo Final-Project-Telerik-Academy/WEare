@@ -1,4 +1,5 @@
 package com.weare.api.Utils;
+import org.json.JSONObject;
 import org.junit.jupiter.api.Assertions;
 
 public class AssertHelper {
@@ -49,6 +50,36 @@ public class AssertHelper {
     }
     public static void assertSkillIdMatches(Integer expectedSkillId, Integer actualSkillId) {
         Assertions.assertEquals(expectedSkillId, actualSkillId, "Invalid skill ID.");
+    }
+    public static void assertUsername(String expected, String actual) {
+        Assertions.assertEquals(expected, actual, "Username does not match the expected value");
+    }
+
+    public static void assertPositiveUserId(int userId) {
+        Assertions.assertTrue(userId > 0, "The user ID should be a positive integer");
+    }
+
+    public static void assertUserCreationResponse(String expected, String actual) {
+        Assertions.assertEquals(expected, actual, "Response body does not match the expected value");
+    }
+
+    public static void assertNotEmptyResponse(String responseBody) {
+        Assertions.assertFalse(responseBody.trim().isEmpty());
+    }
+
+    public static void assertValidStatusCode(boolean isValidStatusCode) {
+        Assertions.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
+    }
+
+    public static void assertResponseBodyEquals(String expected, String actual) {
+        Assertions.assertEquals(expected, actual, "Response body does not match the expected value.");
+    }
+    public static void assertRequestApprovalResponse(String expected, String actual) {
+        Assertions.assertEquals(expected, actual, "Response body does not match the expected value");
+    }
+
+    public static void assertJsonFieldExists(JSONObject jsonObject, String fieldName, String errorMessage) {
+        Assertions.assertTrue(jsonObject.has(fieldName), errorMessage);
     }
 }
 
