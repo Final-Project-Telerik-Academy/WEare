@@ -19,11 +19,11 @@ public class ResponseHelper {
                 .post();
     }
 
-    public static Response getUserById(Cookie cookie, User user) {
+    public static Response getUserById(Cookie cookie, String username) {
         return given()
                 .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
-                .queryParam("principal", user.getUsername())
+                .queryParam("principal", username)
                 .when()
                 .get();
     }

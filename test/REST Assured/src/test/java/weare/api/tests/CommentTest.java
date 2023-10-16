@@ -37,6 +37,7 @@ public class CommentTest extends BaseTestSetup {
     }
 
     @AfterEach
+//    @AfterMethod
     public void tearDownAfterTest() {
         logout();
     }
@@ -123,6 +124,7 @@ public class CommentTest extends BaseTestSetup {
        AssertHelper.assertStatusCode(statusCode,SC_OK);
 
     }
+//    @Test(priority = 4,dependsOnMethods = "createComment")
     @Test
     @Order(4)
     public void editComment() {

@@ -31,7 +31,7 @@ public class PostTest extends BaseTestSetup {
     protected static CommentService commentService;
     protected Integer userId;
 
-    //    @BeforeMethod
+
     @BeforeEach
     public void setupTest() {
         register();
@@ -39,15 +39,12 @@ public class PostTest extends BaseTestSetup {
     }
 
     @AfterEach
-//    @AfterMethod
     public void tearDownAfterTest() {
         logout();
     }
 
-
     @Test
     @Order(1)
-//    @Test (priority = 1)
     public void createPrivatePost() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
         post = new Post();
@@ -74,9 +71,9 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertContentTypeNotNull(ContentType.JSON);
         AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
+
     @Test
     @Order(2)
-//    @Test(priority = 2)
     public void createPublicPost() {
 
 
@@ -107,7 +104,6 @@ public class PostTest extends BaseTestSetup {
     }
     @Test
     @Order(2)
-//    @Test(priority = 2,dependsOnMethods = "createPublicPost")
     public void editPost() {
 
         createPublicPost();
@@ -118,7 +114,6 @@ public class PostTest extends BaseTestSetup {
         String editJsonBody = PostService.editPostRequest(post);
 
         Response response = given()
-                // .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("postId", POST_ID)
@@ -132,7 +127,6 @@ public class PostTest extends BaseTestSetup {
     }
     @Test
     @Order(3)
-//    @Test(priority = 3)
     public void getPost() {
         baseURI = format("%s%s", BASE_URL, GET_POST);
 
@@ -150,7 +144,6 @@ public class PostTest extends BaseTestSetup {
     }
     @Test
     @Order(4)
-//    @Test(priority = 4,dependsOnMethods = "createPublicPost")
     public void likePost() {
         baseURI = format("%s%s", BASE_URL, LIKE_POST);
 
@@ -167,9 +160,8 @@ public class PostTest extends BaseTestSetup {
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
      AssertHelper.assertStatusCode(statusCode,SC_OK);
-
     }
-//    @Test(priority = 5)
+
     @Test
     @Order(5)
     public void dislikePost() {
@@ -194,7 +186,6 @@ public class PostTest extends BaseTestSetup {
     @Test
     @Order(6)
     public void createComment() {
-
         baseURI = format("%s%s", BASE_URL, CREATE_COMMENT_ENDPOINT);
         commentService = new CommentService();
         comment = new Comment();
@@ -229,7 +220,6 @@ public class PostTest extends BaseTestSetup {
     }
     @Test
     @Order(7)
-//    @Test(priority = 7)
     public void showComment() {
         baseURI = format("%s%s", BASE_URL, SHOW_COMMENT);
 
@@ -248,8 +238,7 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode,SC_OK);
 
     }
-   // @AfterClass
-/*    @Test(priority = 8)*/
+
    @Test
    @Order(8)
     public void deletePost() {
@@ -269,8 +258,6 @@ public class PostTest extends BaseTestSetup {
         System.out.println(responseBody);
 
         AssertHelper.assertStatusCode(statusCode,SC_OK);
-
     }
-
 }
 
