@@ -56,8 +56,7 @@ public class PostTest extends BaseTestSetup {
         Response response = given()
 
                 .contentType(ContentType.JSON)
-                .cookie("JSESSIONID", cookie.getValue()) // Use the saved authentication cookie
-                // .cookie(cookie.getName(), cookie.getValue())
+                .cookie("JSESSIONID", cookie.getValue())
                 .body(postJsonBody)
                 .when()
                 .post();
