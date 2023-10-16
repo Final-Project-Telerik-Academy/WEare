@@ -6,8 +6,6 @@ import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 
-import static com.weare.api.utils.Constants.COMMENT_ID;
-import static com.weare.api.utils.Constants.POST_ID;
 import static io.restassured.RestAssured.given;
 
 public class CommentService {

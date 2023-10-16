@@ -17,6 +17,5 @@ public class Comment {
     public Comment(){
         this.content= faker.lorem().sentence();
         this.postId=Constants.POST_ID;
-
     }
 }

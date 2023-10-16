@@ -1,8 +1,7 @@
 package com.weare.api.models;
-
 import com.weare.api.utils.Constants;
-
 import com.github.javafaker.Faker;
+
 import lombok.Getter;
 import lombok.Setter;
     @Getter
@@ -49,6 +48,7 @@ public class User {
         }
         return generatedUsername;
     }
+
     private boolean isValidUsername(String username) {
         for (char c : username.toCharArray()) {
             if (Character.isWhitespace(c) || c == '.') {
@@ -58,7 +58,6 @@ public class User {
 
         return username.matches("^[a-zA-Z]+$");
     }
-
     public String getFullName() {
         return getFirstName() + " " + getLastName();
     }

@@ -1,7 +1,5 @@
 package com.weare.api.utils;
 
-import static java.lang.String.format;
-
 public class Endpoints {
     public static final String BASE_URL="http://localhost:8081";
     public static final String AUTH_ENDPOINT = "/authenticate";

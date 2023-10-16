@@ -1,13 +1,11 @@
 package com.weare.api.services;
 
-import com.google.gson.Gson;
 import com.weare.api.models.Post;
 import com.weare.api.utils.JSONRequests;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import io.restassured.http.Cookie;
+import io.restassured.response.Response;
 
-import static com.weare.api.utils.Constants.POST_ID;
 import static io.restassured.RestAssured.given;
 
 public class PostService {
