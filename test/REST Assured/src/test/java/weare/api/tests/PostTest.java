@@ -5,6 +5,7 @@ import com.weare.api.Models.Comment;
 import com.weare.api.Models.Post;
 import com.weare.api.Services.CommentService;
 import com.weare.api.Services.PostService;
+import com.weare.api.Utils.AssertHelper;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
@@ -48,7 +49,18 @@ public class PostTest extends BaseTestSetup {
         Assert.assertEquals(statusCode, SC_MOVED_TEMPORARILY, "Cookie status code is correct");
     }*/
 
+    @BeforeEach
+//    @BeforeMethod
+    public void setupTest() {
+        register();
+        login();
+    }
 
+    @AfterEach
+//    @AfterMethod
+    public void tearDownAfterTest() {
+        logout();
+    }
     @Test
     @Order(1)
 //    @Test (priority = 1)
@@ -77,12 +89,9 @@ public class PostTest extends BaseTestSetup {
         System.out.println(responseBody);
         int statusCode = response.getStatusCode();
 
-        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-        Assertions.assertFalse(privatePost,"This post is not a public");
-        Assertions.assertNotNull(ContentType.JSON);
-        Assertions.assertEquals(contentPost, post.getContent());
-
-
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        AssertHelper.assertContentTypeNotNull(ContentType.JSON);
+        AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
     @Test
     @Order(2)
@@ -110,16 +119,18 @@ public class PostTest extends BaseTestSetup {
         String contentPost=response.getBody().jsonPath().get("content");
         Boolean privatePost=response.getBody().jsonPath().get("public");
         System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-        Assertions.assertTrue(privatePost,"This post is not a public");
-        Assertions.assertNotNull(ContentType.JSON);
-        Assertions.assertEquals(contentPost, post.getContent());
+
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        AssertHelper.assertPostIsPrivate(privatePost);
+        AssertHelper.assertContentTypeNotNull(ContentType.JSON);
+        AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
     @Test
     @Order(2)
 //    @Test(priority = 2,dependsOnMethods = "createPublicPost")
     public void editPost() {
 
+        createPublicPost();
 
         baseURI = format("%s%s", BASE_URL, EDIT_POST);
         PostService postService = new PostService();
@@ -136,7 +147,8 @@ public class PostTest extends BaseTestSetup {
                 .put();
 
         int statusCode = response.getStatusCode();
-        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+        AssertHelper.assertStatusCode(statusCode,SC_OK);
+
     }
     @Test
     @Order(3)
@@ -154,8 +166,7 @@ public class PostTest extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-
+     AssertHelper.assertStatusCode(statusCode,SC_OK);
     }
     @Test
     @Order(4)
@@ -175,7 +186,7 @@ public class PostTest extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+     AssertHelper.assertStatusCode(statusCode,SC_OK);
 
     }
 //    @Test(priority = 5)
@@ -195,7 +206,8 @@ public class PostTest extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+       AssertHelper.assertStatusCode(statusCode,SC_OK);
 
     }
 //    @Test(priority = 6 ,dependsOnMethods = "createPublicPost")
@@ -224,10 +236,13 @@ public class PostTest extends BaseTestSetup {
         String responseBody = response.getBody().asString();
         String contentComment=response.getBody().jsonPath().get("content");
         int statusCode = response.getStatusCode();
-        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-        Assertions.assertNotNull(ContentType.JSON);
-        Assertions.assertEquals(contentComment, comment.getContent(),"Content does not match");
         System.out.println(responseBody);
+
+        AssertHelper.assertStatusCode(statusCode,SC_OK);
+       AssertHelper.assertContentTypeNotNull(ContentType.JSON);
+       AssertHelper.assertPositiveUserId(userId);
+      AssertHelper.assertContentEquals(contentComment,comment.getContent());
+
     }
     @Test
     @Order(7)
@@ -246,7 +261,8 @@ public class PostTest extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+        AssertHelper.assertStatusCode(statusCode,SC_OK);
 
     }
    // @AfterClass
@@ -254,6 +270,7 @@ public class PostTest extends BaseTestSetup {
    @Test
    @Order(8)
     public void deletePost() {
+       createPublicPost();
         baseURI = format("%s%s", BASE_URL, DELETE_POST);
 
         Response response = given()
@@ -267,7 +284,8 @@ public class PostTest extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+
+        AssertHelper.assertStatusCode(statusCode,SC_OK);
 
     }
 
