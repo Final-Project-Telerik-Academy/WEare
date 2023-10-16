@@ -1,5 +1,5 @@
 package com.weare.api.Utils;
-import com.weare.api.Models.User;
+import com.weare.api.Models.*;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
@@ -62,5 +62,47 @@ public class ResponseHelper {
                 .body(updateUserExpertiseBody)
                 .when()
                 .post();
+    }
+
+    public static Response createASkill(String createSkillBody, Cookie cookie) {
+        return given()
+                .cookie(cookie.getName(), cookie.getValue())
+                .contentType(ContentType.JSON)
+                .body(createSkillBody)
+                .when()
+                .post();
+    }
+
+    public static Response getSkill(Cookie cookie) {
+        return given()
+                .contentType(ContentType.JSON)
+                .cookie(cookie.getName(), cookie.getValue())
+                .when()
+                .get();
+    }
+
+    public static Response editASkill(Cookie cookie, String skillName, Integer skillId) {
+        return given()
+                .cookie(cookie.getName(), cookie.getValue())
+                .contentType(ContentType.JSON)
+                .queryParam("skill", skillName)
+                .queryParam("skillId", skillId)
+                .put();
+    }
+
+    public static Response getOneSKill(Cookie cookie, Integer skillId) {
+        return given()
+                .cookie(cookie.getName(), cookie.getValue())
+                .contentType(ContentType.JSON)
+                .queryParam("skillId", skillId)
+                .get();
+    }
+
+    public static Response deleteSkill(Cookie cookie, Integer skillId) {
+        return given()
+                .cookie(cookie.getName(), cookie.getValue())
+                .contentType(ContentType.JSON)
+                .queryParam("skillId", skillId)
+                .put();
     }
 }
