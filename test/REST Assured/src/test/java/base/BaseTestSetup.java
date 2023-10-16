@@ -7,8 +7,7 @@ import com.weare.api.Models.User;
 import com.weare.api.Services.UserService;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
-import org.testng.Assert;
-import org.testng.annotations.*;
+import org.junit.jupiter.api.*;
 
 import io.restassured.RestAssured;
 import io.restassured.config.EncoderConfig;
@@ -20,6 +19,9 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.*;
+
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
 
 public class BaseTestSetup {
     protected String username;
@@ -46,8 +48,8 @@ public class BaseTestSetup {
         String responseBody = response.getBody().asString();
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
-        Assert.assertFalse(responseBody.trim().isEmpty());
+        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+        Assertions.assertFalse(responseBody.trim().isEmpty());
 
         String regex = "name (\\w+)(.*)id (\\d+)";
         Matcher matcher = Pattern.compile(regex).matcher(responseBody);
@@ -58,8 +60,8 @@ public class BaseTestSetup {
 
         user.setUserId(userId);
 
-        Assert.assertEquals(username, user.getUsername(), "Username does not match expected value");
-        Assert.assertTrue(userId > 0, "The user ID should be a positiveinteger");
+        Assertions.assertEquals(username, user.getUsername(), "Username does not match expected value");
+        Assertions.assertTrue(userId > 0, "The user ID should be a positiveinteger");
         System.out.println(response.asString());
     }
 
@@ -78,7 +80,7 @@ public class BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
-        Assert.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
+        Assertions.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
         System.out.println("User 1 authenticated successfully - Username: " + user.getUsername() + " - Cookie: " + cookie.getValue());
     }
 
@@ -94,8 +96,9 @@ public class BaseTestSetup {
      * Provided configuration resolve REST Assured issue with a POST request without request body.
      * Missing configuration leads to response status code 415 (Unsupported Media Type)
      */
-    @BeforeSuite
-    public void setup() {
+//    @BeforeSuite
+    @BeforeAll
+    public static void setup() {
         EncoderConfig encoderConfig = RestAssured.config().getEncoderConfig()
             .appendDefaultContentCharsetToContentTypeIfUndefined(false);
 

@@ -8,10 +8,7 @@ import com.weare.api.Utils.Constants;
 import com.weare.api.Utils.JSONRequests;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.Test;
+import org.junit.jupiter.api.*;
 import com.weare.api.Utils.AssertHelper;
 
 import static com.weare.api.Utils.Constants.POST_ID;
@@ -20,21 +17,27 @@ import static io.restassured.RestAssured.*;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
 
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+
 public class UserTests extends BaseTestSetup {
     private Integer postId;
 
-    @BeforeMethod
+    @BeforeEach
+//    @BeforeMethod
     public void setupTest() {
         register();
         login();
     }
 
-    @AfterMethod
+    @AfterEach
+//    @AfterMethod
     public void tearDownAfterTest() {
         logout();
     }
 
-    @Test(priority = 1)
+    @Test
+    @Order(1)
+//    @Test(priority = 1)
     public void updatePersonalProfileTest() {
         String formattedEndpoint = String.format(UPDATE_PERSONAL_PROFILE_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL,formattedEndpoint);
@@ -52,7 +55,9 @@ public class UserTests extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
-    @Test(priority = 2)
+    @Test
+    @Order(2)
+//    @Test(priority = 2)
     public void getUserByIdTest() {
         String formattedEndpoint = String.format(USER_BY_ID_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
@@ -76,7 +81,9 @@ public class UserTests extends BaseTestSetup {
         AssertHelper.assertEmailEquals(resEmail, user.getEmail());
     }
 
-    @Test(priority = 3)
+    @Test
+    @Order(3)
+//    @Test(priority = 3)
     public void searchByUserTest() {
         baseURI = format("%s%s", BASE_URL, SEARCH_USER_ENDPOINT);
         String searchUserBody = UserService.generateSearchUserRequest(user);
@@ -98,7 +105,9 @@ public class UserTests extends BaseTestSetup {
         AssertHelper.assertUsernameEquals(resUsername, user.getUsername());
     }
 
-    @Test(priority = 4)
+    @Test
+    @Order(4)
+//    @Test(priority = 4)
     public void createPostTest() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
         PostService postService = new PostService();
@@ -125,7 +134,9 @@ public class UserTests extends BaseTestSetup {
         AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
 
-    @Test(priority = 5)
+    @Test
+    @Order(5)
+//    @Test(priority = 5)
     public void searchUserPostsTest() {
         String formattedEndpoint = format(SEARCH_USER_POSTS_ENDPOINT, userId) ;
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
@@ -148,7 +159,9 @@ public class UserTests extends BaseTestSetup {
         Assert.assertEquals(postContent, Constants.CONTENT_POST, "The content of the post is not the same.");*/
     }
 
-    @Test(priority = 6)
+    @Test
+    @Order(6)
+//    @Test(priority = 6)
     public void updateUserExpertiseTest() {
         String formattedString = format(UPDATE_USER_EXPERTISE_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL, formattedString);
@@ -163,7 +176,7 @@ public class UserTests extends BaseTestSetup {
                 .post();
 
         int statusCode = response.getStatusCode();
-        Assert.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
         Integer resUserId = response.getBody().jsonPath().get("id");
         Integer resCategoryId = response.getBody().jsonPath().get("category.id");
