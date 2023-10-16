@@ -65,7 +65,7 @@ public class ConnectionTests extends BaseTestSetup {
         AssertHelper.assertUsername(user.getUsername(), user.getUsername());
         AssertHelper.assertPositiveUserId(user.getUserId());
         String expectedResponseBody = String.format("User with name %s and id %d was created", user.getUsername(), user.getUserId());
-        AssertHelper.assertUserCreationResponse(expectedResponseBody, responseBody);
+        AssertHelper.assertResponseBodyEquals(expectedResponseBody, responseBody);
         AssertHelper.assertNotEmptyResponse(responseBody);
 
         System.out.println(response.asString());
@@ -100,7 +100,7 @@ public class ConnectionTests extends BaseTestSetup {
         AssertHelper.assertUsername(user.getUsername(), user.getUsername());
         AssertHelper.assertPositiveUserId(user.getUserId());
         String expectedResponseBody = String.format("User with name %s and id %d was created", user2.getUsername(), user2.getUserId());
-        AssertHelper.assertUserCreationResponse(expectedResponseBody, responseBody);
+        AssertHelper.assertResponseBodyEquals(expectedResponseBody, responseBody);
         AssertHelper.assertNotEmptyResponse(responseBody);
         System.out.println(response.asString());
     }
@@ -172,8 +172,7 @@ public class ConnectionTests extends BaseTestSetup {
         String responseBody = response.getBody().asString();
 
         int statusCode = response.getStatusCode();
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
         String expectedResponseBody = String.format("%s send friend request to %s", user.getUsername(), user2.getUsername());
         AssertHelper.assertResponseBodyEquals(expectedResponseBody, responseBody);
     }
@@ -192,7 +191,7 @@ public class ConnectionTests extends BaseTestSetup {
         System.out.println(response.asString());
 
         int statusCode = response.getStatusCode();
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
 
         JSONArray jsonArray = new JSONArray(response.asString());
 
@@ -202,10 +201,10 @@ public class ConnectionTests extends BaseTestSetup {
 
             JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-            AssertHelper.assertJsonFieldExists(jsonObject, "id", "Field 'id' not found in the response.");
-            AssertHelper.assertJsonFieldExists(jsonObject, "approved", "Field 'approved' not found in the response.");
-            AssertHelper.assertJsonFieldExists(jsonObject, "seen", "Field 'seen' not found in the response.");
-            AssertHelper.assertJsonFieldExists(jsonObject, "timeStamp", "Field 'timeStamp' not found in the response.");
+            AssertHelper.assertJsonFieldExists(jsonObject, "id");
+            AssertHelper.assertJsonFieldExists(jsonObject, "approved");
+            AssertHelper.assertJsonFieldExists(jsonObject, "seen");
+            AssertHelper.assertJsonFieldExists(jsonObject, "timeStamp");
         } else {
             System.out.println("No items found in the response or ID not found.");
         }
