@@ -37,7 +37,6 @@ public class CommentTest extends BaseTestSetup {
     }
 
     @AfterEach
-//    @AfterMethod
     public void tearDownAfterTest() {
         logout();
     }
@@ -59,14 +58,10 @@ public class CommentTest extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         Assertions.assertEquals(statusCode, SC_MOVED_TEMPORARILY, "Cookie status code is correct");
     }
-//    @BeforeMethod
-//    @Test(priority = 1)
 
     @Test
     @Order(1)
     public void createPost() {
-
-
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
         post = new Post();
 
@@ -92,7 +87,7 @@ public class CommentTest extends BaseTestSetup {
         Assertions.assertEquals(contentPost, post.getContent());
 
     }
-//    @Test(priority = 2)
+
     @Test
     @Order(2)
     public void createComment() {
@@ -123,9 +118,8 @@ public class CommentTest extends BaseTestSetup {
         Assertions.assertNotNull(ContentType.JSON);
         Assertions.assertEquals(contentComment, comment.getContent(),"Content does not match");
         System.out.println(responseBody);
-
     }
-//    @Test(priority = 3)
+
     @Test
     @Order(3)
     public void getComment() {
@@ -203,7 +197,7 @@ public class CommentTest extends BaseTestSetup {
         Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
     }
-//    @Test(priority = 7)
+
     @Test
     @Order(7)
     public void getAllComment() {
@@ -222,7 +216,7 @@ public class CommentTest extends BaseTestSetup {
         Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
     }
-//    @Test(priority = 8)
+
     @Test
     @Order(8)
     public void getOneComment() {
@@ -260,7 +254,7 @@ public class CommentTest extends BaseTestSetup {
         Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
     }
-//    @Test(priority = 10)
+
     @Test
     @Order(10)
     public void deletePost() {
@@ -278,6 +272,5 @@ public class CommentTest extends BaseTestSetup {
         String responseBody = response.getBody().asString();
         System.out.println(responseBody);
         Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
-
     }
 }

@@ -41,7 +41,6 @@ public class UserTests extends BaseTestSetup {
 
     @Test
     @Order(1)
-//    @Test(priority = 1)
     public void updatePersonalProfileTest() {
         String formattedEndpoint = String.format(UPDATE_PERSONAL_PROFILE_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL,formattedEndpoint);
@@ -55,7 +54,6 @@ public class UserTests extends BaseTestSetup {
 
     @Test
     @Order(2)
-//    @Test(priority = 2)
     public void getUserByIdTest() {
         String formattedEndpoint = String.format(USER_BY_ID_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
@@ -76,7 +74,6 @@ public class UserTests extends BaseTestSetup {
 
     @Test
     @Order(3)
-//    @Test(priority = 3)
     public void searchByUserTest() {
         baseURI = format("%s%s", BASE_URL, SEARCH_USER_ENDPOINT);
 
@@ -95,7 +92,6 @@ public class UserTests extends BaseTestSetup {
 
     @Test
     @Order(4)
-//    @Test(priority = 4)
     public void createPostTest() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
         post = new Post();
@@ -116,7 +112,6 @@ public class UserTests extends BaseTestSetup {
 
     @Test
     @Order(5)
-//    @Test(priority = 5)
     public void searchUserPostsTest() {
         createPostTest();
         String formattedEndpoint = format(SEARCH_USER_POSTS_ENDPOINT, userId) ;
@@ -136,7 +131,6 @@ public class UserTests extends BaseTestSetup {
 
     @Test
     @Order(6)
-//    @Test(priority = 6)
     public void updateUserExpertiseTest() {
         String formattedString = format(UPDATE_USER_EXPERTISE_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL, formattedString);
@@ -148,7 +142,6 @@ public class UserTests extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
 
-        String resBody = response.getBody().asString();
         Integer resUserId = response.getBody().jsonPath().get("id");
         Integer resCategoryId = response.getBody().jsonPath().get("category.id");
         Float availability = response.getBody().jsonPath().get("availability");

@@ -22,7 +22,7 @@ import static org.apache.http.HttpStatus.SC_OK;
 
 public class SkillTests extends BaseTestSetup {
     private Skill skill = new Skill();
-//    @BeforeMethod
+
     @BeforeEach
     public void setupTest() {
         register();
@@ -30,14 +30,12 @@ public class SkillTests extends BaseTestSetup {
     }
 
     @AfterEach
-//    @AfterMethod
     public void tearDownAfterTest() {
         logout();
     }
 
     @Test
     @Order(1)
-//    @Test(priority = 1)
     public void createASkillTest() {
         baseURI = format("%s%s", BASE_URL, CREATE_SKILL_ENDPOINT);
 
@@ -83,7 +81,6 @@ public class SkillTests extends BaseTestSetup {
 
     @Test
     @Order(3)
-//    @Test(priority = 3)
     public void editASkillTest() {
         createASkillTest();
         baseURI = format("%s%s", BASE_URL, EDIT_SKILL_ENDPOINT);
@@ -97,7 +94,6 @@ public class SkillTests extends BaseTestSetup {
 
     @Test
     @Order(4)
-//    @Test(priority = 4)
     public void getOneSkillTest() {
         createASkillTest();
         baseURI = format("%s%s", BASE_URL, GET_ONE_SKILL_ENDPOINT);
@@ -120,7 +116,6 @@ public class SkillTests extends BaseTestSetup {
 
     @Test
     @Order(5)
-//    @Test(priority = 5)
     public void deleteASkillTest() {
         createASkillTest();
         baseURI = format("%s%s", BASE_URL, DELETE_SKILL_ENDPOINT);
