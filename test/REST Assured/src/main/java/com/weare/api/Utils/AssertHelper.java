@@ -59,12 +59,8 @@ public class AssertHelper {
         Assertions.assertTrue(userId > 0, "The user ID should be a positive integer");
     }
 
-    public static void assertUserCreationResponse(String expected, String actual) {
-        Assertions.assertEquals(expected, actual, "Response body does not match the expected value");
-    }
-
     public static void assertNotEmptyResponse(String responseBody) {
-        Assertions.assertFalse(responseBody.trim().isEmpty());
+        Assertions.assertFalse(responseBody.trim().isEmpty(), "Response body should not be empty.");
     }
 
     public static void assertValidStatusCode(boolean isValidStatusCode) {
@@ -74,12 +70,9 @@ public class AssertHelper {
     public static void assertResponseBodyEquals(String expected, String actual) {
         Assertions.assertEquals(expected, actual, "Response body does not match the expected value.");
     }
-    public static void assertRequestApprovalResponse(String expected, String actual) {
-        Assertions.assertEquals(expected, actual, "Response body does not match the expected value");
-    }
 
-    public static void assertJsonFieldExists(JSONObject jsonObject, String fieldName, String errorMessage) {
-        Assertions.assertTrue(jsonObject.has(fieldName), errorMessage);
+    public static void assertJsonFieldExists(JSONObject jsonObject, String fieldName) {
+        Assertions.assertTrue(jsonObject.has(fieldName), " Field '" + fieldName + "' not found in the response.");
     }
 }
 
