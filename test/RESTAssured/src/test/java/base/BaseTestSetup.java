@@ -37,7 +37,7 @@ public class BaseTestSetup {
         username = user.getUsername();
         password = user.getPassword();
 
-        String registrationJsonBody = UserService.generateRegistrationRequest(user);
+        String registrationJsonBody = UserService.registrationRequest(user);
 
         Response response = given()
                 .contentType(ContentType.JSON)

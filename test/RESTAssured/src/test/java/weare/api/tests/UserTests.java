@@ -16,8 +16,13 @@ import static com.weare.api.services.UserService.*;
 import static com.weare.api.utils.Constants.POST_ID;
 import static com.weare.api.utils.Endpoints.*;
 import static io.restassured.RestAssured.baseURI;
+import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
+
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
@@ -35,19 +40,24 @@ public class UserTests extends BaseTestSetup {
     public void tearDownAfterTest() {
         logout();
     }
-
+    @Feature("User Profile")
+    @Story("Update personal profile")
+    @Description("Test to verify that a user can successfully update their personal profile.")
     @Test
     public void updatePersonalProfileTest() {
         String formattedEndpoint = String.format(UPDATE_PERSONAL_PROFILE_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL,formattedEndpoint);
 
-        String updateUserBody = UserService.generateUpdatePersonalProfile(user);
+        String updateUserBody = UserService.updateProfileRequest(user);
         Response response = searchByUserApi(updateUserBody, cookie);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
+    @Feature("User Search")
+    @Story("Retrieve user by ID")
+    @Description("Test to verify that a user can be retrieved by their unique ID.")
     @Test
     public void getUserByIdTest() {
         String formattedEndpoint = String.format(USER_BY_ID_ENDPOINT, userId);
@@ -67,6 +77,9 @@ public class UserTests extends BaseTestSetup {
         AssertHelper.assertEmailEquals(resEmail, user.getEmail());
     }
 
+    @Feature("User Search")
+    @Story("Search user by username")
+    @Description("Test to verify that users can be searched by their username.")
     @Test
     public void searchByUserTest() {
         baseURI = format("%s%s", BASE_URL, SEARCH_USER_ENDPOINT);
@@ -84,6 +97,9 @@ public class UserTests extends BaseTestSetup {
         AssertHelper.assertUsernameEquals(resUsername, user.getUsername());
     }
 
+    @Feature("User Posts")
+    @Story("Create new post")
+    @Description("Test to verify that a user can create a new post.")
     @Test
     public void createPostTest() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
@@ -104,6 +120,9 @@ public class UserTests extends BaseTestSetup {
         AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
 
+    @Feature("User Posts")
+    @Story("Search user's posts")
+    @Description("Test to verify that a user's posts can be searched and retrieved.")
     @Test
     public void searchUserPostsTest() {
         createPostTest();
@@ -121,6 +140,9 @@ public class UserTests extends BaseTestSetup {
         Assertions.assertEquals(postContent, post.getContent(), "The content of the post is not the same.");
     }
 
+    @Feature("User Profile Expertise")
+    @Story("Update user expertise")
+    @Description("Test to verify that a user can update their expertise profile.")
     @Test
     public void updateUserExpertiseTest() {
         String formattedString = format(UPDATE_USER_EXPERTISE_ENDPOINT, userId);

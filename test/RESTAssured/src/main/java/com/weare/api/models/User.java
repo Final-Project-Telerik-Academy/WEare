@@ -7,6 +7,7 @@ import lombok.Setter;
     @Getter
     @Setter
 public class User {
+    private Integer userId;
     private String username;
     private String password;
     private String email;
@@ -15,7 +16,7 @@ public class User {
     private String authority;
     private Integer categoryId;
     private String categoryName;
-    private Integer userId;
+
     private final Faker faker = new Faker();
 
     public User(){
