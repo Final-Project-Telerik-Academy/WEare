@@ -1,11 +1,15 @@
 package pages.weare;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 import static com.telerikacademy.testframework.RandomGenerator.*;
+import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
+import static java.lang.String.format;
 
 public class PersonalProfilePage extends BasePage {
 
@@ -14,6 +18,13 @@ public class PersonalProfilePage extends BasePage {
     private String lastName = generateRandomLastName();
 
     private String fullName = firstName + " " + lastName;
+    private final String randomName2 = generateRandomString(2);
+    private final String randomMessage = generateRandomMessage();
+    private final String skillOne=generateRandomMessage();
+    private final String skillTwo=generateRandomMessage();
+    private final String skillTree=generateRandomMessage();
+    private final String skillFour=generateRandomMessage();
+    private final String skillFive=generateRandomMessage();
 
 
     public PersonalProfilePage(WebDriver driver) {
@@ -82,6 +93,46 @@ public class PersonalProfilePage extends BasePage {
     private void fillFieldById(String locator, String value) {
         actions.waitForElementPresent(locator);
         actions.typeValueInField(value, locator);
+    }
+    public void editFirstNameWithTwoCharacters(){
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+        actions.waitForElementPresent("weare.editProfileButton");
+        actions.clickElement("weare.editProfileButton");
+        clearFirsNameField();
+        actions.waitForElementVisible("weare.firstName");
+        actions.typeValueInField(randomName2,"weare.firstName");
+        actions.hoverOverElement("weare.updateMyProfileFirstButton");
+        actions.waitForElementPresent("weare.updateMyProfileFirstButton");
+        actions.clickElement("weare.updateMyProfileFirstButton");
+
+    }
+    public void editLastNameWithTwoCharacters(){
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+        actions.waitForElementPresent("weare.editProfileButton");
+        actions.clickElement("weare.editProfileButton");
+        actions.waitForElementVisible("weare.lastName");
+        clearLastNameField();
+        actions.typeValueInField(randomName2,"weare.lastName");
+        actions.waitFor(500);
+        actions.hoverOverElement("weare.updateMyProfileFirstButton");
+        actions.waitForElementPresent("weare.updateMyProfileFirstButton");
+        actions.clickElement("weare.updateMyProfileFirstButton");
+    }
+    private void clearFirsNameField() {
+        WebElement emailInput = driver.findElement(By.id("nameE"));
+        emailInput.clear();
+    }
+    private void clearLastNameField() {
+        WebElement emailInput = driver.findElement(By.id("lastnameE"));
+        emailInput.clear();
+    }
+    public void assertFirstNameField(){
+        actions.assertElementPresent(format(getUIMappingByKey("weare.assertFirstNameField"), randomName2));
+    }
+    public void assertLastNameField(){
+        actions.assertElementPresent(format(getUIMappingByKey("weare.assertLastNameField"), randomName2));
     }
 }
 
