@@ -14,6 +14,10 @@ import static com.weare.api.utils.Endpoints.*;
 import static io.restassured.RestAssured.*;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
@@ -31,7 +35,9 @@ public class SkillTests extends BaseTestSetup {
     public void tearDownAfterTest() {
         logout();
     }
-
+    @Feature("Skills")
+    @Story("Create a skill")
+    @Description("Test to verify that a new skill can be created successfully.")
     @Test
     public void createASkillTest() {
         baseURI = format("%s%s", BASE_URL, CREATE_SKILL_ENDPOINT);
@@ -55,6 +61,9 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
 
+    @Feature("Skills")
+    @Story("Retrieve all skills")
+    @Description("Test to verify that all skills can be retrieved successfully.")
     @Test
 //    @Test(priority = 2)
     public void getSkillsTest() {
@@ -74,7 +83,9 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertCategoryIdsMatch(categoryId, Constants.CATEGORY_ID);
         AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
-
+    @Feature("Skills")
+    @Story("Edit a skill")
+    @Description("Test to verify that a skill can be edited successfully.")
     @Test
     public void editASkillTest() {
         createASkillTest();
@@ -86,7 +97,9 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertStatusCode(SC_OK, statusCode);
         AssertHelper.assertResponseBodyNotNull(response.getBody());
     }
-
+    @Feature("Skills")
+    @Story("Retrieve a single Skill")
+    @Description("Test to verify that a single skill can be retrieved by its unique ID.")
     @Test
     public void getOneSkillTest() {
         createASkillTest();
@@ -107,7 +120,9 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertCategoryIdsMatch(categoryId, Constants.CATEGORY_ID);
         AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
-
+    @Feature("Skill management")
+    @Story("Delete a skill")
+    @Description("Test to verify that a skill can be deleted successfully.")
     @Test
     public void deleteASkillTest() {
         createASkillTest();

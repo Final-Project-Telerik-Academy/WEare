@@ -140,7 +140,7 @@ public class UserTests extends BaseTestSetup {
         Assertions.assertEquals(postContent, post.getContent(), "The content of the post is not the same.");
     }
 
-    @Feature("User Profile Expertise")
+    @Feature("User Profile")
     @Story("Update user expertise")
     @Description("Test to verify that a user can update their expertise profile.")
     @Test
