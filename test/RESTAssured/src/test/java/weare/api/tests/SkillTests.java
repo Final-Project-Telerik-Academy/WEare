@@ -65,7 +65,6 @@ public class SkillTests extends BaseTestSetup {
     @Story("Retrieve all skills")
     @Description("Test to verify that all skills can be retrieved successfully.")
     @Test
-//    @Test(priority = 2)
     public void getSkillsTest() {
         baseURI = format("%s%s", BASE_URL, GET_SKILLS_ENPOINT);
 

@@ -22,6 +22,9 @@ import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_MOVED_TEMPORARILY;
 import static org.apache.http.HttpStatus.SC_OK;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
@@ -42,8 +45,10 @@ public class CommentTest extends BaseTestSetup {
         logout();
     }
 
+    @Feature("Posts")
+    @Story("Create a post")
+    @Description("Test to verify that a post can be created successfully.")
     @Test
-    @Order(1)
     public void createPost() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
         post = new Post();
@@ -62,8 +67,10 @@ public class CommentTest extends BaseTestSetup {
         AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
 
+    @Feature("Comments")
+    @Story("Create a comment")
+    @Description("Test to verify that a comment can be added to a post successfully.")
     @Test
-    @Order(2)
     public void createComment() {
         baseURI = format("%s%s", BASE_URL, CREATE_COMMENT_ENDPOINT);
         comment = new Comment();
@@ -83,8 +90,10 @@ public class CommentTest extends BaseTestSetup {
         AssertHelper.assertContentEquals(contentComment, comment.getContent());
     }
 
+    @Feature("Comments")
+    @Story("Retrieve a comment")
+    @Description("Test to verify that a comment can be retrieved successfully.")
     @Test
-    @Order(3)
     public void getComment() {
         baseURI = format("%s%s", BASE_URL, GET_COMMENT);
 
@@ -93,9 +102,12 @@ public class CommentTest extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
+
 //    @Test(priority = 4,dependsOnMethods = "createComment")
+    @Feature("Comments")
+    @Story("Edit a comment")
+    @Description("Test to verify that a comment can be edited successfully.")
     @Test
-    @Order(4)
     public void editComment() {
         baseURI = format("%s%s", BASE_URL, EDIT_COMMENT);
 
@@ -114,8 +126,10 @@ public class CommentTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 //    @Test(priority = 5,dependsOnMethods = "createComment")
+    @Feature("Comments")
+    @Story("Like a comment")
+    @Description("Test to verify that a comment can be liked successfully.")
     @Test
-    @Order(5)
     public void likeComment() {
         baseURI = format("%s%s", BASE_URL, LIKE_COMMENT);
 
@@ -125,8 +139,10 @@ public class CommentTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 //    @Test(priority = 6,dependsOnMethods = "likeComment")
+    @Feature("Comments")
+    @Story("Dislike a comment")
+    @Description("Test to verify that a comment can be disliked successfully.")
     @Test
-    @Order(6)
     public void dislikeComment() {
         baseURI = format("%s%s", BASE_URL, LIKE_COMMENT);
 
@@ -136,8 +152,10 @@ public class CommentTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
+    @Feature("Comments")
+    @Story("Retrieve all comments of a post")
+    @Description("Test to verify that all comments of a post can be retrieved successfully.")
     @Test
-    @Order(7)
     public void getAllComment() {
         baseURI = format("%s%s", BASE_URL, FIND_ALL_COMMENTS);
 
@@ -147,8 +165,10 @@ public class CommentTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
+    @Feature("Comment management")
+    @Story("Retrieve a single comment")
+    @Description("Test to verify that a single comment can be retrieved by its unique ID.")
     @Test
-    @Order(8)
     public void getOneComment() {
         baseURI = format("%s%s", BASE_URL, FIND_ONE_COMMENTS);
 
@@ -158,8 +178,10 @@ public class CommentTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 //    @Test(priority = 9,dependsOnMethods = "createComment")
+    @Feature("Comments")
+    @Story("Delete a comment")
+    @Description("Test to verify that a comment can be deleted successfully.")
     @Test
-    @Order(9)
     public void deleteComment() {
         baseURI = format("%s%s", BASE_URL, DELETE_COMMENTS);
 
@@ -171,8 +193,10 @@ public class CommentTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
+    @Feature("Posts")
+    @Story("Delete a post")
+    @Description("Test to verify that a post can be deleted successfully after all comment operations.")
     @Test
-    @Order(10)
     public void deletePost() {
         baseURI = format("%s%s", BASE_URL, DELETE_POST);
 

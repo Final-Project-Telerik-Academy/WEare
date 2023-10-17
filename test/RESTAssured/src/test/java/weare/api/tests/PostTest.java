@@ -19,6 +19,9 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
@@ -41,6 +44,9 @@ public class PostTest extends BaseTestSetup {
         logout();
     }
 
+    @Feature("Posts")
+    @Story("Create private post")
+    @Description("Test to verify that a private post can be created successfully.")
     @Test
     public void createPrivatePost() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
@@ -60,7 +66,9 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertContentTypeNotNull(ContentType.JSON);
         AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
-
+    @Feature("Posts")
+    @Story("Create public post")
+    @Description("Test to verify that a public post can be created successfully.")
     @Test
     public void createPublicPost() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
@@ -82,6 +90,9 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
 
+    @Feature("Posts")
+    @Story("Edit post")
+    @Description("Test to verify that a post can be edited successfully.")
     @Test
     public void editPost() {
         createPublicPost();
@@ -96,6 +107,9 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode,SC_OK);
     }
 
+    @Feature("Posts")
+    @Story("Retrieve post")
+    @Description("Test to verify that a post can be retrieved successfully.")
     @Test
     public void getPost() {
         baseURI = format("%s%s", BASE_URL, GET_POST);
@@ -105,7 +119,11 @@ public class PostTest extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode,SC_OK);
     }
+
 //    @Test(priority = 4,dependsOnMethods = "createPublicPost")
+    @Feature("Posts")
+    @Story("Like a post")
+    @Description("Test to verify that a post can be liked successfully.")
     @Test
     public void likePost() {
         baseURI = format("%s%s", BASE_URL, LIKE_POST);
@@ -116,6 +134,9 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode,SC_OK);
     }
 
+    @Feature("Posts")
+    @Story("Dislike a post")
+    @Description("Test to verify that a post can be disliked successfully.")
     @Test
     public void dislikePost() {
         baseURI = format("%s%s", BASE_URL, LIKE_POST);
@@ -127,7 +148,11 @@ public class PostTest extends BaseTestSetup {
 
         AssertHelper.assertStatusCode(statusCode,SC_OK);
     }
+
 //    @Test(priority = 6 ,dependsOnMethods = "createPublicPost")
+    @Feature("Comments")
+    @Story("Create comment on a Post")
+    @Description("Test to verify that a comment can be added to a post successfully.")
     @Test
     public void createComment() {
         baseURI = format("%s%s", BASE_URL, CREATE_COMMENT_ENDPOINT);
@@ -159,6 +184,9 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode,SC_OK);
     }
 
+    @Feature("Comments")
+    @Story("Retrieve comments of a post")
+    @Description("Test to verify that comments of a post can be retrieved successfully.")
     @Test
     public void deletePost() {
         createPublicPost();
