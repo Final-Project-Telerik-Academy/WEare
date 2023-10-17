@@ -17,7 +17,6 @@ import static com.weare.api.utils.Constants.*;
 import static com.weare.api.utils.Endpoints.*;
 import static com.weare.api.utils.Endpoints.SHOW_COMMENT;
 import static io.restassured.RestAssured.baseURI;
-import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
 import io.qameta.allure.Description;
@@ -102,7 +101,6 @@ public class PostTest extends BaseTestSetup {
         baseURI = format("%s%s", BASE_URL, EDIT_POST);
 
         String editJsonBody = PostService.editPostRequest(post);
-
         Response response = editPostApi(editJsonBody, cookie, POST_ID);
 
         int statusCode = response.getStatusCode();

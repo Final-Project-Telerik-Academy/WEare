@@ -41,6 +41,40 @@ public class ConnectionTests extends BaseTestSetup {
 
     @Test
     public void sendConnectionRequest() {
+        // Проверка на кукито
+        if (cookie == null || !cookie.getValue().startsWith(sender.getUserId().toString())) {
+            Assertions.fail("Invalid cookie for sender.");
+            return;
+        }
+
+        if (sender.getUserId().equals(receiver.getUserId())) {
+            Assertions.fail("Sender and receiver should be different users.");
+            return;
+        }
+
+        baseURI = format("%s%s", BASE_URL, SEND_REQUEST);
+
+        JSONObject sendRequestJsonBody = new JSONObject();
+        sendRequestJsonBody.put("id", receiver.getUserId());
+        sendRequestJsonBody.put("username", receiver.getUsername());
+
+        Response response = given()
+                .cookie("JSESSIONID", cookie.getValue())
+                .contentType("application/json")
+                .body(sendRequestJsonBody.toString())
+                .when()
+                .post();
+
+        String responseBody = response.getBody().asString();
+        int statusCode = response.getStatusCode();
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        String expectedResponseBody = String.format("%s send friend request to %s", sender.getUsername(), receiver.getUsername());
+        AssertHelper.assertResponseBodyEquals(expectedResponseBody, responseBody);
+    }
+
+
+/*    @Test
+    public void sendConnectionRequest() {
 
         baseURI = format("%s%s", BASE_URL, SEND_REQUEST);
 
@@ -65,7 +99,7 @@ public class ConnectionTests extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
         String expectedResponseBody = String.format("%s send friend request to %s", sender.getUsername(), receiver.getUsername());
         AssertHelper.assertResponseBodyEquals(expectedResponseBody, responseBody);
-    }
+    }*/
 
     @Test
     public void getUserRequests() {

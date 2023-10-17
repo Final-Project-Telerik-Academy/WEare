@@ -76,12 +76,12 @@ public class UserService {
                 .get();
     }
 
-    public static Response updateUserExpertiseApi(String updateUserExpertiseBody, Cookie cookie) {
+    public static Response updateUserExpertiseApi(String updateExpertiseBody, Cookie cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
-                .body(updateUserExpertiseBody)
+                .body(updateExpertiseBody)
                 .when()
                 .post();
     }

@@ -2,7 +2,7 @@
 -- use my-remote-db-example;
 
 -- After the regstration you can promote the first user 'exampleUsername' to admin:
--- INSERT INTO `authorities` (`username`, `authority`) VALUES ('exampleUsername', 'ROLE_ADMIN');
+-- INSERT INTO `authorities` (`username`, `authority`) VALUES ('exampl  eUsername', 'ROLE_ADMIN');
 
 
 INSERT INTO `authority` VALUES (2,'ROLE_ADMIN'),(1,'ROLE_USER');

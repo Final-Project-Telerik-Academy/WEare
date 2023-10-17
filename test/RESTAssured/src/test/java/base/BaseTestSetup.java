@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 
 import com.weare.api.models.User;
 import com.weare.api.services.UserService;
+import com.weare.api.utils.AssertHelper;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import org.junit.jupiter.api.*;
@@ -48,7 +49,7 @@ public class BaseTestSetup {
         String responseBody = response.getBody().asString();
 
         int statusCode = response.getStatusCode();
-        Assertions.assertEquals(statusCode, SC_OK, format("Incorrect status code. Expected %s.", SC_OK));
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
         Assertions.assertFalse(responseBody.trim().isEmpty());
 
         String regex = "name (\\w+)(.*)id (\\d+)";
@@ -65,7 +66,7 @@ public class BaseTestSetup {
         System.out.println(response.asString());
     }
 
-    public void login(User user) {
+/*    public void login(User user) {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
 
         Response response = getApplicationAuthentication()
@@ -82,6 +83,23 @@ public class BaseTestSetup {
         boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
         Assertions.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
         System.out.println("User 1 authenticated successfully - Username: " + user.getUsername() + " - Cookie: " + cookie.getValue());
+    }*/
+
+    public void login(User user) {
+        baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
+
+        Response response = getApplicationAuthentication()
+                .when()
+                .post();
+
+        // Генериране на уникално куки за всеки потребител
+        cookie = new Cookie.Builder("JSESSIONID", user.getUserId() + "_" + System.currentTimeMillis()).setPath("/").build();
+
+        System.out.println("User authenticated successfully - Username: " + user.getUsername() + " - Cookie: " + cookie.getValue());
+
+        int statusCode = response.getStatusCode();
+        boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
+        Assertions.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
     }
 
     protected void logout() {
