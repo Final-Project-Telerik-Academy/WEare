@@ -97,7 +97,7 @@ public class UserTests extends BaseTestSetup {
         AssertHelper.assertUsernameEquals(resUsername, user.getUsername());
     }
 
-    @Feature("User Posts")
+    @Feature("Posts")
     @Story("Create new post")
     @Description("Test to verify that a user can create a new post.")
     @Test
@@ -120,7 +120,7 @@ public class UserTests extends BaseTestSetup {
         AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
 
-    @Feature("User Posts")
+    @Feature("User Search")
     @Story("Search user's posts")
     @Description("Test to verify that a user's posts can be searched and retrieved.")
     @Test

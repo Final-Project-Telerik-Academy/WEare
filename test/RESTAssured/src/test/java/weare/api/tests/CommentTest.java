@@ -165,7 +165,7 @@ public class CommentTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
-    @Feature("Comment management")
+    @Feature("Comments")
     @Story("Retrieve a single comment")
     @Description("Test to verify that a single comment can be retrieved by its unique ID.")
     @Test

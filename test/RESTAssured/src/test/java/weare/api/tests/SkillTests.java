@@ -119,7 +119,7 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertCategoryIdsMatch(categoryId, Constants.CATEGORY_ID);
         AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
-    @Feature("Skill management")
+    @Feature("Skill")
     @Story("Delete a skill")
     @Description("Test to verify that a skill can be deleted successfully.")
     @Test
