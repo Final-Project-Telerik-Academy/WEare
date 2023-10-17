@@ -6,6 +6,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
+
 import static com.telerikacademy.testframework.RandomGenerator.*;
 import static com.telerikacademy.testframework.RandomGenerator.generateRandomFirstName;
 import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
@@ -33,6 +34,17 @@ public class HomePage extends BasePage {
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
         actions.clickElement("weare.updateMyProfileFirstButton");
     }
+
+    public void changeProfessionalCategory() {
+        actions.waitForElementPresent("//select[@id='category.id']");
+        actions.clickElement("//select[@id='category.id']");
+        actions.waitForElementPresent("//option[@value='102']");
+        actions.clickElement("//option[@value='102']");
+
+        actions.waitForElementPresent("(//button[@type='submit' and contains(text(), 'Update')])[2]");
+        actions.clickElement("(//button[@type='submit' and contains(text(), 'Update')])[2]");
+    }
+
 
     public void searchUserByProfession() {
         actions.waitForElementClickable("weare.searchProfessionField");
@@ -82,7 +94,7 @@ public class HomePage extends BasePage {
     }
 
     public void assertUserResulFirstSearch() {
-        actions.assertElementPresent(format(getUIMappingByKey("weare.assertFirstNameSearchResult"), firstName,lastName));
+        actions.assertElementPresent(format(getUIMappingByKey("weare.assertFirstNameSearchResult"), firstName, lastName));
     }
 
 }

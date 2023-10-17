@@ -6,6 +6,12 @@ public class HomePageTests extends BaseTest {
 
     @Test
     public void searchByProfession() {
+        register();
+        login();
+        homePage.updatePersonalRegistration();
+        homePage.changeProfessionalCategory();
+        logout();
+        updatePersonalProfilePage.backToHome();
         homePage.searchUserByProfession();
         homePage.assertResultSearch();
     }
