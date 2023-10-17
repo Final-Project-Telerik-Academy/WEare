@@ -9,23 +9,24 @@ public class HomePageTests extends BaseTest {
         homePage.searchUserByProfession();
         homePage.assertResultSearch();
     }
+
     @Test
-    public void searchUserByFullname() {
+    public void searchUserByFullName() {
         register();
         login();
         homePage.updatePersonalRegistration();
         logout();
-        homePage.searchUserByFullname();
+        homePage.searchUserByFullName();
         homePage.assertUserResultSearch();
     }
 
     @Test
-    public void searchUserByFirstname() {
+    public void searchUserByFirstName() {
         register();
         login();
         homePage.updatePersonalRegistration();
         logout();
-        homePage.searchUserByFirstname();
-        homePage.assertUserResultSearch();
+        homePage.searchUserByFirstName();
+        homePage.assertUserResulFirstSearch();
     }
 }

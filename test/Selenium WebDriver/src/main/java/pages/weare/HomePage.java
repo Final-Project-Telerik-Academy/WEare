@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import java.time.Month;
 import java.time.format.DateTimeFormatter;
 import java.util.Random;
-
+import static com.telerikacademy.testframework.RandomGenerator.*;
 import static com.telerikacademy.testframework.RandomGenerator.generateRandomFirstName;
 import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
 import static java.lang.String.format;
@@ -16,7 +16,6 @@ public class HomePage extends BasePage {
     LocalDate randomBirthday = generateRandomBirthday();
     private String firstName = generateRandomFirstName();
     private String lastName = generateRandomFirstName();
-
     private String fullName = firstName + " " + lastName;
 
 
@@ -47,7 +46,7 @@ public class HomePage extends BasePage {
         actions.assertElementPresent("weare.assertSearchResult");
     }
 
-    public void searchUserByFullname() {
+    public void searchUserByFullName() {
         actions.waitForElementVisible("weare.homeButton");
         actions.clickElement("weare.homeButton");
         actions.waitForElementClickable("weare.searchUserByName");
@@ -57,7 +56,7 @@ public class HomePage extends BasePage {
 
     }
 
-    public void searchUserByFirstname() {
+    public void searchUserByFirstName() {
         actions.waitForElementVisible("weare.homeButton");
         actions.clickElement("weare.homeButton");
         actions.waitForElementClickable("weare.searchUserByName");
@@ -83,18 +82,8 @@ public class HomePage extends BasePage {
     }
 
     public void assertUserResulFirstSearch() {
-        actions.assertElementPresent(format(getUIMappingByKey("weare.assertFullnameSearch"), firstName));
+        actions.assertElementPresent(format(getUIMappingByKey("weare.assertFirstNameSearchResult"), firstName,lastName));
     }
 
-    LocalDate generateRandomBirthday() {
-        Random random = new Random();
-
-        int year = 1900 + random.nextInt(124);
-        int monthValue = 1 + random.nextInt(12);
-        Month month = Month.of(monthValue);
-        int day = 1 + random.nextInt(28);
-
-        return LocalDate.of(year, month, day);
-    }
 }
 

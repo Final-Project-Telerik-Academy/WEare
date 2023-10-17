@@ -4,6 +4,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -20,11 +21,11 @@ public class PersonalProfilePage extends BasePage {
     private String fullName = firstName + " " + lastName;
     private final String randomName2 = generateRandomString(2);
     private final String randomMessage = generateRandomMessage();
-    private final String skillOne=generateRandomMessage();
-    private final String skillTwo=generateRandomMessage();
-    private final String skillTree=generateRandomMessage();
-    private final String skillFour=generateRandomMessage();
-    private final String skillFive=generateRandomMessage();
+    private final String skillOne = generateRandomMessage();
+    private final String skillTwo = generateRandomMessage();
+    private final String skillTree = generateRandomMessage();
+    private final String skillFour = generateRandomMessage();
+    private final String skillFive = generateRandomMessage();
 
 
     public PersonalProfilePage(WebDriver driver) {
@@ -94,45 +95,106 @@ public class PersonalProfilePage extends BasePage {
         actions.waitForElementPresent(locator);
         actions.typeValueInField(value, locator);
     }
-    public void editFirstNameWithTwoCharacters(){
+
+    public void editFirstNameWithTwoCharacters() {
         actions.waitForElementPresent("weare.personalProfileButton");
         actions.clickElement("weare.personalProfileButton");
         actions.waitForElementPresent("weare.editProfileButton");
         actions.clickElement("weare.editProfileButton");
         clearFirsNameField();
         actions.waitForElementVisible("weare.firstName");
-        actions.typeValueInField(randomName2,"weare.firstName");
+        actions.typeValueInField(randomName2, "weare.firstName");
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
         actions.clickElement("weare.updateMyProfileFirstButton");
 
     }
-    public void editLastNameWithTwoCharacters(){
+
+    public void editLastNameWithTwoCharacters() {
         actions.waitForElementPresent("weare.personalProfileButton");
         actions.clickElement("weare.personalProfileButton");
         actions.waitForElementPresent("weare.editProfileButton");
         actions.clickElement("weare.editProfileButton");
         actions.waitForElementVisible("weare.lastName");
         clearLastNameField();
-        actions.typeValueInField(randomName2,"weare.lastName");
+        actions.typeValueInField(randomName2, "weare.lastName");
         actions.waitFor(500);
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
         actions.clickElement("weare.updateMyProfileFirstButton");
     }
+    public void personalReviewField(){
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+        actions.waitForElementPresent("weare.editProfileButton");
+        actions.clickElement("weare.editProfileButton");
+        fillPersonalDetails(firstName, lastName, randomBirthday);
+        actions.waitForElementVisible("weare.personalReview");
+        actions.typeValueInField(randomMessage, "weare.personalReview");
+        actions.waitFor(500);
+        actions.hoverOverElement("weare.updateMyProfileFirstButton");
+        actions.waitForElementPresent("weare.updateMyProfileFirstButton");
+        actions.clickElement("weare.updateMyProfileFirstButton");
+
+    }
+    public void updateSkillDetails() {
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+        actions.waitForElementPresent("weare.editProfileButton");
+        actions.clickElement("weare.editProfileButton");
+        fillSkillDetails(skillOne, skillTwo, skillTree,skillFour,skillFive);
+        actions.hoverOverElement("weare.updateMyProfileFirstButton");
+        actions.waitForElementPresent("weare.updateMyProfileFirstButton");
+        actions.clickElement("weare.updateMyProfileFirstButton");
+    }
+    public void fillSkillDetails(String skillOne , String skillTwo, String skillTree,String skillFour,String skillFive) {
+        fillFieldById("weare.skill1", skillOne);
+        fillFieldById("weare.skill2",skillTwo);
+        fillFieldById("weare.skill3", skillTree);
+        fillFieldById("weare.skill4",skillFour);
+        fillFieldById("weare.skill5",skillFive);
+    }
+    private void photoUser(String imagePath) {
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+        actions.waitForElementPresent("weare.editProfileButton");
+        actions.clickElement("weare.editProfileButton");
+        actions.waitFor(500);
+        fillPersonalDetails(firstName, lastName, randomBirthday);
+        actions.hoverOverElement("weare.updateMyProfileFirstButton");
+        actions.waitForElementPresent("weare.updateMyProfileFirstButton");
+        actions.waitForElementPresent("weare.imageUser");
+        actions.typeValueInField(imagePath, "weare.imageUser");
+        actions.waitFor(5000);
+        actions.clickElement("weare.updateProfileImage");
+    }
+    public void updatePersonalImage(){
+        String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo-2.jpg").toAbsolutePath().toString();
+        photoUser(imagePath);
+
+    }
     private void clearFirsNameField() {
         WebElement emailInput = driver.findElement(By.id("nameE"));
         emailInput.clear();
     }
+
     private void clearLastNameField() {
         WebElement emailInput = driver.findElement(By.id("lastnameE"));
         emailInput.clear();
     }
-    public void assertFirstNameField(){
+
+    public void assertFirstNameField() {
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertFirstNameField"), randomName2));
     }
-    public void assertLastNameField(){
+
+    public void assertLastNameField() {
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertLastNameField"), randomName2));
     }
+    public void assertPersonalReview(){
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+        actions.assertElementPresent(format(getUIMappingByKey("weare.assertPersonalReview"),randomMessage));
+    }
+
 }
 

@@ -42,18 +42,40 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.backToHome();
         updatePersonalProfilePage.approveFriendRequest();
     }
+
     @Test
-    public void editFirstNameWithTwoCharacters(){
+    public void editFirstNameWithTwoCharacters() {
         updateUserProfile();
         updatePersonalProfilePage.backToHome();
         updatePersonalProfilePage.editFirstNameWithTwoCharacters();
         updatePersonalProfilePage.assertFirstNameField();
     }
+
     @Test
-    public void editLastNameWithTwoCharacters(){
+    public void editLastNameWithTwoCharacters() {
         updateUserProfile();
         updatePersonalProfilePage.backToHome();
         updatePersonalProfilePage.editLastNameWithTwoCharacters();
         updatePersonalProfilePage.assertLastNameField();
+    }
+    @Test
+    public void personalReviewField(){
+        register();
+        login();
+        updatePersonalProfilePage.personalReviewField();
+        updatePersonalProfilePage.backToHome();
+        updatePersonalProfilePage.assertPersonalReview();
+    }
+    @Test
+    public void updateSkillDetails(){
+        updateUserProfile();
+        updatePersonalProfilePage.updateSkillDetails();
+    }
+    @Test
+    public void updatePersonalImage(){
+       // updateUserProfile();
+        register();
+        login();
+        updatePersonalProfilePage.updatePersonalImage();
     }
 }
