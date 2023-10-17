@@ -30,9 +30,9 @@ public class BaseTestSetup {
     protected User user;
     protected Cookie cookie;
 
-    protected void register() {
+    protected void register(User user) {
         baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
-        user = new User();
+//        user = new User();
 
         username = user.getUsername();
         password = user.getPassword();
@@ -65,7 +65,7 @@ public class BaseTestSetup {
         System.out.println(response.asString());
     }
 
-    public void login() {
+    public void login(User user) {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
 
         Response response = getApplicationAuthentication()

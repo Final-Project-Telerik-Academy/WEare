@@ -3,6 +3,7 @@ package weare.api.tests;
 import base.BaseTestSetup;
 import com.weare.api.models.Comment;
 import com.weare.api.models.Post;
+import com.weare.api.models.User;
 import com.weare.api.services.CommentService;
 import com.weare.api.services.PostService;
 import io.restassured.http.ContentType;
@@ -36,8 +37,9 @@ public class CommentTest extends BaseTestSetup {
 
     @BeforeEach
     public void setupTest() {
-        register();
-        login();
+        User user = new User();
+        register(user);
+        login(user);
     }
 
     @AfterEach

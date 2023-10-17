@@ -2,6 +2,7 @@ package weare.api.tests;
 
 import base.BaseTestSetup;
 import com.weare.api.models.Skill;
+import com.weare.api.models.User;
 import com.weare.api.services.SkillService;
 import com.weare.api.utils.Constants;
 import io.restassured.response.Response;
@@ -27,8 +28,9 @@ public class SkillTests extends BaseTestSetup {
 
     @BeforeEach
     public void setupTest() {
-        register();
-        login();
+        User user = new User();
+        register(user);
+        login(user);
     }
 
     @AfterEach

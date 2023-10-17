@@ -3,6 +3,7 @@ package weare.api.tests;
 import base.BaseTestSetup;
 import com.weare.api.models.Post;
 import com.weare.api.models.Skill;
+import com.weare.api.models.User;
 import com.weare.api.services.PostService;
 import com.weare.api.services.UserService;
 import com.weare.api.utils.AssertHelper;
@@ -32,8 +33,9 @@ public class UserTests extends BaseTestSetup {
 
     @BeforeEach
     public void setupTest() {
-        register();
-        login();
+        User user = new User();
+        register(user);
+        login(user);
     }
 
     @AfterEach
