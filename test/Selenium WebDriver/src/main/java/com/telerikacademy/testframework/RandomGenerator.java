@@ -11,7 +11,10 @@ import java.util.Random;
 public class RandomGenerator {
     protected static final String CHARACTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
     protected static final String SPECIAL_CHARACTERS = "!@#$%^&*()_-+=<>?/[]{}|\\~`";
-    private final Faker faker = new Faker();
+    private static final Faker faker = new Faker();
+
+//    public String randomPassword;
+//    public static String randomUsername;
 
     public static String generateRandomString(int length) {
         SecureRandom random = new SecureRandom();
@@ -107,5 +110,19 @@ public class RandomGenerator {
         int day = 1 + random.nextInt(28);
 
         return LocalDate.of(year, month, day);
+    }
+
+    public static String generateRandomPassword(int length) {
+        String randomPassword = faker.lorem().characters(length - 2);
+        String randomDigit = faker.number().digit();
+        String specialChar = faker.regexify("[!@#$%^&*()]");
+
+        randomPassword = randomPassword + randomDigit + specialChar;
+        return randomPassword;
+    }
+
+    public static String generateRandomUsername(int length) {
+        String randomUsername = faker.regexify("[a-zA-Z]{" + length + "}");
+        return randomUsername;
     }
 }

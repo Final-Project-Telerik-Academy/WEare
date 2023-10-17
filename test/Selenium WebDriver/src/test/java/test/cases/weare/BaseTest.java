@@ -11,6 +11,7 @@ import static com.telerikacademy.testframework.RandomGenerator.*;
 public class BaseTest {
 
     protected String password;
+    protected String confirmedPassword;
     protected String username;
     protected String email;
     protected String adminUsername;
@@ -24,7 +25,6 @@ public class BaseTest {
     AdminPage adminPage = new AdminPage(actions.getDriver());
     PostPage postPage = new PostPage(actions.getDriver());
     CommentPage commentPage = new CommentPage((actions.getDriver()));
-
     HomePage homePage = new HomePage(actions.getDriver());
     PersonalProfilePage updatePersonalProfilePage = new PersonalProfilePage(actions.getDriver());
 
