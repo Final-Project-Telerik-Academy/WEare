@@ -31,9 +31,10 @@ public class BaseTestSetup {
     protected User user;
     protected Cookie cookie;
 
-    protected void register(User user) {
+    @BeforeEach
+    protected void register() {
         baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
-//        user = new User();
+        user = new User();
 
         username = user.getUsername();
         password = user.getPassword();
@@ -66,7 +67,7 @@ public class BaseTestSetup {
         System.out.println(response.asString());
     }
 
-/*    public void login(User user) {
+    public void login(User user) {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
 
         Response response = getApplicationAuthentication()
@@ -83,23 +84,6 @@ public class BaseTestSetup {
         boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
         Assertions.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
         System.out.println("User 1 authenticated successfully - Username: " + user.getUsername() + " - Cookie: " + cookie.getValue());
-    }*/
-
-    public void login(User user) {
-        baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
-
-        Response response = getApplicationAuthentication()
-                .when()
-                .post();
-
-        // Генериране на уникално куки за всеки потребител
-        cookie = new Cookie.Builder("JSESSIONID", user.getUserId() + "_" + System.currentTimeMillis()).setPath("/").build();
-
-        System.out.println("User authenticated successfully - Username: " + user.getUsername() + " - Cookie: " + cookie.getValue());
-
-        int statusCode = response.getStatusCode();
-        boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
-        Assertions.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
     }
 
     protected void logout() {

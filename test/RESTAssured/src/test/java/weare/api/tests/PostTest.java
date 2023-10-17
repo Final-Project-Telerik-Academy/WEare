@@ -36,7 +36,7 @@ public class PostTest extends BaseTestSetup {
     @BeforeEach
     public void setupTest() {
         User user = new User();
-        register(user);
+        register();
         login(user);
     }
 
