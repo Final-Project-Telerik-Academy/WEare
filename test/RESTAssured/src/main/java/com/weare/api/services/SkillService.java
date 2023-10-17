@@ -3,6 +3,7 @@ package com.weare.api.services;
 import com.weare.api.models.Skill;
 import com.weare.api.utils.Constants;
 import com.weare.api.utils.JSONRequests;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
@@ -18,6 +19,7 @@ public class SkillService {
 
     public static Response createASkillApi(String createSkillBody, Cookie cookie) {
         return given()
+                .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
                 .body(createSkillBody)
@@ -27,6 +29,7 @@ public class SkillService {
 
     public static Response getSkillApi(Cookie cookie) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie(cookie.getName(), cookie.getValue())
                 .when()
@@ -35,6 +38,7 @@ public class SkillService {
 
     public static Response editASkillApi(Cookie cookie, String skillName, Integer skillId) {
         return given()
+                .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
                 .queryParam("skill", skillName)
@@ -44,6 +48,7 @@ public class SkillService {
 
     public static Response getOneSKillApi(Cookie cookie, Integer skillId) {
         return given()
+                .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
                 .queryParam("skillId", skillId)
@@ -52,6 +57,7 @@ public class SkillService {
 
     public static Response deleteSkillApi(Cookie cookie, Integer skillId) {
         return given()
+                .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
                 .queryParam("skillId", skillId)

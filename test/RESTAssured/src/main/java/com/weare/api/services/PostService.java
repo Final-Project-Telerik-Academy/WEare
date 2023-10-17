@@ -2,6 +2,7 @@ package com.weare.api.services;
 
 import com.weare.api.models.Post;
 import com.weare.api.utils.JSONRequests;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
@@ -22,6 +23,7 @@ public class PostService {
 
     public static Response createPrivatePostApi(String postJsonBody, Cookie cookie) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .body(postJsonBody)
@@ -31,6 +33,7 @@ public class PostService {
 
     public static Response createPublicPostApi(String postJsonBody, Cookie cookie) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .body(postJsonBody)
@@ -39,6 +42,7 @@ public class PostService {
     }
     public static Response editPostApi(String editJsonBody, Cookie cookie, Integer postId) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("postId", postId)
@@ -50,6 +54,7 @@ public class PostService {
 
     public static Response getPostAPi(Cookie cookie) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .when()
@@ -58,6 +63,7 @@ public class PostService {
 
     public static Response likePostApi( Cookie cookie, Integer postId) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("postId", postId)
@@ -67,6 +73,7 @@ public class PostService {
 
     public static Response disLikePost( Cookie cookie, Integer postId) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("postId", postId)
@@ -76,6 +83,7 @@ public class PostService {
 
     public static Response deletePostApi(Cookie cookie, Integer postId) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("postId", postId)

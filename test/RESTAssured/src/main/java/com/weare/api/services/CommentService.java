@@ -2,6 +2,7 @@ package com.weare.api.services;
 
 import com.weare.api.models.Comment;
 import com.weare.api.utils.JSONRequests;
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import io.restassured.response.Response;
@@ -18,6 +19,7 @@ public class CommentService {
 
     public static Response createCommentApi(String commentJsonBody, Cookie cookie) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .body(commentJsonBody)
@@ -27,6 +29,7 @@ public class CommentService {
 
     public static Response showCommentApi(Cookie cookie, Integer postId) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("postId", postId)
@@ -36,6 +39,7 @@ public class CommentService {
 
     public static Response getCommentApi(Cookie cookie) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie)
                 .when()
@@ -44,6 +48,7 @@ public class CommentService {
 
     public static Response likeCommentApi(Cookie cookie, Integer commentId) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("commentId", commentId)
@@ -53,6 +58,7 @@ public class CommentService {
 
     public static Response diskCommentApi(Cookie cookie, Integer commentId) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("commentId", commentId)
@@ -62,6 +68,7 @@ public class CommentService {
 
     public static Response getAllCommentApi(Cookie cookie, Integer postId) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("postId", postId)
@@ -71,6 +78,7 @@ public class CommentService {
 
     public static Response getOneCommentApi(Cookie cookie, Integer postId) {
         return given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("commentId", postId)
@@ -80,6 +88,7 @@ public class CommentService {
 
     public static Response deleteCommentApi(Cookie cookie, Integer commentId) {
         return  given()
+                .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("commentId", commentId)
