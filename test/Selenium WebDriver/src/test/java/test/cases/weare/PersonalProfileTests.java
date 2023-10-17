@@ -3,7 +3,16 @@ package test.cases.weare;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
+import static com.telerikacademy.testframework.RandomGenerator.*;
+
 public class PersonalProfileTests extends BaseTest {
+    String senderUsername = generateRandomUsername(12);
+    String senderEmail = generateRandomEmail();
+    String senderPassword = generateRandomPassword(8);
+    String receiverUsername = generateRandomUsername(2);
+    String receiverEmail = generateRandomEmail();
+    String receiverPassword = generateRandomPassword(8);
+
 
     @AfterEach
     public void performLogout() {
@@ -25,14 +34,15 @@ public class PersonalProfileTests extends BaseTest {
 
     @Test
     public void sendFriendRequest() {
-        register();
-        login();
+        registrationPage.userRegistration(receiverUsername, receiverEmail, receiverPassword);
+        loginPage.loginUser(receiverUsername, receiverPassword);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         logout();
         updatePersonalProfilePage.backToHome();
-        register();
-        login();
+        registrationPage.userRegistration(senderEmail, senderEmail, senderPassword);
+        loginPage.loginUser(senderUsername, senderPassword);
         updatePersonalProfilePage.sendFriendRequest();
+        updatePersonalProfilePage.assertFriendRequestSent();
     }
 
     @Test
@@ -40,8 +50,19 @@ public class PersonalProfileTests extends BaseTest {
         sendFriendRequest();
         logout();
         updatePersonalProfilePage.backToHome();
+        loginPage.loginUser(receiverUsername, receiverPassword);
         updatePersonalProfilePage.approveFriendRequest();
+        updatePersonalProfilePage.assertFriendRequestApproved();
     }
+
+    @Test
+    public void disconnectUser() {
+        approveRequest();
+        loginPage.loginUser(senderUsername, senderPassword);
+        updatePersonalProfilePage.disconnectUser();
+        updatePersonalProfilePage.assertUserDisconnected();
+    }
+
 
     @Test
     public void editFirstNameWithTwoCharacters() {
@@ -58,22 +79,25 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.editLastNameWithTwoCharacters();
         updatePersonalProfilePage.assertLastNameField();
     }
+
     @Test
-    public void personalReviewField(){
+    public void personalReviewField() {
         register();
         login();
         updatePersonalProfilePage.personalReviewField();
         updatePersonalProfilePage.backToHome();
         updatePersonalProfilePage.assertPersonalReview();
     }
+
     @Test
-    public void updateSkillDetails(){
+    public void updateSkillDetails() {
         updateUserProfile();
         updatePersonalProfilePage.updateSkillDetails();
     }
+
     @Test
-    public void updatePersonalImage(){
-       // updateUserProfile();
+    public void updatePersonalImage() {
+        // updateUserProfile();
         register();
         login();
         updatePersonalProfilePage.updatePersonalImage();

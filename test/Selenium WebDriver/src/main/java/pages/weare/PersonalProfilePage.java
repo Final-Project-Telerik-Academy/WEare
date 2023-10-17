@@ -67,15 +67,27 @@ public class PersonalProfilePage extends BasePage {
     }
 
     public void approveFriendRequest() {
-        actions.waitFor(5000);
-
         actions.waitForElementPresent("weare.personalProfileButton");
         actions.clickElementWithJavaScriptExecutor("weare.personalProfileButton");
         actions.waitForElementPresent("weare.openRequestButton");
         actions.clickElement("weare.openRequestButton");
+        actions.waitFor(2000);
         actions.waitForElementPresent("weare.approveRequest");
         actions.clickElement("weare.approveRequest");
     }
+
+    public void disconnectUser() {
+        actions.waitForElementPresent("weare.searchUserByName");
+        actions.clickElementWithJavaScriptExecutor("weare.searchUserByName");
+        actions.typeValueInField(fullName, "weare.searchUserByName");
+        actions.waitForElementPresent("weare.searchUserButton");
+        actions.clickElement("weare.searchUserButton");
+        actions.waitForElementPresent("weare.seeUserProfileButton");
+        actions.clickElement("weare.seeUserProfileButton");
+        actions.waitForElementPresent("weare.disconnectButton");
+        actions.clickElement("weare.disconnectButton");
+    }
+
 
     public void backToHome() {
 //        actions.waitFor(2000);
@@ -196,5 +208,19 @@ public class PersonalProfilePage extends BasePage {
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertPersonalReview"),randomMessage));
     }
 
+    public void assertFriendRequestSent() {
+    actions.assertElementPresent("weare.friendRequestSentMessage");
+    }
+
+    public void assertFriendRequestApproved() {
+        actions.assertElementPresent("weare.thereAreNoFriendRequestMessage");
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+        actions.hoverOverElement("weare.assertFriendsNumber");
+        actions.assertElementPresent("weare.assertFriendsNumber");
+    }
+    public void assertUserDisconnected() {
+        actions.assertElementPresent("weare.connectButton");
+    }
 }
 
