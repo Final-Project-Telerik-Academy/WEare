@@ -13,7 +13,7 @@ import static java.lang.String.format;
 
 public class HomePage extends BasePage {
 
-    LocalDate randomBirthday = generateRandomBirthday();
+    LocalDate randomBirthday = generateRandomBirthday(1930, 2000);
     private String firstName = generateRandomFirstName();
     private String lastName = generateRandomFirstName();
     private String fullName = firstName + " " + lastName;

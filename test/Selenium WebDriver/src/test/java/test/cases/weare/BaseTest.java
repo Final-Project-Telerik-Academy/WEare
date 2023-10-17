@@ -41,7 +41,7 @@ public class BaseTest {
     protected void register() {
         username = generateRandomUsername();
         email = generateRandomEmail();
-        password = generatePassword();
+        password = generateRandomPassword(8);
         registrationPage.userRegistration(username, email, password);
         registrationPage.assertUserRegistered();
     }
@@ -49,7 +49,7 @@ public class BaseTest {
     protected void registerAsAdmin() {
         adminUsername = "admin" + generateRandomUsername();
         adminEmail = generateRandomEmail();
-        adminPassword = generatePassword();
+        adminPassword = generateRandomPassword(8);
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         registrationPage.assertAdminRegistered();
     }

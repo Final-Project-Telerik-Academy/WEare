@@ -13,9 +13,6 @@ public class RandomGenerator {
     protected static final String SPECIAL_CHARACTERS = "!@#$%^&*()_-+=<>?/[]{}|\\~`";
     private static final Faker faker = new Faker();
 
-//    public String randomPassword;
-//    public static String randomUsername;
-
     public static String generateRandomString(int length) {
         SecureRandom random = new SecureRandom();
         StringBuilder stringBuilder = new StringBuilder(length);
@@ -76,41 +73,15 @@ public class RandomGenerator {
         return username.toLowerCase();
     }
 
-    public static String generatePassword() {
-        return new RandomGenerator().faker.internet().password(8, 20, true, true, true);
-    }
+        public static LocalDate generateRandomBirthday ( int startYear, int endYear){
+            Random random = new Random();
 
-    public static String generatePasswordEightSymbols() {
-        StringBuilder password = new StringBuilder();
-        String symbols = "1234567890!@#$%^&*";
+            int year = startYear + random.nextInt(endYear - startYear + 1);
+            int month = 1 + random.nextInt(12);
+            int day = 1 + random.nextInt(28);
 
-        String fakeWords = new RandomGenerator().faker.lorem().characters(8 - symbols.length());
-        password.append(fakeWords);
-
-        for (int i = 0; i < 8 - fakeWords.length(); i++) {
-            int index = new RandomGenerator().faker.random().nextInt(symbols.length());
-            password.append(symbols.charAt(index));
+            return LocalDate.of(year, month, day);
         }
-        return password.toString();
-    }
-
-    public static String generateTwoCharacterUsername() {
-        return new RandomGenerator().faker.lorem().characters(2, false, false);
-    }
-
-    public static String generateTwentyCharacterUsername() {
-        return new RandomGenerator().faker.lorem().characters(20, false, false);
-    }
-    public static LocalDate generateRandomBirthday() {
-        Random random = new Random();
-
-        int year = 1900 + random.nextInt(124);
-        int monthValue = 1 + random.nextInt(12);
-        Month month = Month.of(monthValue);
-        int day = 1 + random.nextInt(28);
-
-        return LocalDate.of(year, month, day);
-    }
 
     public static String generateRandomPassword(int length) {
         String randomPassword = faker.lorem().characters(length - 2);
