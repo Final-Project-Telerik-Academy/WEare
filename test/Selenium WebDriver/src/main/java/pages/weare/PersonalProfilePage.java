@@ -20,6 +20,7 @@ public class PersonalProfilePage extends BasePage {
 
     private String fullName = firstName + " " + lastName;
     private final String randomName2 = generateRandomString(2);
+    private final String randomName3 = generateRandomString(3);
     private final String randomMessage = generateRandomMessage();
     private final String skillOne = generateRandomMessage();
     private final String skillTwo = generateRandomMessage();
@@ -115,6 +116,7 @@ public class PersonalProfilePage extends BasePage {
         actions.waitForElementPresent("weare.editProfileButton");
         actions.clickElement("weare.editProfileButton");
         clearFirsNameField();
+        actions.waitFor(500);
         actions.waitForElementVisible("weare.firstName");
         actions.typeValueInField(randomName2, "weare.firstName");
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
@@ -127,7 +129,9 @@ public class PersonalProfilePage extends BasePage {
         actions.waitForElementPresent("weare.personalProfileButton");
         actions.clickElement("weare.personalProfileButton");
         actions.waitForElementPresent("weare.editProfileButton");
+        actions.waitForElementPresent("weare.editProfileButton");
         actions.clickElement("weare.editProfileButton");
+        actions.waitFor(500);
         actions.waitForElementVisible("weare.lastName");
         clearLastNameField();
         actions.typeValueInField(randomName2, "weare.lastName");
@@ -135,8 +139,25 @@ public class PersonalProfilePage extends BasePage {
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
         actions.clickElement("weare.updateMyProfileFirstButton");
+
     }
-    public void personalReviewField(){
+
+    public void editFirstNameWithTreeCharacters() {
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+        actions.waitForElementPresent("weare.editProfileButton");
+        actions.clickElement("weare.editProfileButton");
+        clearFirsNameField();
+        actions.waitForElementVisible("weare.firstName");
+        actions.typeValueInField(randomName3, "weare.firstName");
+        actions.waitFor(500);
+        actions.hoverOverElement("weare.updateMyProfileFirstButton");
+        actions.waitForElementPresent("weare.updateMyProfileFirstButton");
+        actions.clickElement("weare.updateMyProfileFirstButton");
+
+    }
+
+    public void personalReviewField() {
         actions.waitForElementPresent("weare.personalProfileButton");
         actions.clickElement("weare.personalProfileButton");
         actions.waitForElementPresent("weare.editProfileButton");
@@ -150,23 +171,26 @@ public class PersonalProfilePage extends BasePage {
         actions.clickElement("weare.updateMyProfileFirstButton");
 
     }
+
     public void updateSkillDetails() {
         actions.waitForElementPresent("weare.personalProfileButton");
         actions.clickElement("weare.personalProfileButton");
         actions.waitForElementPresent("weare.editProfileButton");
         actions.clickElement("weare.editProfileButton");
-        fillSkillDetails(skillOne, skillTwo, skillTree,skillFour,skillFive);
+        fillSkillDetails(skillOne, skillTwo, skillTree, skillFour, skillFive);
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
         actions.clickElement("weare.updateMyProfileFirstButton");
     }
-    public void fillSkillDetails(String skillOne , String skillTwo, String skillTree,String skillFour,String skillFive) {
+
+    public void fillSkillDetails(String skillOne, String skillTwo, String skillTree, String skillFour, String skillFive) {
         fillFieldById("weare.skill1", skillOne);
-        fillFieldById("weare.skill2",skillTwo);
+        fillFieldById("weare.skill2", skillTwo);
         fillFieldById("weare.skill3", skillTree);
-        fillFieldById("weare.skill4",skillFour);
-        fillFieldById("weare.skill5",skillFive);
+        fillFieldById("weare.skill4", skillFour);
+        fillFieldById("weare.skill5", skillFive);
     }
+
     private void photoUser(String imagePath) {
         actions.waitForElementPresent("weare.personalProfileButton");
         actions.clickElement("weare.personalProfileButton");
@@ -181,11 +205,13 @@ public class PersonalProfilePage extends BasePage {
         actions.waitFor(5000);
         actions.clickElement("weare.updateProfileImage");
     }
-    public void updatePersonalImage(){
+
+    public void updatePersonalImage() {
         String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo-2.jpg").toAbsolutePath().toString();
         photoUser(imagePath);
 
     }
+
     private void clearFirsNameField() {
         WebElement emailInput = driver.findElement(By.id("nameE"));
         emailInput.clear();
@@ -196,21 +222,28 @@ public class PersonalProfilePage extends BasePage {
         emailInput.clear();
     }
 
-    public void assertFirstNameField() {
+    public void assertFirstNameTwoCharactersField() {
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertFirstNameField"), randomName2));
+    }
+
+    public void assertFirstNameTreeCharactersField() {
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+        actions.assertElementPresent(format(getUIMappingByKey("weare.assertEditNameProfile"), randomName3));
     }
 
     public void assertLastNameField() {
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertLastNameField"), randomName2));
     }
-    public void assertPersonalReview(){
+
+    public void assertPersonalReview() {
         actions.waitForElementPresent("weare.personalProfileButton");
         actions.clickElement("weare.personalProfileButton");
-        actions.assertElementPresent(format(getUIMappingByKey("weare.assertPersonalReview"),randomMessage));
+        actions.assertElementPresent(format(getUIMappingByKey("weare.assertPersonalReview"), randomMessage));
     }
 
     public void assertFriendRequestSent() {
-    actions.assertElementPresent("weare.friendRequestSentMessage");
+        actions.assertElementPresent("weare.friendRequestSentMessage");
     }
 
     public void assertFriendRequestApproved() {
@@ -220,8 +253,21 @@ public class PersonalProfilePage extends BasePage {
         actions.hoverOverElement("weare.assertFriendsNumber");
         actions.assertElementPresent("weare.assertFriendsNumber");
     }
+
     public void assertUserDisconnected() {
         actions.assertElementPresent("weare.connectButton");
     }
+
+    public void personalProfileButton() {
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+    }
+
+    public void editProfileButton() {
+        actions.waitForElementPresent("weare.editProfileButton");
+        actions.clickElement("weare.editProfileButton");
+    }
+
+
 }
 

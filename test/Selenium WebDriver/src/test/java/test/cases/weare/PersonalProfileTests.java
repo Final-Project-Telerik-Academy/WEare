@@ -70,7 +70,7 @@ public class PersonalProfileTests extends BaseTest {
         updateUserProfile();
         updatePersonalProfilePage.backToHome();
         updatePersonalProfilePage.editFirstNameWithTwoCharacters();
-        updatePersonalProfilePage.assertFirstNameField();
+        updatePersonalProfilePage.assertFirstNameTwoCharactersField();
     }
 
     @Test
@@ -98,9 +98,19 @@ public class PersonalProfileTests extends BaseTest {
 
     @Test
     public void updatePersonalImage() {
-        // updateUserProfile();
         register();
         login();
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         updatePersonalProfilePage.updatePersonalImage();
     }
+
+    @Test
+    public void editFirstNameWithTreeCharacter() {
+        updateUserProfile();
+        updatePersonalProfilePage.backToHome();
+        updatePersonalProfilePage.editFirstNameWithTreeCharacters();
+        updatePersonalProfilePage.assertFirstNameTreeCharactersField();
+    }
+
 }
+
