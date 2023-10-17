@@ -54,7 +54,7 @@ public class PersonalProfilePage extends BasePage {
     }
 
     public void sendFriendRequest() {
-        actions.waitFor(5000);
+        actions.waitFor(2000);
         actions.waitForElementPresent("weare.searchUserByName");
         actions.clickElementWithJavaScriptExecutor("weare.searchUserByName");
         actions.typeValueInField(fullName, "weare.searchUserByName");
@@ -77,6 +77,7 @@ public class PersonalProfilePage extends BasePage {
     }
 
     public void disconnectUser() {
+        actions.waitFor(2000);
         actions.waitForElementPresent("weare.searchUserByName");
         actions.clickElementWithJavaScriptExecutor("weare.searchUserByName");
         actions.typeValueInField(fullName, "weare.searchUserByName");

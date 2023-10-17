@@ -39,7 +39,7 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         logout();
         updatePersonalProfilePage.backToHome();
-        registrationPage.userRegistration(senderEmail, senderEmail, senderPassword);
+        registrationPage.userRegistration(senderUsername, senderEmail, senderPassword);
         loginPage.loginUser(senderUsername, senderPassword);
         updatePersonalProfilePage.sendFriendRequest();
         updatePersonalProfilePage.assertFriendRequestSent();
@@ -58,6 +58,7 @@ public class PersonalProfileTests extends BaseTest {
     @Test
     public void disconnectUser() {
         approveRequest();
+        logout();
         loginPage.loginUser(senderUsername, senderPassword);
         updatePersonalProfilePage.disconnectUser();
         updatePersonalProfilePage.assertUserDisconnected();
