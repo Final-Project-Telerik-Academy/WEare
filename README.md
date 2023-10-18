@@ -8,8 +8,12 @@ This README serves as a guide for conducting testing procedures related to the W
 
 The task is to test a WEAre Social Network web application which is a social media platform designed to connect individuals based on their skills, services, and shared interests. The Social Network application enables users to connect with people, create posts and comment and like posts, to get a feed of the newest/most relevant posts of your connections. This is a social network for exchanging of services allowing the users to set their profession/skills and make posts with the services they offer (e.g. online lawyer consultations). Testing will verify that the application's features and functionalities are working as intended. Our focus is on validating the correctness of the application's behavior and ensuring that it aligns with the specified requirements.
 
-## Table of Content
+## Table of contents
 
+1. [Project Structure](#project-structure)
+2. [Prerequisites](#prerequisites)
+3. [Installation Steps](#installation-steps)
+4. [Languages and Framewok](#languages-and-framework)
 1. [Manual Testing](#manual-testing)
 2. [API Testing with Postman](#api-testing-with-postman)
 3. [API Testing with Rest Assured](#api-testing-with-rest-assured)
@@ -17,31 +21,6 @@ The task is to test a WEAre Social Network web application which is a social med
 5. [Reporting](#reporting)
 6. [Contributors](#contributors)
 7. [Documentation](#documentation)
-
-## Manual Testing
-
-In our quality assurance process, we employ the use of Xray within Jira to guide and document our manual testing procedures. While our high-level tests provide a comprehensive overview of the Weare application's core functionality and user interactions, we also maintain a detailed set of test cases. These detailed test cases offer a thorough examination of the application's features and functionalities. They are designed to ensure that every element works precisely as intended. This level of detail allows us to detect and rectify any anomalies, ensuring a seamless and reliable experience for our users.
-
-## API Testing with Postman
-
-The API testing with Postman has allowed us to thoroughly assess and validate the effectiveness of the Weare application's APIs. With this testing approach, we have examined various API endpoints to ensure they perform precisely as intended, handling requests and responses accurately.
-
-In this process, we have used the developers' API documentation, which can be accessed through the provided link - *[API Documentation](http://localhost:8081/swagger-ui.html)*.
-
-## API Testing with Rest Assured
-
-With a programmatic and code-driven approach using Java and JUnit as a library, we have systematically verified the correctness of API behaviors, ensuring they align with the specified requirements.
-
-The same API documentation was used for the testing purpose.
-
-## UI Testing with Selenium
-
-Our UI testing strategy utilizes Selenium WebDriver in combination with Maven and JUnit, following a page-oriented model. This approach allows us to comprehensively validate the user interface and user experience of the Weare application.
-
-With Selenium WebDriver, we automate the interaction with the application's web pages, simulating user behavior to verify the correctness of page elements, user flows, and interactions. Maven assists in building and managing the testing environment, while JUnit serves as a reliable testing framework to structure and execute our UI tests.
-
-By using the page-oriented model, we organize our UI tests based on individual pages or components of the application, enabling a systematic and maintainable testing process.
-
 
 
 ## Project Structure
@@ -178,27 +157,29 @@ The project uses the following:
 
 - *[IntelliJ IDEA](https://www.jetbrains.com/idea/)* as the IDE.
 
-<div align="left">
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg" height="40" alt="java logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/intellij/intellij-original.svg" height="40" alt="intellij logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jira/jira-original.svg" height="40" alt="jira logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" height="40" alt="github logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" height="40" alt="mysql logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/selenium/selenium-original.svg" height="40" alt="selenium logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg" height="40" alt="chrome logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/windows8/windows8-original.svg" height="40" alt="windows8 logo"  />
-  <img width="12" />
-  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" height="40" alt="linux logo"  />
-</div>
+## Manual Testing
 
-## Requirements
+In our quality assurance process, we employ the use of Xray within Jira to guide and document our manual testing procedures. While our high-level tests provide a comprehensive overview of the Weare application's core functionality and user interactions, we also maintain a detailed set of test cases. These detailed test cases offer a thorough examination of the application's features and functionalities. They are designed to ensure that every element works precisely as intended. This level of detail allows us to detect and rectify any anomalies, ensuring a seamless and reliable experience for our users.
+
+## API Testing with Postman
+
+The API testing with Postman has allowed us to thoroughly assess and validate the effectiveness of the Weare application's APIs. With this testing approach, we have examined various API endpoints to ensure they perform precisely as intended, handling requests and responses accurately.
+
+In this process, we have used the developers' API documentation, which can be accessed through the provided link - *[API Documentation](http://localhost:8081/swagger-ui.html)*.
+
+## API Testing with Rest Assured
+
+With a programmatic and code-driven approach using Java, Maven and JUnit as a library, we have systematically verified the correctness of API behaviors, ensuring they align with the specified requirements.
+
+The same API documentation was used for the testing purpose.
+
+## UI Testing with Selenium
+
+Our UI testing strategy utilizes Selenium WebDriver in combination with Maven and JUnit, following a page-oriented model. This approach allows us to comprehensively validate the user interface and user experience of the Weare application.
+
+With Selenium WebDriver, we automate the interaction with the application's web pages, simulating user behavior to verify the correctness of page elements, user flows, and interactions. Maven assists in building and managing the testing environment, while JUnit serves as a reliable testing framework to structure and execute our UI tests.
+
+By using the page-oriented model, we organize our UI tests based on individual pages or components of the application, enabling a systematic and maintainable testing process.
 
 
 ## Reporting
@@ -276,8 +257,8 @@ https://www.swtestacademy.com/allure-report-junit/
 ## Contributors
 
 - Rositsa Markova: [GitHub profile](https://github.com/rosicatm)
-- Kristina Duhneva: [GitHub profile]()
-- Filip Gargov: [GitHub profile]()
+- Kristina Duhneva: [GitHub profile](https://github.com/Kristina-Duhneva)
+- Filip Gargov: [GitHub profile](https://github.com/FGargov)
 
 ## Documentation
 
@@ -287,12 +268,7 @@ Here are the links to our documentation resources:
 - [Test Case Template](https://docs.google.com/document/d/1sGhZSPXvgvnOjZosZUeBZyZnDNZTzJjKANeSIV3z-dc/edit)
 - [BUG Template](https://docs.google.com/document/d/1GpPPaK76lmC1_k1vc4E53eV829WNz1Ib69nuoVRwCrA/edit)
 - [High-Level Test Cases](https://docs.google.com/document/d/1QNIOPp_iGTjVdGASaATBMkjdmaiSwjubrC1VHQrnPOM/edit)
-- [Exploratory Testing Diagram]()
+- [Exploratory Testing Diagram](https://app.gemoo.com/share/image-annotation/573344378804707328?codeId=Ml27a6OOgQbwY&origin=imageurlgenerator)
 
-<p align="left">
-✨ Test Plane-<br>
-📚 Test Case Template-<br>
-🎯 Bug Template<br>
-🎲 High-Level Test Cases</p>
 
 ###
