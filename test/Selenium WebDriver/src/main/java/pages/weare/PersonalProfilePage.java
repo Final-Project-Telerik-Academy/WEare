@@ -174,10 +174,13 @@ public class PersonalProfilePage extends BasePage {
         fillPersonalDetails(firstName, lastName, randomBirthday);
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
+       actions.hoverOverElement("weare.imageUser");
         actions.waitForElementPresent("weare.imageUser");
         actions.typeValueInField(imagePath, "weare.imageUser");
         actions.waitFor(5000);
-        actions.clickElement("weare.updateProfileImage");
+        actions.clickElement("(//button[@type='submit' and contains(text(), 'Update')])[4]");
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
     }
     public void updatePersonalImage(){
         String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo-2.jpg").toAbsolutePath().toString();
@@ -238,6 +241,9 @@ public class PersonalProfilePage extends BasePage {
         actions.assertElementPresent(format(getUIMappingByKey("//span[text()='%s']"),skillFour));
         actions.assertElementPresent(format(getUIMappingByKey("//span[text()='%s']"),skillFive));
 
+    }
+    public void assertUserCreatedUploadPhoto() {
+        actions.assertElementPresent("weare.assertPhotoExists");
     }
 }
 
