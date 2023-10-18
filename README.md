@@ -110,15 +110,22 @@ The project is structured as follows:
 
 In order to use the framework:
 
-1. [Fork](https://github.com/Final-Project-Telerik-Academy/WEare.git) the repository.
-2. Clone, i.e, download your copy of the repository to your local machine using
+1. Install Git:
+
+If you haven't installed Git on your system, you can download and install it from here.
+Clone the Repository:
+
+Open a terminal or command prompt.
+1. Navigate to the directory where you want to clone the repository.
+2. Clone the Repository., i.e, download your copy of the repository to your local machine using
+   - Open a terminal or command prompt.
+   - Navigate to the directory where you want to clone the repository.
+   - Run the following command:
 ```
-git clone https://github.com/[your_username]/WEare.git
+git clone https://github.com/Final-Project-Telerik-Academy/WEare.git
 ```
-3. Import the project in [IntelliJ IDEA](https://www.jetbrains.com/idea/download/).
-
-
-
+3. Explore the project structure and files using your preferred code editor or IDE.
+4. Start and access the application  from WeareApplication.class with your IDE, it will typically be accessible via a web browser. The default address is usually http://localhost:8081/, but this might vary based on the project configuration.
 ## Languages and Frameworks
 
 The project uses the following:
