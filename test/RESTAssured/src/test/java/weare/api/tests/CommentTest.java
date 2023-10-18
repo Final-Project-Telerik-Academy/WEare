@@ -23,6 +23,7 @@ import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_MOVED_TEMPORARILY;
 import static org.apache.http.HttpStatus.SC_OK;
+
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -32,7 +33,6 @@ import io.qameta.allure.Story;
 public class CommentTest extends BaseTestSetup {
     protected static Post post;
     protected static Comment comment;
-    private Cookie authCookie;
     protected Integer userId;
 
     @BeforeEach
@@ -54,13 +54,14 @@ public class CommentTest extends BaseTestSetup {
     public void createPost() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
         post = new Post();
+        post.setPublic(true);
 
         String postJsonBody = PostService.generatePostRequest(post);
         Response response = createPostApi(postJsonBody, cookie);
 
         POST_ID = response.getBody().jsonPath().get("postId");
-        String contentPost=response.getBody().jsonPath().get("content");
-        Boolean privatePost=response.getBody().jsonPath().get("public");
+        String contentPost = response.getBody().jsonPath().get("content");
+        Boolean privatePost = response.getBody().jsonPath().get("public");
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(SC_OK, statusCode);
@@ -74,6 +75,7 @@ public class CommentTest extends BaseTestSetup {
     @Description("Test to verify that a comment can be added to a post successfully.")
     @Test
     public void createComment() {
+        createPost();
         baseURI = format("%s%s", BASE_URL, CREATE_COMMENT_ENDPOINT);
         comment = new Comment();
 
@@ -105,12 +107,13 @@ public class CommentTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
-//    @Test(priority = 4,dependsOnMethods = "createComment")
+
     @Feature("Comments")
     @Story("Edit a comment")
     @Description("Test to verify that a comment can be edited successfully.")
     @Test
     public void editComment() {
+        createComment();
         baseURI = format("%s%s", BASE_URL, EDIT_COMMENT);
 
         String editJsonBody = PostService.editPostRequest(post);
@@ -119,7 +122,7 @@ public class CommentTest extends BaseTestSetup {
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())
                 .queryParam("commentId", COMMENT_ID)
-                .queryParam("content",comment.getContent())
+                .queryParam("content", comment.getContent())
                 .body(editJsonBody)
                 .when()
                 .put();
@@ -127,12 +130,14 @@ public class CommentTest extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
-//    @Test(priority = 5,dependsOnMethods = "createComment")
+
     @Feature("Comments")
     @Story("Like a comment")
     @Description("Test to verify that a comment can be liked successfully.")
     @Test
     public void likeComment() {
+        createPost();
+        createComment();
         baseURI = format("%s%s", BASE_URL, LIKE_COMMENT);
 
         Response response = likeCommentApi(cookie, COMMENT_ID);
@@ -140,12 +145,14 @@ public class CommentTest extends BaseTestSetup {
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
-//    @Test(priority = 6,dependsOnMethods = "likeComment")
+
     @Feature("Comments")
     @Story("Dislike a comment")
     @Description("Test to verify that a comment can be disliked successfully.")
     @Test
     public void dislikeComment() {
+        createComment();
+        likeComment();
         baseURI = format("%s%s", BASE_URL, LIKE_COMMENT);
 
         Response response = diskCommentApi(cookie, COMMENT_ID);
@@ -159,6 +166,7 @@ public class CommentTest extends BaseTestSetup {
     @Description("Test to verify that all comments of a post can be retrieved successfully.")
     @Test
     public void getAllComment() {
+        createPost();
         baseURI = format("%s%s", BASE_URL, FIND_ALL_COMMENTS);
 
         Response response = getAllCommentApi(cookie, POST_ID);
@@ -172,22 +180,24 @@ public class CommentTest extends BaseTestSetup {
     @Description("Test to verify that a single comment can be retrieved by its unique ID.")
     @Test
     public void getOneComment() {
+        createComment();
         baseURI = format("%s%s", BASE_URL, FIND_ONE_COMMENTS);
 
-        Response response = getOneCommentApi(cookie, POST_ID);
+        Response response = getOneCommentApi(cookie, COMMENT_ID);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
-//    @Test(priority = 9,dependsOnMethods = "createComment")
+
     @Feature("Comments")
     @Story("Delete a comment")
     @Description("Test to verify that a comment can be deleted successfully.")
     @Test
     public void deleteComment() {
+        createComment();
         baseURI = format("%s%s", BASE_URL, DELETE_COMMENTS);
 
-        Response response =deleteCommentApi(cookie, COMMENT_ID);
+        Response response = deleteCommentApi(cookie, COMMENT_ID);
 
         int statusCode = response.getStatusCode();
         String responseBody = response.getBody().asString();
@@ -200,6 +210,7 @@ public class CommentTest extends BaseTestSetup {
     @Description("Test to verify that a post can be deleted successfully after all comment operations.")
     @Test
     public void deletePost() {
+        createPost();
         baseURI = format("%s%s", BASE_URL, DELETE_POST);
 
         Response response = deletePostApi(cookie, POST_ID);
