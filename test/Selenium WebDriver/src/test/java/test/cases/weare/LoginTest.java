@@ -8,6 +8,18 @@ public class LoginTest extends BaseTest {
 
     String invalidUsername = generateRandomUsername(1);
     String invalidPassword = generateRandomPassword(5);
+
+    @Test
+    protected void loginWithValidDetails() {
+        username = generateRandomUsername(2);
+        email = generateRandomEmail();
+        password = generateRandomPassword(8);
+        registrationPage.userRegistration(username, email, password);
+        registrationPage.assertUserRegistered();
+        loginPage.loginUser(username, password);
+        loginPage.assertUserIsLoggedIn();
+    }
+
     @Test
     public void loginWithInvalidUsername() {
         username = generateRandomUsername(2);
@@ -39,5 +51,13 @@ public class LoginTest extends BaseTest {
         registrationPage.assertUserRegistered();
         loginPage.loginUserWithInvalidCredentials(invalidUsername, invalidPassword);
         loginPage.assertUserNotLoggedInWithInvalidCredentials();
+    }
+
+    @Test
+    public void logoutUser() {
+         loginWithValidDetails();
+        loginPage.logoutUser();
+        loginPage.assertUserIsLoggedOut();
+
     }
 }
