@@ -148,9 +148,15 @@ public class PersonalProfilePage extends BasePage {
         actions.waitForElementPresent("weare.editProfileButton");
         actions.clickElement("weare.editProfileButton");
         fillSkillDetails(skillOne, skillTwo, skillTree,skillFour,skillFive);
-        actions.hoverOverElement("weare.updateMyProfileFirstButton");
-        actions.waitForElementPresent("weare.updateMyProfileFirstButton");
-        actions.clickElement("weare.updateMyProfileFirstButton");
+//        actions.hoverOverElement("weare.updateMyProfileFirstButton");
+//        actions.waitForElementPresent("weare.updateMyProfileFirstButton");
+//        actions.clickElement("weare.updateMyProfileFirstButton");
+        actions.hoverOverElement("//*[@id=\"profile-resource\"]/div[3]/div/button");
+        actions.waitForElementPresent("//*[@id=\"profile-resource\"]/div[3]/div/button");
+        actions.clickElement("//*[@id=\"profile-resource\"]/div[3]/div/button");
+       // personalProfileButton();
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
     }
     public void fillSkillDetails(String skillOne , String skillTwo, String skillTree,String skillFour,String skillFive) {
         fillFieldById("weare.skill1", skillOne);
@@ -224,6 +230,14 @@ public class PersonalProfilePage extends BasePage {
 
     public void assertCategoryChanged() {
         actions.assertElementPresent("weare.assertCategoryChanged");
+    }
+    public void assertSkillField(){
+        actions.assertElementPresent(format(getUIMappingByKey("//span[text()='%s']"),skillOne));
+        actions.assertElementPresent(format(getUIMappingByKey("//span[text()='%s']"),skillTwo));
+        actions.assertElementPresent(format(getUIMappingByKey("//span[text()='%s']"),skillTree));
+        actions.assertElementPresent(format(getUIMappingByKey("//span[text()='%s']"),skillFour));
+        actions.assertElementPresent(format(getUIMappingByKey("//span[text()='%s']"),skillFive));
+
     }
 }
 

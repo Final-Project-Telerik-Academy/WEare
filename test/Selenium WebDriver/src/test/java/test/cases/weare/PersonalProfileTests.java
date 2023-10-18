@@ -96,8 +96,11 @@ public class PersonalProfileTests extends BaseTest {
 
     @Test
     public void updateSkillDetails() {
-        updateUserProfile();
+        register();
+        login();
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         updatePersonalProfilePage.updateSkillDetails();
+        updatePersonalProfilePage.assertSkillField();
     }
 
     @Test
