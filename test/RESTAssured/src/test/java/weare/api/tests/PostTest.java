@@ -29,8 +29,6 @@ public class PostTest extends BaseTestSetup {
 
     protected static Post post;
     protected static Comment comment;
-    protected static PostService postService;
-    protected static CommentService commentService;
     protected Integer userId;
 
     @BeforeEach
@@ -120,12 +118,12 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode,SC_OK);
     }
 
-//    @Test(priority = 4,dependsOnMethods = "createPublicPost")
     @Feature("Posts")
     @Story("Like a post")
     @Description("Test to verify that a post can be liked successfully.")
     @Test
     public void likePost() {
+        createPublicPost();
         baseURI = format("%s%s", BASE_URL, LIKE_POST);
 
         Response response = likePostApi(cookie, POST_ID);
@@ -139,6 +137,8 @@ public class PostTest extends BaseTestSetup {
     @Description("Test to verify that a post can be disliked successfully.")
     @Test
     public void dislikePost() {
+        createPublicPost();
+        likePost();
         baseURI = format("%s%s", BASE_URL, LIKE_POST);
 
         Response response = disLikePost(cookie, POST_ID);
@@ -149,12 +149,12 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode,SC_OK);
     }
 
-//    @Test(priority = 6 ,dependsOnMethods = "createPublicPost")
     @Feature("Comments")
     @Story("Create comment on a Post")
     @Description("Test to verify that a comment can be added to a post successfully.")
     @Test
     public void createComment() {
+        createPublicPost();
         baseURI = format("%s%s", BASE_URL, CREATE_COMMENT_ENDPOINT);
         comment = new Comment();
 
@@ -175,6 +175,7 @@ public class PostTest extends BaseTestSetup {
 
     @Test
     public void showComment() {
+        createComment();
         baseURI = format("%s%s", BASE_URL, SHOW_COMMENT);
 
         Response response = showCommentApi(cookie, POST_ID);
