@@ -1,6 +1,5 @@
 package test.cases.weare;
 
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
 import static com.telerikacademy.testframework.RandomGenerator.*;
@@ -47,6 +46,7 @@ public class RegistrationTest extends BaseTest {
         registrationPage.userRegistration(username, email, password);
         registrationPage.assertUserNotRegisteredWithAlreadyUsedUsername();
     }
+
     @Test
     public void registerWithAboveTheRangeCharactersForUsername() {
         username = generateRandomUsername(21);
