@@ -169,7 +169,40 @@ The command runs the Postman collection from collection.json 10 times using vari
 ```
 newman run collection.json -e environment.json -r htmlextra --reporter-htmlextra-displayProgressBar --iteration-count 10 --timeout-request 3000 --timeout-script 1000
 ```
+You can execute Newman directly from these two script files in Postman folder in the project:
+For Linux:
+1. Navigate to the "Postman" directory within the project.
+2. Open a terminal in this directory.
+3. Write in terminal one of these commands: 
 
+```
+./run.sh
+
+```
+or
+```
+./run10.sh
+```
+- **run.sh** - This script will execute the basic command.
+
+- **run10.sh** - This script will execute 10 times the command with additional parameters.
+
+4. Тhe test report will appear in a folder named 'Newman' in the same directory.
+
+For Windows:
+
+Double-click on the desired batch file to run it. The pause command at the end of each batch file will keep the command prompt window open so you can view the results.
+
+Alternatively, you can also run the batch files from the Command Prompt. Navigate to the directory containing the batch files and type the name of the batch file you want to run, followed by pressing Enter.
+./run.sh
+
+```
+run.bat
+```
+or
+```
+run10.bat
+```
 ### Allure Reports
 Allure Report is a flexible, lightweight multi-language test report tool that not only shows a very concise representation of what has been tested in a neat web report form, but also allows for a deeper test debugging by providing logs, steps, fixtures, attachments, timings, and more. It's designed to create clear and comprehensive test reports that are easy to read and understand.
 
