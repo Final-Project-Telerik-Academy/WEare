@@ -82,11 +82,16 @@ public class PersonalProfilePage extends BasePage {
         actions.clickElement("weare.disconnectButton");
     }
 
+    public void disableUser() {
+        useractionLogic();
+        actions.waitForElementPresent("weare.disableButton");
+        actions.clickElement("weare.disableButton");
+    }
+
 
     public void backToHome() {
         actions.waitForElementPresent("weare.homeButton");
         actions.clickElement("weare.homeButton");
-
     }
 
     public void fillPersonalDetails(String firstName, String lastName, LocalDate birthday) {

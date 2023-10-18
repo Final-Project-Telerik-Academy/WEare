@@ -96,4 +96,17 @@ public class RandomGenerator {
         String randomUsername = faker.regexify("[a-zA-Z]{" + length + "}");
         return randomUsername;
     }
+
+    public static String generateSmallLettersRandomString(int length) {
+        String characterSet = "abcdefghijklmnopqrstuvwxyz";
+        char[] chars = characterSet.toCharArray();
+        Random random = new Random();
+        StringBuilder randomString = new StringBuilder();
+
+        for (int i = 0; i < length; i++) {
+            randomString.append(chars[random.nextInt(chars.length)]);
+        }
+
+        return randomString.toString();
+    }
 }
