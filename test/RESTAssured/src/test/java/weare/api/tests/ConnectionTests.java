@@ -15,23 +15,29 @@ import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
 
-
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-
 public class ConnectionTests extends BaseTestSetup {
 
     protected static User sender;
     protected static User receiver;
     private static int requestId;
 
-    @BeforeEach
-    public void setupTest() {
-        sender = new User();
-        register();
-        receiver = new User();
-        register();
-        login(sender);
+//    @BeforeEach
+//    public void setupTest() {
+//        sender = new User();
+//        register(sender);
+//        receiver = new User();
+//        register(receiver);
+//        login(sender);
+//
+//    }
 
+    @Override @BeforeEach
+    protected void beforeEach() {
+        sender = new User();
+        register(sender);
+        receiver = new User();
+        register(receiver);
+        login(sender);
     }
 
     @AfterEach
@@ -69,10 +75,24 @@ public class ConnectionTests extends BaseTestSetup {
 
     @Test
     public void getUserRequests() {
+        baseURI = format("%s%s", BASE_URL, SEND_REQUEST);
+
+        JSONObject sendRequestJsonBody = new JSONObject();
+        sendRequestJsonBody.put("id", receiver.getUserId());
+        sendRequestJsonBody.put("username", receiver.getUsername());
+
+        Response response = given()
+                .cookie("JSESSIONID", cookie.getValue())
+                .contentType("application/json")
+                .body(sendRequestJsonBody.toString())
+                .when()
+                .post();
+
+        logout();
         login(receiver);
         baseURI = format("http://localhost:8081/api/auth/users/%d/request/", receiver.getUserId());
 
-        Response response = given()
+         response = given()
                 .cookie(cookie.getName(), cookie.getValue())
                 .when()
                 .get();
@@ -101,10 +121,44 @@ public class ConnectionTests extends BaseTestSetup {
 
     @Test
     public void approveConnectionRequest() {
+        baseURI = format("%s%s", BASE_URL, SEND_REQUEST);
+
+        JSONObject sendRequestJsonBody = new JSONObject();
+        sendRequestJsonBody.put("id", receiver.getUserId());
+        sendRequestJsonBody.put("username", receiver.getUsername());
+
+        Response response = given()
+                .cookie("JSESSIONID", cookie.getValue())
+                .contentType("application/json")
+                .body(sendRequestJsonBody.toString())
+                .when()
+                .post();
+
+        login(receiver);
+        baseURI = format("http://localhost:8081/api/auth/users/%d/request/", receiver.getUserId());
+
+        response = given()
+                .cookie(cookie.getName(), cookie.getValue())
+                .when()
+                .get();
+
+        System.out.println(response.asString());
+
+        int statusCode = response.getStatusCode();
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+
+        JSONArray jsonArray = new JSONArray(response.asString());
+
+            requestId = jsonArray.getJSONObject(0).getInt("id");
+            System.out.println("Extracted ID from response: " + requestId);
+
+            JSONObject jsonObject = jsonArray.getJSONObject(0);
+
+        logout();
         login(receiver);
         baseURI = String.format("http://localhost:8081/api/auth/users/%s/request/approve", receiver.getUserId());
 
-        Response response = given()
+         response = given()
                 .cookie("JSESSIONID", cookie.getValue())
                 .formParam("requestId", requestId)
                 .when()
@@ -112,10 +166,10 @@ public class ConnectionTests extends BaseTestSetup {
 
         System.out.println(response.asString());
 
-        int statusCode = response.getStatusCode();
+//        int statusCode = response.getStatusCode();
 
         String responseBody = response.getBody().asString();
-        String expectedResponseBody = String.format("%s approved request of %s", receiver.getUsername(), user.getUsername());
+        String expectedResponseBody = String.format("%s approved request of %s", receiver.getUsername(), sender.getUsername());
         AssertHelper.assertResponseBodyEquals(expectedResponseBody, responseBody);
         AssertHelper.assertStatusCode(statusCode, SC_OK);
     }

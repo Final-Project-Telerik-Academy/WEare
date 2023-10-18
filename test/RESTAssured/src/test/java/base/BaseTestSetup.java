@@ -21,17 +21,17 @@ import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-
-
 public class BaseTestSetup {
     protected String username;
     protected String password;
     protected Integer userId;
     protected User user;
     protected Cookie cookie;
-
-    @BeforeEach
+//    @BeforeEach
+    protected void beforeEach() {
+        register();
+    }
+//    @BeforeEach
     protected void register() {
         baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
         user = new User();
@@ -67,10 +67,45 @@ public class BaseTestSetup {
         System.out.println(response.asString());
     }
 
+    protected void register(User user) {
+        baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
+//        user = new User();
+
+//        username = user.getUsername();
+//        password = user.getPassword();
+
+        String registrationJsonBody = UserService.registrationRequest(user);
+
+        Response response = given()
+                .contentType(ContentType.JSON)
+                .body(registrationJsonBody)
+                .when()
+                .post();
+
+        String responseBody = response.getBody().asString();
+
+        int statusCode = response.getStatusCode();
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
+        Assertions.assertFalse(responseBody.trim().isEmpty());
+
+        String regex = "name (\\w+)(.*)id (\\d+)";
+        Matcher matcher = Pattern.compile(regex).matcher(responseBody);
+        if (matcher.find()) {
+            username = matcher.group(1);
+            userId = Integer.parseInt(matcher.group(3));
+        }
+
+        user.setUserId(userId);
+
+        Assertions.assertEquals(username, user.getUsername(), "Username does not match expected value");
+        Assertions.assertTrue(userId > 0, "The user ID should be a positiveinteger");
+        System.out.println(response.asString());
+    }
+
     public void login(User user) {
         baseURI = format("%s%s", BASE_URL, AUTH_ENDPOINT);
 
-        Response response = getApplicationAuthentication()
+        Response response = getApplicationAuthentication(user.getUsername(), user.getPassword())
                 .when()
                 .post();
 
@@ -107,7 +142,7 @@ public class BaseTestSetup {
         RestAssured.config = RestAssured.config().encoderConfig(encoderConfig);
     }
 
-    public RequestSpecification getApplicationAuthentication() {
+    public RequestSpecification getApplicationAuthentication(String username, String password) {
         return given()
                 .multiPart("username", username)
                 .multiPart("password", password);
