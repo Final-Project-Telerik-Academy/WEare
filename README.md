@@ -124,7 +124,7 @@ The project uses the following:
 - *[Selenium WebDriver](https://www.selenium.dev/)* as the web browser automation framework using the Java binding.
 - *[jUnit](https://junit.org/junit5/)* as the testing framework.
 - *[Lombok](https://projectlombok.org/)* to generate getters.
-- *[Allure Reports](https://allurereport.org)* as the test reporting strategy for REST Assured.
+- *[Allure Reports](https://allurereport.org)* as the test reporting strategy for REST Assured and Selenium.
 
 - *[IntelliJ IDEA](https://www.jetbrains.com/idea/)* as the IDE.
 
@@ -140,6 +140,10 @@ The reporter works as a plugin with Newman so ensure that you have already insta
 To globally install the htmlextra package:
 ```
 npm install -g newman-rep
+```
+To globally install the htmlextra package:
+```
+npm install -g newman-reporter-htmlextra
 ```
 
 #### Usage
