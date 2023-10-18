@@ -61,5 +61,9 @@ public class RegistrationPage extends BasePage {
         actions.assertElementPresent("weare.differentConfirmedPasswordErrorMessage");
     }
 
+    public void assertUserNotRegisteredWithOnlyLettersForPassword() {
+        actions.assertElementPresent("weare.errorMessagePresent");
+    }
+
 
 }

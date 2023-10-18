@@ -83,5 +83,23 @@ public class RegistrationTest extends BaseTest {
         registrationPage.userRegistrationWithDifferentConfirmedPassword(username, email, password, confirmedPassword);
         registrationPage.assertUserNotRegisteredWithDifferentConfirmedPassword();
     }
+////
 
+    @Test
+    public void registerUserWithSevenCharacterPassword() {
+        username = generateRandomUsername(2);
+        email = generateRandomEmail();
+        password = generateRandomPassword(7);
+        registrationPage.userRegistration(username, email, password);
+        registrationPage.assertUserNotRegisteredWithInvalidPassword();
+    }
+
+    @Test
+    public void registerUserWithOnlySmallLettersForPassword() {
+        username = generateRandomUsername(2);
+        email = generateRandomEmail();
+        password = generateSmallLettersRandomString(10);
+        registrationPage.userRegistration(username, email, password);
+        registrationPage.assertUserNotRegisteredWithOnlyLettersForPassword();
+    }
 }
