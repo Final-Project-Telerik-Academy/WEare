@@ -12,7 +12,7 @@ public class AdminTests extends BaseTest {
     String emailTest = generateRandomEmail();
     String passwordTest = generateRandomPassword(8);
 
-    String adminUsername = generateRandomUsername(12);
+    String adminUsername = "admin" + generateRandomUsername(12);
     String adminEmail = generateRandomEmail();
     String adminPassword = generateRandomPassword(8);
 /*    @BeforeEach
@@ -36,10 +36,7 @@ public class AdminTests extends BaseTest {
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);
-
-
-        adminPage.userPersonalProfile();
-        adminPage.disableProfile();
+        updatePersonalProfilePage.disableUser();
         adminPage.assertUserIsLocked();
     }
 
