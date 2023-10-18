@@ -49,6 +49,7 @@ The project is structured as follows:
 │   ├── target
 │   │   └── jmeter.log
 │   └── pom.xml
+
 ├── Selenium WebDriver
 │   ├── src
 │   │   ├── main
@@ -194,7 +195,7 @@ _For Windows:_
 Double-click on the desired batch file to run it. The pause command at the end of each batch file will keep the command prompt window open so you can view the results.
 
 Alternatively, you can also run the batch files from the Command Prompt. Navigate to the directory containing the batch files and type the name of the batch file you want to run, followed by pressing Enter.
-./run.sh
+
 
 ```
 run.bat
