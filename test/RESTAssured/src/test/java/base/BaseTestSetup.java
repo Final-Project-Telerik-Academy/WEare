@@ -27,52 +27,13 @@ public class BaseTestSetup {
     protected Integer userId;
     protected User user;
     protected Cookie cookie;
-//    @BeforeEach
+
     protected void beforeEach() {
-        register();
-    }
-//    @BeforeEach
-    protected void register() {
-        baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
-        user = new User();
-
-        username = user.getUsername();
-        password = user.getPassword();
-
-        String registrationJsonBody = UserService.registrationRequest(user);
-
-        Response response = given()
-                .contentType(ContentType.JSON)
-                .body(registrationJsonBody)
-                .when()
-                .post();
-
-        String responseBody = response.getBody().asString();
-
-        int statusCode = response.getStatusCode();
-        AssertHelper.assertStatusCode(statusCode, SC_OK);
-        Assertions.assertFalse(responseBody.trim().isEmpty());
-
-        String regex = "name (\\w+)(.*)id (\\d+)";
-        Matcher matcher = Pattern.compile(regex).matcher(responseBody);
-        if (matcher.find()) {
-            username = matcher.group(1);
-            userId = Integer.parseInt(matcher.group(3));
-        }
-
-        user.setUserId(userId);
-
-        Assertions.assertEquals(username, user.getUsername(), "Username does not match expected value");
-        Assertions.assertTrue(userId > 0, "The user ID should be a positiveinteger");
-        System.out.println(response.asString());
+        register(user);
     }
 
     protected void register(User user) {
         baseURI = String.format("%s%s", BASE_URL, REGISTER_ENDPOINT);
-//        user = new User();
-
-//        username = user.getUsername();
-//        password = user.getPassword();
 
         String registrationJsonBody = UserService.registrationRequest(user);
 
@@ -118,7 +79,7 @@ public class BaseTestSetup {
         int statusCode = response.getStatusCode();
         boolean isValidStatusCode = (statusCode == SC_OK) || (statusCode == SC_MOVED_TEMPORARILY);
         Assertions.assertTrue(isValidStatusCode, "Incorrect status code. Expected Status 200.");
-        System.out.println("User 1 authenticated successfully - Username: " + user.getUsername() + " - Cookie: " + cookie.getValue());
+        System.out.println("User authenticated successfully - Username: " + user.getUsername() + " - Cookie: " + cookie.getValue());
     }
 
     protected void logout() {
