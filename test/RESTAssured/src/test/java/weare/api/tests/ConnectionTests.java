@@ -2,11 +2,17 @@ package weare.api.tests;
 
 import base.BaseTestSetup;
 import com.weare.api.models.User;
+import com.weare.api.services.ConnectionService;
 import com.weare.api.utils.AssertHelper;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.response.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static com.weare.api.utils.Endpoints.BASE_URL;
 import static com.weare.api.utils.Endpoints.SEND_REQUEST;
@@ -15,25 +21,12 @@ import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
 
-import io.qameta.allure.Description;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Story;
-
 public class ConnectionTests extends BaseTestSetup {
 
     protected static User sender;
     protected static User receiver;
     private static int requestId;
 
-//    @BeforeEach
-//    public void setupTest() {
-//        sender = new User();
-//        register(sender);
-//        receiver = new User();
-//        register(receiver);
-//        login(sender);
-//
-//    }
 
     @Override @BeforeEach
     protected void beforeEach() {
@@ -60,12 +53,8 @@ public class ConnectionTests extends BaseTestSetup {
         sendRequestJsonBody.put("id", receiver.getUserId());
         sendRequestJsonBody.put("username", receiver.getUsername());
 
-        Response response = given()
-                .cookie("JSESSIONID", cookie.getValue())
-                .contentType("application/json")
-                .body(sendRequestJsonBody.toString())
-                .when()
-                .post();
+        Response response = ConnectionService.sendFriendRequest(String.valueOf(sendRequestJsonBody), cookie);
+
         System.out.println(cookie.getValue());
         System.out.println(response.asString());
         System.out.println(cookie.getValue());
@@ -90,21 +79,13 @@ public class ConnectionTests extends BaseTestSetup {
         sendRequestJsonBody.put("id", receiver.getUserId());
         sendRequestJsonBody.put("username", receiver.getUsername());
 
-        Response response = given()
-                .cookie("JSESSIONID", cookie.getValue())
-                .contentType("application/json")
-                .body(sendRequestJsonBody.toString())
-                .when()
-                .post();
+        Response response = ConnectionService.sendFriendRequest(String.valueOf(sendRequestJsonBody), cookie);
 
         logout();
         login(receiver);
         baseURI = format("http://localhost:8081/api/auth/users/%d/request/", receiver.getUserId());
 
-         response = given()
-                .cookie(cookie.getName(), cookie.getValue())
-                .when()
-                .get();
+         response = ConnectionService.getUsersRequest(cookie);
 
         System.out.println(response.asString());
 
@@ -139,20 +120,12 @@ public class ConnectionTests extends BaseTestSetup {
         sendRequestJsonBody.put("id", receiver.getUserId());
         sendRequestJsonBody.put("username", receiver.getUsername());
 
-        Response response = given()
-                .cookie("JSESSIONID", cookie.getValue())
-                .contentType("application/json")
-                .body(sendRequestJsonBody.toString())
-                .when()
-                .post();
+        Response response = ConnectionService.sendFriendRequest(String.valueOf(sendRequestJsonBody), cookie);
 
         login(receiver);
         baseURI = format("http://localhost:8081/api/auth/users/%d/request/", receiver.getUserId());
 
-        response = given()
-                .cookie(cookie.getName(), cookie.getValue())
-                .when()
-                .get();
+        response = ConnectionService.getUsersRequest(cookie);
 
         System.out.println(response.asString());
 
@@ -170,15 +143,9 @@ public class ConnectionTests extends BaseTestSetup {
         login(receiver);
         baseURI = String.format("http://localhost:8081/api/auth/users/%s/request/approve", receiver.getUserId());
 
-         response = given()
-                .cookie("JSESSIONID", cookie.getValue())
-                .formParam("requestId", requestId)
-                .when()
-                .post();
+         response = ConnectionService.approveRequest(cookie, requestId);
 
         System.out.println(response.asString());
-
-//        int statusCode = response.getStatusCode();
 
         String responseBody = response.getBody().asString();
         String expectedResponseBody = String.format("%s approved request of %s", receiver.getUsername(), sender.getUsername());
