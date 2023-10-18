@@ -1,9 +1,46 @@
-# WEare social network
+# WEare Social Network
 
-**Project Description**
+## Introduction
 
-The task is to develop a SOCIAL NETWORK web application. The SOCIAL NETWORK application enables users to: connect with people; create, comment and like posts; get a feed of the newest/most relevant posts of your connections. This is a social network for exchanging of services allowing the users to set their profession/skills and make posts with the services they offer (e.g. online lawyer consultations).
-<h1 align="left">WEAre Social Application System</h1>
+This README serves as a guide for conducting testing procedures related to the WeAreSocialApp. Within this document, you will discover comprehensive information on how to execute various testing approaches, including manual testing, API testing, and UI testing. Our central objective is to provide precise and actionable guidance to uphold the quality, performance, and reliability standards of the WeAreSocialApp
+
+**Project Description** 
+
+The task is to test a WEAre Social Network web application which is a social media platform designed to connect individuals based on their skills, services, and shared interests. The Social Network application enables users to connect with people, create posts and comment and like posts, to get a feed of the newest/most relevant posts of your connections. This is a social network for exchanging of services allowing the users to set their profession/skills and make posts with the services they offer (e.g. online lawyer consultations). Testing will verify that the application's features and functionalities are working as intended. Our focus is on validating the correctness of the application's behavior and ensuring that it aligns with the specified requirements.
+
+## Table of Content
+
+1. [Manual Testing](#manual-testing)
+2. [API Testing with Postman](#api-testing-with-postman)
+3. [API Testing with Rest Assured](#api-testing-with-rest-assured)
+4. [UI Testing with Selenium WebDriver](#ui-testing-with-selenium)
+5. [Reporting](#reporting)
+6. [Contributors](#contributors)
+7. [Documentation](#documentation)
+
+## Manual Testing
+
+In our quality assurance process, we employ the use of Xray within Jira to guide and document our manual testing procedures. While our high-level tests provide a comprehensive overview of the Weare application's core functionality and user interactions, we also maintain a detailed set of test cases. These detailed test cases offer a thorough examination of the application's features and functionalities. They are designed to ensure that every element works precisely as intended. This level of detail allows us to detect and rectify any anomalies, ensuring a seamless and reliable experience for our users.
+
+## API Testing with Postman
+
+The API testing with Postman has allowed us to thoroughly assess and validate the effectiveness of the Weare application's APIs. With this testing approach, we have examined various API endpoints to ensure they perform precisely as intended, handling requests and responses accurately.
+
+In this process, we have used the developers' API documentation, which can be accessed through the provided link - *[API Documentation](http://localhost:8081/swagger-ui.html)*.
+
+## API Testing with Rest Assured
+
+With a programmatic and code-driven approach using Java and JUnit as a library, we have systematically verified the correctness of API behaviors, ensuring they align with the specified requirements.
+
+The same API documentation was used for the testing purpose.
+
+## UI Testing with Selenium
+
+Our UI testing strategy utilizes Selenium WebDriver in combination with Maven and JUnit, following a page-oriented model. This approach allows us to comprehensively validate the user interface and user experience of the Weare application.
+
+With Selenium WebDriver, we automate the interaction with the application's web pages, simulating user behavior to verify the correctness of page elements, user flows, and interactions. Maven assists in building and managing the testing environment, while JUnit serves as a reliable testing framework to structure and execute our UI tests.
+
+By using the page-oriented model, we organize our UI tests based on individual pages or components of the application, enabling a systematic and maintainable testing process.
 
 
 
@@ -165,6 +202,10 @@ The project uses the following:
 
 
 ## Reporting
+
+Throughout our testing procedures, we generate comprehensive reports that include the results of manual testing, API testing, and UI testing.
+These reports provide a clear and concise summary of the test outcomes, highlighting any issues or defects discovered during the testing process.
+
 ### Newman
 A *[Newman](https://www.npmjs.com/package/newman-reporter-htmlextra)* HTML reporter that has been extended to include the separation of the iteration runs so these are no longer aggregated together and also some additional handlebars helpers to enable users to create better custom templates.
 #### Install
@@ -232,11 +273,21 @@ For the *installation* of Allure Reports, follow these detailed instructions:
 
 https://www.swtestacademy.com/allure-report-junit/
 
-###
+## Contributors
 
-<h3 align="left">Documentation</h3>
+- Rositsa Markova: [GitHub profile](https://github.com/rosicatm)
+- Kristina Duhneva: [GitHub profile]()
+- Filip Gargov: [GitHub profile]()
 
-###
+## Documentation
+
+Here are the links to our documentation resources:
+
+- [Test Plan](https://docs.google.com/document/d/1TiwLMgM4jrnX9gJTI9wzVqLraTC7h764croxKT1-zdM/edit)
+- [Test Case Template](https://docs.google.com/document/d/1sGhZSPXvgvnOjZosZUeBZyZnDNZTzJjKANeSIV3z-dc/edit)
+- [BUG Template](https://docs.google.com/document/d/1GpPPaK76lmC1_k1vc4E53eV829WNz1Ib69nuoVRwCrA/edit)
+- [High-Level Test Cases](https://docs.google.com/document/d/1QNIOPp_iGTjVdGASaATBMkjdmaiSwjubrC1VHQrnPOM/edit)
+- [Exploratory Testing Diagram]()
 
 <p align="left">
 ✨ Test Plane-<br>
