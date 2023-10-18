@@ -101,6 +101,10 @@ The project is structured as follows:
 
 
 ```
+## Prerequisites
+- Java SDK 11
+- jUnit 5
+- Windows, macOS, or Linux operating system
 
 ## Installation Steps
 
