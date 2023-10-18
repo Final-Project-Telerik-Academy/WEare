@@ -47,6 +47,8 @@ public class BaseTest {
     }
 
     protected void registerAsAdmin() {
+        actions.waitForElementPresent("weare.homeButton");
+        actions.clickElement("weare.homeButton");
         adminUsername = "admin" + generateRandomUsername();
         adminEmail = generateRandomEmail();
         adminPassword = generateRandomPassword(8);

@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import static com.telerikacademy.testframework.RandomGenerator.generateRandomEmail;
 import static com.telerikacademy.testframework.RandomGenerator.generateRandomMessage;
 import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
 import static java.lang.String.format;
@@ -32,7 +33,7 @@ public class AdminPage extends BasePage {
     public void userPersonalProfile() {
         actions.waitForElementPresent("weare.searchUsersField");
         actions.waitFor(500);
-        actions.typeValueInField("Ivan Ivanov", "weare.searchUsersField");
+        actions.typeValueInField(firstName + " " + lastName, "weare.searchUsersField");
         actions.waitFor(500);
         actions.clickElement("weare.searchButton");
         actions.waitForElementPresent("weare.seeProfileButton");
@@ -69,7 +70,7 @@ public class AdminPage extends BasePage {
         actions.waitForElementPresent("weare.emailProfileField");
         actions.waitFor(500);
         clearEmailField();
-        updatedEmail = faker.internet().emailAddress();
+        updatedEmail = generateRandomEmail();
         actions.typeValueInField(updatedEmail, "weare.emailProfileField");
         changeBirthdayDate();
         actions.waitForElementPresent("weare.updateProfileButton");
@@ -85,7 +86,7 @@ public class AdminPage extends BasePage {
         actions.waitFor(500);
         actions.clickElement("weare.publicPostOption");
         actions.waitForElementPresent("weare.messageForm");
-        editedContent = faker.lorem().sentence();
+        editedContent = generateRandomMessage();
         actions.typeValueInField(editedContent, "weare.messageForm");
         actions.waitForElementPresent("weare.savePostButton");
         actions.waitFor(500);

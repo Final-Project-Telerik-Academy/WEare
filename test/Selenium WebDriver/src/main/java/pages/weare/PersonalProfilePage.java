@@ -86,7 +86,6 @@ public class PersonalProfilePage extends BasePage {
     public void backToHome() {
         actions.waitForElementPresent("weare.homeButton");
         actions.clickElement("weare.homeButton");
-
     }
 
     public void fillPersonalDetails(String firstName, String lastName, LocalDate birthday) {

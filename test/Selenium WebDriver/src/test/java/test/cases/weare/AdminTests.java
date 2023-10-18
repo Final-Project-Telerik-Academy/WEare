@@ -2,23 +2,42 @@ package test.cases.weare;
 
 import org.junit.jupiter.api.*;
 
+import static com.telerikacademy.testframework.RandomGenerator.*;
+
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 public class AdminTests extends BaseTest {
-    @BeforeEach
+
+    String usernameTest = generateRandomUsername(12);
+    String emailTest = generateRandomEmail();
+    String passwordTest = generateRandomPassword(8);
+
+    String adminUsername = generateRandomUsername(12);
+    String adminEmail = generateRandomEmail();
+    String adminPassword = generateRandomPassword(8);
+/*    @BeforeEach
     public void setupTest() {
         registerAsAdmin();
         loginAsAdmin();
-    }
-
+    }*/
+/*
     @AfterEach
     public void performLogout() {
         logout();
-    }
+    }*/
 
     @Test
     @Order(1)
     public void adminLockASingleUserTest() {
+        registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
+        loginPage.loginUser(usernameTest, passwordTest);
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        logout();
+        updatePersonalProfilePage.backToHome();
+        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
+        loginPage.loginUser(adminUsername, adminPassword);
+
+
         adminPage.userPersonalProfile();
         adminPage.disableProfile();
         adminPage.assertUserIsLocked();
