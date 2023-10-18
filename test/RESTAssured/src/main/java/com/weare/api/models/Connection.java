@@ -1,10 +1,9 @@
 package com.weare.api.models;
 
-import lombok.Getter;
-import lombok.Setter;
-    @Getter
-    @Setter
-public class Connection {
+import lombok.Data;
+
+    @Data
+public class Connection extends BaseModel {
     private String requestId;
 
     public Connection(){

@@ -1,21 +1,19 @@
 package com.weare.api.models;
-import com.github.javafaker.Faker;
 
-import lombok.Getter;
-import lombok.Setter;
-    @Getter
-    @Setter
-public class Skill {
+import com.github.javafaker.Faker;
+import lombok.Data;
+
+    @Data
+public class Skill extends BaseModel {
     private Integer id;
     private String name;
     private Faker faker = new Faker();
 
     public Skill() {
-        this.id = getId();
-        this.name = getRandomSkillName();
+        setRandomSkillName();
     }
 
-    private String getRandomSkillName() {
-        return faker.name().firstName();
+    private void setRandomSkillName() {
+        name = faker.name().firstName();
     }
 }

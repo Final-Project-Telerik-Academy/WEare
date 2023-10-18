@@ -3,12 +3,10 @@ package com.weare.api.models;
 
 import com.github.javafaker.Faker;
 import com.weare.api.utils.Constants;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-    @Getter
-    @Setter
-public class Post {
+    @Data
+public class Post extends  BaseModel {
     private String content;
     private String picture;
     private boolean isPublic;

@@ -28,11 +28,14 @@ import io.qameta.allure.Story;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 public class UserTests extends BaseTestSetup {
+    private User user;
     Post post;
     Skill skill;
 
-    @BeforeEach
-    public void setupTest() {
+    @Override @BeforeEach
+    protected void beforeEach() {
+        user = new User();
+        register(user);
         login(user);
     }
 

@@ -31,10 +31,10 @@ public class PostTest extends BaseTestSetup {
     protected static Comment comment;
     protected Integer userId;
 
-    @BeforeEach
-    public void setupTest() {
-        User user = new User();
-        register();
+    @Override @BeforeEach
+    protected void beforeEach() {
+        user = new User();
+        register(user);
         login(user);
     }
 

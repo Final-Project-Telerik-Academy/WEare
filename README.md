@@ -158,6 +158,6 @@ newman run collection.json -e environment.json -r htmlextra --reporter-htmlextra
 ### Allure Reports
 Allure Report is a flexible, lightweight multi-language test report tool that not only shows a very concise representation of what has been tested in a neat web report form, but also allows for a deeper test debugging by providing logs, steps, fixtures, attachments, timings, and more. It's designed to create clear and comprehensive test reports that are easy to read and understand.
 
-For the *installation* of Allure Reports with REST Assured, follow these detailed instructions:
+For the *installation* of Allure Reports, follow these detailed instructions:
 
 https://www.swtestacademy.com/allure-report-junit/

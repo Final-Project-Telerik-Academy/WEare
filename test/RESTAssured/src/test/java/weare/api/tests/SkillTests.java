@@ -25,10 +25,10 @@ import io.qameta.allure.Story;
 public class SkillTests extends BaseTestSetup {
     Skill skill = new Skill();
 
-    @BeforeEach
-    public void setupTest() {
-        User user = new User();
-        register();
+    @Override @BeforeEach
+    protected void beforeEach() {
+        user = new User();
+        register(user);
         login(user);
     }
 

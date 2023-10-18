@@ -2,12 +2,10 @@ package com.weare.api.models;
 
 import com.github.javafaker.Faker;
 import com.weare.api.utils.Constants;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
-    @Getter
-    @Setter
-public class Comment {
+    @Data
+public class Comment extends BaseModel {
     private String content;
     private Integer postId;
     private Integer userId;

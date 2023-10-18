@@ -2,11 +2,10 @@ package com.weare.api.models;
 import com.weare.api.utils.Constants;
 import com.github.javafaker.Faker;
 
-import lombok.Getter;
-import lombok.Setter;
-    @Getter
-    @Setter
-public class User {
+import lombok.Data;
+
+    @Data
+public class User extends BaseModel {
     private Integer userId;
     private String username;
     private String password;
@@ -16,8 +15,6 @@ public class User {
     private String authority;
     private Integer categoryId;
     private String categoryName;
-
-    private final Faker faker = new Faker();
 
     public User(){
         this.userId = getUserId();
