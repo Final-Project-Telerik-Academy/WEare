@@ -7,98 +7,97 @@ The task is to develop a SOCIAL NETWORK web application. The SOCIAL NETWORK appl
 ## Project Structure
 The project is structured as follows:
 ```bash
-📦 RESTAssured
-├─ .allure
-├─ allure-results
-├─ src
-│  ├─ main
-│  │  ├─ java
-│  │  │  ├─ api
-│  │  │  │  ├─ models
-│  │  │  │  │  ├─ Comment
-│  │  │  │  │  ├─ Connection
-│  │  │  │  │  ├─ Post
-│  │  │  │  │  ├─ Skill
-│  │  │  │  │  ├─ User
-│  │  │  │  │  └─ UserC
-│  │  │  │  ├─ services
-│  │  │  │  │  ├─ CommentService
-│  │  │  │  │  ├─ ConnectionService
-│  │  │  │  │  ├─ PostService
-│  │  │  │  │  ├─ SkillService
-│  │  │  │  │  ├─ UserService
-│  │  │  │  │  └─ UserServiceC
-│  │  │  │  └─ utils
-│  │  │  │     ├─ AssertHelper
-│  │  │  │     ├─ Constants
-│  │  │  │     ├─ Endpoints
-│  │  │  │     ├─ Helper
-│  │  │  │     └─ JSONRequests
-│  │  │  └─ test
-│  │  │     ├─ java
-│  │  │     │  ├─ base
-│  │  │     │  │  └─ BaseTestSetup
-│  │  │     │  └─ tests
-│  │  │     │     ├─ CommentTest
-│  │  │     │     ├─ ConnectionTests
-│  │  │     │     ├─ PostTest
-│  │  │     │     ├─ SkillTests
-│  │  │     │     └─ UserTests
-│  │  └─ resources
-│  │     └─ main-suite.xml
-└─ pom.xml
-
-📦 Selenium WebDriver
-├─ src
-│  ├─ main
-│  │  ├─ java
-│  │  │  └─ testframework
-│  │  │     ├─ pages
-│  │  │     │  ├─ BasePage
-│  │  │     │  ├─ CustomWebDriverManager
-│  │  │     │  ├─ Driver
-│  │  │     │  ├─ PropertiesManager
-│  │  │     │  ├─ RandomGenerator
-│  │  │     │  ├─ UserActionNonImplemented
-│  │  │     │  ├─ UserActions
-│  │  │     │  └─ Utils
-│  │  │     └─ weare
-│  │  │        ├─ AdminPage
-│  │  │        ├─ BasePage
-│  │  │        ├─ CommentPage
-│  │  │        ├─ HomePage
-│  │  │        ├─ LoginPage
-│  │  │        ├─ PersonalProfilePage
-│  │  │        ├─ PostPage
-│  │  │        ├─ RegistrationPage
-│  │  └─ resources
-│  │     ├─ images
-│  │     │  ├─ bug-photo.png
-│  │     │  ├─ bug-photo-2.jpg
-│  │     │  └─ panoramic.jpg
-│  │     ├─ log4j.properties
-│  │     ├─ log4j.xml
-│  │     └─ log4j2.xml
-│  └─ test
-│     ├─ java
-│     │  └─ weare
-│     │     ├─ AdminTests
-│     │     ├─ BaseTest
-│     │     ├─ CommentTests
-│     │     ├─ HomePageTests
-│     │     ├─ LoginTest
-│     │     ├─ PersonalProfileTests
-│     │     ├─ PostTests
-│     │     └─ RegistrationTest
-│     └─ resources
-│        ├─ mappings
-│        │  └─ ui_map.properties
-│        ├─ config.properties
-│        └─ output.log
-├─ pom.xml
-├─ .gitignore
-└─ README.md
-
+.
+├── RESTAssured
+│   ├── .allure
+│   ├── allure-results
+│   ├── src
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   ├── api
+│   │   │   │   │   ├── models
+│   │   │   │   │   │   ├── BaseModel.java
+│   │   │   │   │   │   ├── Comment.java
+│   │   │   │   │   │   ├── Connection.java
+│   │   │   │   │   │   ├── Post.java
+│   │   │   │   │   │   ├── Skill.java
+│   │   │   │   │   │   └── User.java
+│   │   │   │   │   ├── services
+│   │   │   │   │   │   ├── CommentService.java
+│   │   │   │   │   │   ├── ConnectionService.java
+│   │   │   │   │   │   ├── PostService.java
+│   │   │   │   │   │   ├── SkillService.java
+│   │   │   │   │   │   └── UserService.java
+│   │   │   │   │   └── utils
+│   │   │   │   │       ├── AssertHelper.java
+│   │   │   │   │       ├── Constants.java
+│   │   │   │   │       ├── Endpoints.java
+│   │   │   │   │       ├── Helper.java
+│   │   │   │   │       └── JSONRequests.java
+│   │   │   └── test
+│   │   │       ├── java
+│   │   │       │   ├── base
+│   │   │       │   │   └── BaseTestSetup.java
+│   │   │       │   └── tests
+│   │   │       │       ├── CommentTest.java
+│   │   │       │       ├── ConnectionTests.java
+│   │   │       │       ├── PostTest.java
+│   │   │       │       ├── SkillTests.java
+│   │   │       │       └── UserTests.java
+│   │   └── resources
+│   │       └── main-suite.xml
+│   ├── target
+│   │   └── jmeter.log
+│   └── pom.xml
+├── Selenium WebDriver
+│   ├── src
+│   │   ├── main
+│   │   │   ├── java
+│   │   │   │   ├── testframework
+│   │   │   │   │   ├── pages
+│   │   │   │   │   │   ├── BasePage.java
+│   │   │   │   │   │   ├── CustomWebDriverManager.java
+│   │   │   │   │   │   ├── Driver.java
+│   │   │   │   │   │   ├── PropertiesManager.java
+│   │   │   │   │   │   ├── RandomGenerator.java
+│   │   │   │   │   │   ├── UserActionNonImplemented.java
+│   │   │   │   │   │   └── UserActions.java
+│   │   │   │   │   ├── Utils.java
+│   │   │   │   │   └── weare
+│   │   │   │   │       ├── AdminPage.java
+│   │   │   │   │       ├── BasePage.java
+│   │   │   │   │       ├── CommentPage.java
+│   │   │   │   │       ├── HomePage.java
+│   │   │   │   │       ├── LoginPage.java
+│   │   │   │   │       ├── PersonalProfilePage.java
+│   │   │   │   │       ├── PostPage.java
+│   │   │   │   │       └── RegistrationPage.java
+│   │   │   └── resources
+│   │   │       ├── images
+│   │   │       │   ├── bug-photo.png
+│   │   │       │   ├── bug-photo-2.jpg
+│   │   │       │   └── panoramic.jpg
+│   │   │       ├── log4j.properties
+│   │   │       ├── log4j.xml
+│   │   │       └── log4j2.xml
+│   │   └── test
+│   │       ├── java
+│   │       │   └── weare
+│   │       │       ├── AdminTests.java
+│   │       │       ├── BaseTest.java
+│   │       │       ├── CommentTests.java
+│   │       │       ├── HomePageTests.java
+│   │       │       ├── LoginTest.java
+│   │       │       ├── PersonalProfileTests.java
+│   │       │       ├── PostTests.java
+│   │       │       └── RegistrationTest.java
+│   │       └── resources
+│   │           ├── mappings
+│   │           │   └── ui_map.properties
+│   │           └── config.properties
+│   └── pom.xml
+├── .gitignore
+└── README.md
 
 ```
 ## Prerequisites
@@ -170,7 +169,8 @@ The command runs the Postman collection from collection.json 10 times using vari
 newman run collection.json -e environment.json -r htmlextra --reporter-htmlextra-displayProgressBar --iteration-count 10 --timeout-request 3000 --timeout-script 1000
 ```
 You can execute Newman directly from these two script files in Postman folder in the project:
-For Linux:
+
+_For Linux:_
 1. Navigate to the "Postman" directory within the project.
 2. Open a terminal in this directory.
 3. Write in terminal one of these commands: 
@@ -189,7 +189,7 @@ or
 
 4. Тhe test report will appear in a folder named 'Newman' in the same directory.
 
-For Windows:
+_For Windows:_
 
 Double-click on the desired batch file to run it. The pause command at the end of each batch file will keep the command prompt window open so you can view the results.
 
