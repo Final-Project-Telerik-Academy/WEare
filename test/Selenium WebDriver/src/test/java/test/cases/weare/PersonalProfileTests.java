@@ -24,12 +24,16 @@ public class PersonalProfileTests extends BaseTest {
         register();
         login();
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        updatePersonalProfilePage.assertUserProfileUpdated();
     }
 
     @Test
     public void changeProfessionalCategory() {
-        updateUserProfile();
+        register();
+        login();
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         updatePersonalProfilePage.changeProfessionalCategory();
+        updatePersonalProfilePage.assertCategoryChanged();
     }
 
     @Test

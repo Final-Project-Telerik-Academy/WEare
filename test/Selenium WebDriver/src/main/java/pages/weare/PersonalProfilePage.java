@@ -14,11 +14,6 @@ import static java.lang.String.format;
 
 public class PersonalProfilePage extends BasePage {
 
-    LocalDate randomBirthday = generateRandomBirthday(1930, 2000);
-    private String firstName = generateRandomFirstName();
-    private String lastName = generateRandomLastName();
-
-    private String fullName = firstName + " " + lastName;
     private final String randomName2 = generateRandomString(2);
     private final String randomMessage = generateRandomMessage();
     private final String skillOne = generateRandomMessage();
@@ -44,16 +39,23 @@ public class PersonalProfilePage extends BasePage {
     }
 
     public void changeProfessionalCategory() {
-        actions.waitForElementPresent("//select[@id='category.id']");
-        actions.clickElement("//select[@id='category.id']");
-        actions.waitForElementPresent("//option[@value='102']");
-        actions.clickElement("//option[@value='102']");
-
-        actions.waitForElementPresent("(//button[@type='submit' and contains(text(), 'Update')])[2]");
-        actions.clickElement("(//button[@type='submit' and contains(text(), 'Update')])[2]");
+        actions.waitForElementPresent("weare.categoryId");
+        actions.clickElement("weare.categoryId");
+        actions.waitFor(500);
+        actions.waitForElementPresent("weare.optionActor");
+        actions.waitFor(500);
+        actions.clickElement("weare.optionActor");
+        actions.waitForElementPresent("weare.updateMyProfileSecondButton");
+        actions.clickElement("weare.updateMyProfileSecondButton");
     }
 
     public void sendFriendRequest() {
+        useractionLogic();
+        actions.waitForElementPresent("weare.connectButton");
+        actions.clickElement("weare.connectButton");
+    }
+
+    private void useractionLogic() {
         actions.waitFor(2000);
         actions.waitForElementPresent("weare.searchUserByName");
         actions.clickElementWithJavaScriptExecutor("weare.searchUserByName");
@@ -62,8 +64,6 @@ public class PersonalProfilePage extends BasePage {
         actions.clickElement("weare.searchUserButton");
         actions.waitForElementPresent("weare.seeUserProfileButton");
         actions.clickElement("weare.seeUserProfileButton");
-        actions.waitForElementPresent("weare.connectButton");
-        actions.clickElement("weare.connectButton");
     }
 
     public void approveFriendRequest() {
@@ -77,21 +77,13 @@ public class PersonalProfilePage extends BasePage {
     }
 
     public void disconnectUser() {
-        actions.waitFor(2000);
-        actions.waitForElementPresent("weare.searchUserByName");
-        actions.clickElementWithJavaScriptExecutor("weare.searchUserByName");
-        actions.typeValueInField(fullName, "weare.searchUserByName");
-        actions.waitForElementPresent("weare.searchUserButton");
-        actions.clickElement("weare.searchUserButton");
-        actions.waitForElementPresent("weare.seeUserProfileButton");
-        actions.clickElement("weare.seeUserProfileButton");
+        useractionLogic();
         actions.waitForElementPresent("weare.disconnectButton");
         actions.clickElement("weare.disconnectButton");
     }
 
 
     public void backToHome() {
-//        actions.waitFor(2000);
         actions.waitForElementPresent("weare.homeButton");
         actions.clickElement("weare.homeButton");
 
@@ -209,6 +201,12 @@ public class PersonalProfilePage extends BasePage {
         actions.assertElementPresent(format(getUIMappingByKey("weare.assertPersonalReview"),randomMessage));
     }
 
+    public void assertUserProfileUpdated(){
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+        actions.hoverOverElement(format(getUIMappingByKey("weare.assertPersonalReview"),fullName));
+
+    }
     public void assertFriendRequestSent() {
     actions.assertElementPresent("weare.friendRequestSentMessage");
     }
@@ -222,6 +220,10 @@ public class PersonalProfilePage extends BasePage {
     }
     public void assertUserDisconnected() {
         actions.assertElementPresent("weare.connectButton");
+    }
+
+    public void assertCategoryChanged() {
+        actions.assertElementPresent("weare.assertCategoryChanged");
     }
 }
 

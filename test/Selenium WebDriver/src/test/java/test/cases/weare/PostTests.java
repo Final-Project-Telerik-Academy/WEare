@@ -2,8 +2,6 @@ package test.cases.weare;
 
 import org.junit.jupiter.api.*;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-
 public class PostTests extends BaseTest {
 
     @BeforeEach
