@@ -28,7 +28,6 @@ The project is structured as follows:
 ```bash
 .
 ├── RESTAssured
-│   ├── .allure
 │   ├── allure-results
 │   ├── src
 │   │   ├── main
@@ -65,8 +64,7 @@ The project is structured as follows:
 │   │   │       │       └── UserTests.java
 │   │   └── resources
 │   │       └── main-suite.xml
-│   ├── target
-│   │   └── jmeter.log
+│   │
 │   └── pom.xml
 
 ├── Selenium WebDriver
@@ -127,13 +125,14 @@ The project is structured as follows:
 
 ## Installation Steps
 
-In order to use the framework:
+### In order to use the project:
 
-1. Install Git:
 
-If you haven't installed Git on your system, you can download and install it from here.
+* #### Git
+Install _[Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)_ distributed version control system tool.
 
-Open a terminal or command prompt.
+
+Open a terminal or command prompt:
 1. Navigate to the directory where you want to clone the repository.
 2. Clone the Repository., i.e, download your copy of the repository to your local machine using
    - Open a terminal or command prompt.
@@ -144,7 +143,22 @@ git clone https://github.com/Final-Project-Telerik-Academy/WEare.git
 ```
 3. Explore the project structure and files using your preferred code editor or IDE.
 4. Start and access the application  from WeareApplication.class with your IDE, it will typically be accessible via a web browser. The default address is usually http://localhost:8081/, but this might vary based on the project configuration.
-## Languages and Frameworks
+
+
+* ####  Database:
+
+To set up the database, first ensure you have created your own SQL database locally or using [MyFreeSQLHosting](freemysqlhosting.com) or another database server hosting.
+
+Once you have a working database, navigate to the project and open the application.properties file. Fill in the following fields:
+
+spring.datasource.url=_YOUR_DATABASE_URL_
+spring.datasource.username=_YOUR_USERNAME_
+spring.datasource.password=_YOUR_PASSWORD_
+
+Next, execute the **create.sql** script and specify the name of your database.
+Finally, run the **data.sql** script to populate the tables with data.
+
+## Languages, Tools and Frameworks
 
 The project uses the following:
 
@@ -152,7 +166,7 @@ The project uses the following:
 - *[Maven](https://maven.apache.org)* as project management and comprehension tool.
 - *[Selenium WebDriver](https://www.selenium.dev/)* as the web browser automation framework using the Java binding.
 - *[jUnit](https://junit.org/junit5/)* as the testing framework.
-- *[Lombok](https://projectlombok.org/)* to generate getters.
+- *[Lombok](https://projectlombok.org/)* to generate getters and setters.
 - *[Allure Reports](https://allurereport.org)* as the test reporting strategy for REST Assured and Selenium.
 
 - *[IntelliJ IDEA](https://www.jetbrains.com/idea/)* as the IDE.
