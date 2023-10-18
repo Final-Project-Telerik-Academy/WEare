@@ -159,7 +159,7 @@ public class UserTests extends BaseTestSetup {
         Response response = updateUserExpertiseApi(updateUserExpertiseBody, cookie);
 
         int statusCode = response.getStatusCode();
-        Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
 
         Integer resUserId = response.getBody().jsonPath().get("id");
         Integer resCategoryId = response.getBody().jsonPath().get("category.id");

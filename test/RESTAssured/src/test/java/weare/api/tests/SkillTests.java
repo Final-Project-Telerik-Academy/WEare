@@ -22,7 +22,6 @@ import io.qameta.allure.Story;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
-
 public class SkillTests extends BaseTestSetup {
     Skill skill = new Skill();
 
