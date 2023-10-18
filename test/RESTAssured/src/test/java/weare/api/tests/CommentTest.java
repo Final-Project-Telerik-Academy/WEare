@@ -6,22 +6,19 @@ import com.weare.api.models.Post;
 import com.weare.api.models.User;
 import com.weare.api.services.CommentService;
 import com.weare.api.services.PostService;
+import com.weare.api.services.UserService;
 import io.restassured.http.ContentType;
-import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import com.weare.api.utils.AssertHelper;
 
 import static com.weare.api.services.CommentService.*;
-import static com.weare.api.services.PostService.deletePostApi;
-import static com.weare.api.services.UserService.createPostApi;
 import static com.weare.api.utils.Constants.COMMENT_ID;
 import static com.weare.api.utils.Constants.POST_ID;
 import static com.weare.api.utils.Endpoints.*;
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
-import static org.apache.http.HttpStatus.SC_MOVED_TEMPORARILY;
 import static org.apache.http.HttpStatus.SC_OK;
 
 import io.qameta.allure.Description;
@@ -56,8 +53,8 @@ public class CommentTest extends BaseTestSetup {
         post = new Post();
         post.setPublic(true);
 
-        String postJsonBody = PostService.generatePostRequest(post);
-        Response response = createPostApi(postJsonBody, cookie);
+        String postJsonBody = PostService.postRequest(post);
+        Response response = UserService.createPost(postJsonBody, cookie);
 
         POST_ID = response.getBody().jsonPath().get("postId");
         String contentPost = response.getBody().jsonPath().get("content");
@@ -82,8 +79,8 @@ public class CommentTest extends BaseTestSetup {
         userId = user.getUserId();
         comment.setUserId(userId);
 
-        String commentJsonBody = CommentService.generateCommentRequest(comment);
-        Response response = createCommentApi(commentJsonBody, cookie);
+        String commentJsonBody = CommentService.commentRequest(comment);
+        Response response = CommentService.createComment(commentJsonBody, cookie);
 
         COMMENT_ID = response.getBody().jsonPath().get("commentId");
         String contentComment = response.getBody().jsonPath().get("content");
@@ -101,7 +98,7 @@ public class CommentTest extends BaseTestSetup {
     public void getComment() {
         baseURI = format("%s%s", BASE_URL, GET_COMMENT);
 
-        Response response = getCommentApi(cookie);
+        Response response = CommentService.getComment(cookie);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
@@ -140,7 +137,7 @@ public class CommentTest extends BaseTestSetup {
         createComment();
         baseURI = format("%s%s", BASE_URL, LIKE_COMMENT);
 
-        Response response = likeCommentApi(cookie, COMMENT_ID);
+        Response response = CommentService.likeComment(cookie, COMMENT_ID);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
@@ -155,7 +152,7 @@ public class CommentTest extends BaseTestSetup {
         likeComment();
         baseURI = format("%s%s", BASE_URL, LIKE_COMMENT);
 
-        Response response = diskCommentApi(cookie, COMMENT_ID);
+        Response response = diskComment(cookie, COMMENT_ID);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
@@ -169,7 +166,7 @@ public class CommentTest extends BaseTestSetup {
         createPost();
         baseURI = format("%s%s", BASE_URL, FIND_ALL_COMMENTS);
 
-        Response response = getAllCommentApi(cookie, POST_ID);
+        Response response = CommentService.getAllComment(cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
@@ -183,7 +180,7 @@ public class CommentTest extends BaseTestSetup {
         createComment();
         baseURI = format("%s%s", BASE_URL, FIND_ONE_COMMENTS);
 
-        Response response = getOneCommentApi(cookie, COMMENT_ID);
+        Response response = CommentService.getOneComment(cookie, COMMENT_ID);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
@@ -197,7 +194,7 @@ public class CommentTest extends BaseTestSetup {
         createComment();
         baseURI = format("%s%s", BASE_URL, DELETE_COMMENTS);
 
-        Response response = deleteCommentApi(cookie, COMMENT_ID);
+        Response response = CommentService.deleteComment(cookie, COMMENT_ID);
 
         int statusCode = response.getStatusCode();
         String responseBody = response.getBody().asString();
@@ -213,7 +210,7 @@ public class CommentTest extends BaseTestSetup {
         createPost();
         baseURI = format("%s%s", BASE_URL, DELETE_POST);
 
-        Response response = deletePostApi(cookie, POST_ID);
+        Response response = PostService.deletePost(cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
         String responseBody = response.getBody().asString();

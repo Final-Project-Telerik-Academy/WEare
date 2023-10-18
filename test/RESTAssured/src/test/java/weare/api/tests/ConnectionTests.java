@@ -15,6 +15,10 @@ import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+
 public class ConnectionTests extends BaseTestSetup {
 
     protected static User sender;
@@ -44,7 +48,9 @@ public class ConnectionTests extends BaseTestSetup {
     public void tearDownAfterTest() {
         logout();
     }
-
+    @Feature("Connections")
+    @Story("Send connection request")
+    @Description("Test to verify that a connection request can be sent successfully.")
     @Test
     public void sendConnectionRequest() {
 
@@ -73,6 +79,9 @@ public class ConnectionTests extends BaseTestSetup {
         AssertHelper.assertResponseBodyEquals(expectedResponseBody, responseBody);
     }
 
+    @Feature("Connections")
+    @Story("Get user requests")
+    @Description("Test to verify that user requests can be retrieved successfully.")
     @Test
     public void getUserRequests() {
         baseURI = format("%s%s", BASE_URL, SEND_REQUEST);
@@ -119,6 +128,9 @@ public class ConnectionTests extends BaseTestSetup {
         }
     }
 
+    @Feature("Connections")
+    @Story("Approve connection request")
+    @Description("Test to verify that a connection request can be approved successfully.")
     @Test
     public void approveConnectionRequest() {
         baseURI = format("%s%s", BASE_URL, SEND_REQUEST);

@@ -12,12 +12,12 @@ import static io.restassured.RestAssured.given;
 
 public class SkillService {
     private SkillService() {}
-    public static String generateCreateSkill(Skill skill) {
+    public static String createASkillRequest(Skill skill) {
         return String.format(JSONRequests.CREATE_SKILL,
                 Constants.CATEGORY_ID, Constants.CATEGORY_NAME, skill.getName());
     }
 
-    public static Response createASkillApi(String createSkillBody, Cookie cookie) {
+    public static Response createASkill(String createSkillBody, Cookie cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())
@@ -27,7 +27,7 @@ public class SkillService {
                 .post();
     }
 
-    public static Response getSkillApi(Cookie cookie) {
+    public static Response getSkill(Cookie cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
@@ -36,7 +36,7 @@ public class SkillService {
                 .get();
     }
 
-    public static Response editASkillApi(Cookie cookie, String skillName, Integer skillId) {
+    public static Response editASkill(Cookie cookie, String skillName, Integer skillId) {
         return given()
                 .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())
@@ -46,7 +46,7 @@ public class SkillService {
                 .put();
     }
 
-    public static Response getOneSKillApi(Cookie cookie, Integer skillId) {
+    public static Response getOneSKill(Cookie cookie, Integer skillId) {
         return given()
                 .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())
@@ -55,7 +55,7 @@ public class SkillService {
                 .get();
     }
 
-    public static Response deleteSkillApi(Cookie cookie, Integer skillId) {
+    public static Response deleteSkill(Cookie cookie, Integer skillId) {
         return given()
                 .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())

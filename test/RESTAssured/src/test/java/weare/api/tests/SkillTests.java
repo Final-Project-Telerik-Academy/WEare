@@ -43,8 +43,8 @@ public class SkillTests extends BaseTestSetup {
     public void createASkillTest() {
         baseURI = format("%s%s", BASE_URL, CREATE_SKILL_ENDPOINT);
 
-        String createSkillBody = SkillService.generateCreateSkill(skill);
-        Response response = createASkillApi(createSkillBody, cookie);
+        String createSkillBody = SkillService.createASkillRequest(skill);
+        Response response = createASkill(createSkillBody, cookie);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
@@ -69,7 +69,7 @@ public class SkillTests extends BaseTestSetup {
     public void getSkillsTest() {
         baseURI = format("%s%s", BASE_URL, GET_SKILLS_ENPOINT);
 
-        Response response = getSkillApi(cookie);
+        Response response = getSkill(cookie);
 
         int statusCode = response.getStatusCode();
         Assertions.assertEquals(statusCode, SC_OK, "Incorrect status code. Expected Status 200.");
@@ -91,7 +91,7 @@ public class SkillTests extends BaseTestSetup {
         createASkillTest();
         baseURI = format("%s%s", BASE_URL, EDIT_SKILL_ENDPOINT);
 
-        Response response = editASkillApi(cookie, skill.getName(), skill.getId());
+        Response response = editASkill(cookie, skill.getName(), skill.getId());
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(SC_OK, statusCode);
@@ -105,7 +105,7 @@ public class SkillTests extends BaseTestSetup {
         createASkillTest();
         baseURI = format("%s%s", BASE_URL, GET_ONE_SKILL_ENDPOINT);
 
-        Response response = getOneSKillApi(cookie, skill.getId());
+        Response response = getOneSKill(cookie, skill.getId());
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
@@ -128,7 +128,7 @@ public class SkillTests extends BaseTestSetup {
         createASkillTest();
         baseURI = format("%s%s", BASE_URL, DELETE_SKILL_ENDPOINT);
 
-        Response response = deleteSkillApi(cookie, skill.getId());
+        Response response = deleteSkill(cookie, skill.getId());
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);

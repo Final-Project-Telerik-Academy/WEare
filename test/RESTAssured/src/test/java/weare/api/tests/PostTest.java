@@ -11,7 +11,6 @@ import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
 import com.weare.api.utils.AssertHelper;
 
-import static com.weare.api.services.CommentService.*;
 import static com.weare.api.services.PostService.*;
 import static com.weare.api.utils.Constants.*;
 import static com.weare.api.utils.Endpoints.*;
@@ -51,8 +50,8 @@ public class PostTest extends BaseTestSetup {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
         post = new Post();
 
-        String postJsonBody = PostService.generatePostRequest(post);
-        Response response = createPrivatePostApi(postJsonBody, cookie);
+        String postJsonBody = PostService.postRequest(post);
+        Response response = PostService.createPrivatePost(postJsonBody, cookie);
 
         String responseBody = response.getBody().asString();
         POST_ID = response.getBody().jsonPath().get("postId");
@@ -74,8 +73,8 @@ public class PostTest extends BaseTestSetup {
 
         post = new Post();
         post.setPublic(true);
-        String postJsonBody = PostService.generatePostRequest(post);
-        Response response = createPublicPostApi(postJsonBody, cookie);
+        String postJsonBody = PostService.postRequest(post);
+        Response response = PostService.createPublicPost(postJsonBody, cookie);
 
         String responseBody = response.getBody().asString();
         POST_ID = response.getBody().jsonPath().get("postId");
@@ -99,7 +98,7 @@ public class PostTest extends BaseTestSetup {
         baseURI = format("%s%s", BASE_URL, EDIT_POST);
 
         String editJsonBody = PostService.editPostRequest(post);
-        Response response = editPostApi(editJsonBody, cookie, POST_ID);
+        Response response = PostService.editPost(editJsonBody, cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode,SC_OK);
@@ -112,7 +111,7 @@ public class PostTest extends BaseTestSetup {
     public void getPost() {
         baseURI = format("%s%s", BASE_URL, GET_POST);
 
-        Response response = getPostAPi(cookie);
+        Response response = PostService.getPost(cookie);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode,SC_OK);
@@ -126,7 +125,7 @@ public class PostTest extends BaseTestSetup {
         createPublicPost();
         baseURI = format("%s%s", BASE_URL, LIKE_POST);
 
-        Response response = likePostApi(cookie, POST_ID);
+        Response response = PostService.likePost(cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode,SC_OK);
@@ -161,8 +160,8 @@ public class PostTest extends BaseTestSetup {
         userId = user.getUserId();
         comment.setUserId(userId);
 
-        String commentJsonBody = CommentService.generateCommentRequest(comment);
-        Response response = createCommentApi(commentJsonBody, cookie);
+        String commentJsonBody = CommentService.commentRequest(comment);
+        Response response = CommentService.createComment(commentJsonBody, cookie);
 
         String contentComment=response.getBody().jsonPath().get("content");
         int statusCode = response.getStatusCode();
@@ -178,7 +177,7 @@ public class PostTest extends BaseTestSetup {
         createComment();
         baseURI = format("%s%s", BASE_URL, SHOW_COMMENT);
 
-        Response response = showCommentApi(cookie, POST_ID);
+        Response response = CommentService.showComment(cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
 
@@ -193,7 +192,7 @@ public class PostTest extends BaseTestSetup {
         createPublicPost();
         baseURI = format("%s%s", BASE_URL, DELETE_POST);
 
-        Response response = deletePostApi(cookie, POST_ID);
+        Response response = PostService.deletePost(cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode,SC_OK);

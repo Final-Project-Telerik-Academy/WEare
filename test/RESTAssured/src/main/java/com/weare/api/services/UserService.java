@@ -27,16 +27,16 @@ public class UserService {
                 Constants.CITY, Constants.CITY_ID);
     }
 
-    public static String generateSearchUserRequest(User user) {
+    public static String searchUserRequest(User user) {
         return String.format(JSONRequests.SEARCH_USER, user.getFullName());
     }
 
-    public static String generateUpdateExpertiseProfile(User user, Skill skill) {
+    public static String updateExpertiseProfileRequest(User user, Skill skill) {
         return String.format(JSONRequests.UPDATE_USER_EXPERTISE,
                 Constants.AVAILABILITY, user.getCategoryId(), user.getUserId(), skill.getName());
     }
 
-    public static Response searchByUserApi(String searchUserBody, Cookie cookie) {
+    public static Response searchByUser(String searchUserBody, Cookie cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())
@@ -46,7 +46,7 @@ public class UserService {
                 .post();
     }
 
-    public static Response getUserByIdApi(Cookie cookie, String username) {
+    public static Response getUserById(Cookie cookie, String username) {
         return given()
                 .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())
@@ -56,7 +56,7 @@ public class UserService {
                 .get();
     }
 
-    public static Response createPostApi(String postJsonBody, Cookie cookie) {
+    public static Response createPost(String postJsonBody, Cookie cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
@@ -66,7 +66,7 @@ public class UserService {
                 .post();
     }
 
-    public static Response searchUserPostsApi(String postJsonBody, Cookie cookie) {
+    public static Response searchUserPosts(String postJsonBody, Cookie cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())
@@ -76,7 +76,7 @@ public class UserService {
                 .get();
     }
 
-    public static Response updateUserExpertiseApi(String updateExpertiseBody, Cookie cookie) {
+    public static Response updateUserExpertise(String updateExpertiseBody, Cookie cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .cookie(cookie.getName(), cookie.getValue())

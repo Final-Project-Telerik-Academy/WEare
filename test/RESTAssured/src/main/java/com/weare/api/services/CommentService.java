@@ -12,12 +12,12 @@ import static io.restassured.RestAssured.given;
 public class CommentService {
     private CommentService() {}
 
-    public static String generateCommentRequest(Comment comment) {
+    public static String commentRequest(Comment comment) {
         return String.format(JSONRequests.COMMENT,
                 comment.getContent(),comment.getPostId(),comment.getUserId());
     }
 
-    public static Response createCommentApi(String commentJsonBody, Cookie cookie) {
+    public static Response createComment(String commentJsonBody, Cookie cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
@@ -27,7 +27,7 @@ public class CommentService {
                 .post();
     }
 
-    public static Response showCommentApi(Cookie cookie, Integer postId) {
+    public static Response showComment(Cookie cookie, Integer postId) {
         return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
@@ -37,7 +37,7 @@ public class CommentService {
                 .get();
     }
 
-    public static Response getCommentApi(Cookie cookie) {
+    public static Response getComment(Cookie cookie) {
         return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
@@ -46,7 +46,7 @@ public class CommentService {
                 .get();
     }
 
-    public static Response likeCommentApi(Cookie cookie, Integer commentId) {
+    public static Response likeComment(Cookie cookie, Integer commentId) {
         return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
@@ -56,7 +56,7 @@ public class CommentService {
                 .post();
     }
 
-    public static Response diskCommentApi(Cookie cookie, Integer commentId) {
+    public static Response diskComment(Cookie cookie, Integer commentId) {
         return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
@@ -66,7 +66,7 @@ public class CommentService {
                 .post();
     }
 
-    public static Response getAllCommentApi(Cookie cookie, Integer postId) {
+    public static Response getAllComment(Cookie cookie, Integer postId) {
         return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
@@ -76,7 +76,7 @@ public class CommentService {
                 .get();
     }
 
-    public static Response getOneCommentApi(Cookie cookie, Integer postId) {
+    public static Response getOneComment(Cookie cookie, Integer postId) {
         return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
@@ -86,7 +86,7 @@ public class CommentService {
                 .get();
     }
 
-    public static Response deleteCommentApi(Cookie cookie, Integer commentId) {
+    public static Response deleteComment(Cookie cookie, Integer commentId) {
         return  given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)

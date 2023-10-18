@@ -72,7 +72,7 @@ public class UserTests extends BaseTestSetup {
         String formattedEndpoint = String.format(USER_BY_ID_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
 
-        Response response = getUserByIdApi(cookie, user.getUsername());
+        Response response = getUserById(cookie, user.getUsername());
 
         int statusCode = response.getStatusCode();
         String resUserId = response.getBody().jsonPath().getString("id");
@@ -93,8 +93,8 @@ public class UserTests extends BaseTestSetup {
     public void searchByUserTest() {
         baseURI = format("%s%s", BASE_URL, SEARCH_USER_ENDPOINT);
 
-        String searchUserBody = UserService.generateSearchUserRequest(user);
-        Response response = searchByUserApi(searchUserBody, cookie);
+        String searchUserBody = UserService.searchUserRequest(user);
+        Response response = searchByUser(searchUserBody, cookie);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
@@ -115,8 +115,8 @@ public class UserTests extends BaseTestSetup {
         post = new Post();
         post.setPublic(true);
 
-        String postJsonBody = PostService.generatePostRequest(post);
-        Response response = createPostApi(postJsonBody, cookie);
+        String postJsonBody = PostService.postRequest(post);
+        Response response = createPost(postJsonBody, cookie);
 
         POST_ID = response.getBody().jsonPath().get("postId");
         int statusCode = response.getStatusCode();
@@ -138,7 +138,7 @@ public class UserTests extends BaseTestSetup {
         String formattedEndpoint = format(SEARCH_USER_POSTS_ENDPOINT, userId) ;
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
 
-        Response response = searchUserPostsApi(JSONRequests.SHOW_PROFILE_POSTS, cookie);
+        Response response = searchUserPosts(JSONRequests.SHOW_PROFILE_POSTS, cookie);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
@@ -158,8 +158,8 @@ public class UserTests extends BaseTestSetup {
         baseURI = format("%s%s", BASE_URL, formattedString);
 
         skill = new Skill();
-        String updateUserExpertiseBody = UserService.generateUpdateExpertiseProfile(user, skill);
-        Response response = updateUserExpertiseApi(updateUserExpertiseBody, cookie);
+        String updateUserExpertiseBody = UserService.updateExpertiseProfileRequest(user, skill);
+        Response response = updateUserExpertise(updateUserExpertiseBody, cookie);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
