@@ -1,8 +1,11 @@
 package test.cases.weare;
 
-import org.junit.jupiter.api.*;
-
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestInfo;
 
 public class CommentTests extends BaseTest {
     @BeforeEach
@@ -20,6 +23,8 @@ public class CommentTests extends BaseTest {
         }
     }
 
+    @Feature("Comment")
+    @Story("Create a comment with valid input successfully.")
     @Test
     public void createCommentTest() {
         postPage.createPublicPost();
@@ -28,6 +33,8 @@ public class CommentTests extends BaseTest {
         commentPage.asserCreatedCommentContent();
     }
 
+    @Feature("Comment")
+    @Story("Create a comment with one character successfully.")
     @Test
     public void createCommentWithOneCharacterTest() {
         postPage.createPublicPost();
@@ -35,6 +42,8 @@ public class CommentTests extends BaseTest {
         commentPage.assertNewCommentCreated();
     }
 
+    @Feature("Comment")
+    @Story("Create a comment with 999 characters successfully.")
     @Test
     public void createCommentWith999CharactersTest() {
         postPage.createPublicPost();
@@ -42,6 +51,8 @@ public class CommentTests extends BaseTest {
         commentPage.assertNewCommentCreated();
     }
 
+    @Feature("Comment")
+    @Story("Create a comment with 1000 characters successfully.")
     @Test
     public void createCommentWith1000CharactersTest() {
         postPage.createPublicPost();
@@ -49,6 +60,8 @@ public class CommentTests extends BaseTest {
         commentPage.assertNewCommentCreated();
     }
 
+    @Feature("Comment")
+    @Story("Create a comment with special characters successfully.")
     @Test
     public void createCommentWithSpecialCharactersTest() {
         postPage.createPublicPost();
@@ -56,6 +69,8 @@ public class CommentTests extends BaseTest {
         commentPage.assertCommentWithSpecialCharsCreated();
     }
 
+    @Feature("Comment")
+    @Story("Create a comment with hyperlink successfully.")
     @Test
     public void createCommentWithHyperLinkTest() {
         postPage.createPublicPost();
@@ -63,6 +78,8 @@ public class CommentTests extends BaseTest {
         commentPage.assertCommentWithHyperlinkCreated();
     }
 
+    @Feature("Comment")
+    @Story("Create a comment with 1000 characters, special characters and hyperlink successfully.")
     @Test
     public void createCommentWith1000CharsSpecialCharsAndHyperLinkTest() {
         postPage.createPublicPost();
@@ -70,6 +87,8 @@ public class CommentTests extends BaseTest {
         commentPage.assertCommentWithMessageHyperLinkAndSpecialChars();
     }
 
+    @Feature("Comment")
+    @Story("Like a created comment successfully.")
     @Test
     public void likeCreatedCommentTest() {
         postPage.createPublicPost();
@@ -78,6 +97,8 @@ public class CommentTests extends BaseTest {
         commentPage.assertCommentIsLiked();
     }
 
+    @Feature("Comment")
+    @Story("Dislike a created comment successfully.")
     @Test
     public void dislikeCreatedCommentTest() {
         postPage.createPublicPost();
@@ -87,6 +108,8 @@ public class CommentTests extends BaseTest {
         commentPage.assertCommentIsDisiked();
     }
 
+    @Feature("Comment")
+    @Story("Edit last created comment successfully.")
     @Test
     public void editLastCreatedCommentTest() {
         postPage.createPublicPost();
@@ -95,6 +118,8 @@ public class CommentTests extends BaseTest {
         commentPage.assertCommentContentIsEdited();
     }
 
+    @Feature("Comment")
+    @Story("Delete last created comment successfully.")
     @Test
     public void deleteLastCreatedComment() {
         postPage.createPublicPost();
@@ -103,6 +128,8 @@ public class CommentTests extends BaseTest {
         commentPage.assertCommentIsDeleted();
     }
 
+    @Feature("Comment")
+    @Story("Create a comment with 1001 characters unsuccessfully.")
     @Test
     public void createCommentWith1001Characters() {
         postPage.createPublicPost();
@@ -110,6 +137,8 @@ public class CommentTests extends BaseTest {
         commentPage.assertCommentWith1001CharsNotCreated();
     }
 
+    @Feature("Comment")
+    @Story("Anonymous user creates a comment unsuccessfully.")
     @Test
     public void anonymousUserCantCreateComment() {
         commentPage.anonymousUserTryToCreateComment();

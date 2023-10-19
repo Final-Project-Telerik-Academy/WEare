@@ -1,5 +1,7 @@
 package test.cases.weare;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 
@@ -19,6 +21,8 @@ public class PersonalProfileTests extends BaseTest {
         logout();
     }
 
+    @Feature("Personal profile")
+    @Story("Edit personal profile - first name, last name and birthday successfully.")
     @Test
     public void updateUserProfile() {
         register();
@@ -27,6 +31,8 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.assertUserProfileUpdated();
     }
 
+    @Feature("Personal profile")
+    @Story("Change professional category successfully.")
     @Test
     public void changeProfessionalCategory() {
         register();
@@ -36,6 +42,8 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.assertCategoryChanged();
     }
 
+    @Feature("Personal profile")
+    @Story("Send friend request to another user successfully.")
     @Test
     public void sendFriendRequest() {
         registrationPage.userRegistration(receiverUsername, receiverEmail, receiverPassword);
@@ -49,6 +57,8 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.assertFriendRequestSent();
     }
 
+    @Feature("Personal profile")
+    @Story("Approve friend request from another user successfully.")
     @Test
     public void approveRequest() {
         sendFriendRequest();
@@ -59,6 +69,8 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.assertFriendRequestApproved();
     }
 
+    @Feature("Personal profile")
+    @Story("Disconnect from another user successfully.")
     @Test
     public void disconnectUser() {
         approveRequest();
@@ -68,7 +80,8 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.assertUserDisconnected();
     }
 
-
+    @Feature("Personal profile")
+    @Story("Edit first name with two characters successfully.")
     @Test
     public void editFirstNameWithTwoCharacters() {
         register();
@@ -79,6 +92,8 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.assertFirstNameField();
     }
 
+    @Feature("Personal profile")
+    @Story("Edit last name with two characters successfully.")
     @Test
     public void editLastNameWithTwoCharacters() {
         updateUserProfile();
@@ -87,6 +102,8 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.assertLastNameField();
     }
 
+    @Feature("Personal profile")
+    @Story("Edit personal profile details and review it successfully.")
     @Test
     public void personalReviewField() {
         register();
@@ -96,6 +113,8 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.assertPersonalReview();
     }
 
+    @Feature("Personal profile")
+    @Story("Update skill details successfully.")
     @Test
     public void updateSkillDetails() {
         register();
@@ -105,6 +124,8 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.assertSkillField();
     }
 
+    @Feature("Personal profile")
+    @Story("Update personal profile image successfully.")
     @Test
     public void updatePersonalImage() {
         register();
@@ -113,6 +134,8 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.assertUpdatePhoto();
     }
 
+    @Feature("Personal profile")
+    @Story("Edit first name with three characters successfully.")
     @Test
     public void updateFirstNameWithTreeCharacters() {
         register();
@@ -121,6 +144,4 @@ public class PersonalProfileTests extends BaseTest {
         updatePersonalProfilePage.editFirstNameWithTreeCharacters();
         updatePersonalProfilePage.assertFirstNameFieldWithTreeCharacters();
     }
-
-
 }

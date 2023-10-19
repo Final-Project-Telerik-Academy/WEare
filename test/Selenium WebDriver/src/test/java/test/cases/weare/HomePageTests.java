@@ -1,15 +1,20 @@
 package test.cases.weare;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.Test;
 
 public class HomePageTests extends BaseTest {
-
+    @Feature("HomePage")
+    @Story("Search user by profession successfully.")
     @Test
     public void searchByProfession() {
         homePage.searchUserByProfession();
         homePage.assertResultSearch();
     }
 
+    @Feature("HomePage")
+    @Story("Search user by full name successfully.")
     @Test
     public void searchUserByFullName() {
         register();
@@ -20,6 +25,8 @@ public class HomePageTests extends BaseTest {
         homePage.assertUserResultSearch();
     }
 
+    @Feature("HomePage")
+    @Story("Search user by first name successfully.")
     @Test
     public void searchUserByFirstName() {
         register();

@@ -1,11 +1,15 @@
 package test.cases.weare;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.telerikacademy.testframework.RandomGenerator.*;
 
 public class RegistrationTest extends BaseTest {
-
+    @Feature("Registration")
+    @Story("Register user with two characters for username successfully.")
     @Test
     public void registerWithTwoCharactersForUsername() {
         username = generateRandomUsername(2);
@@ -15,6 +19,8 @@ public class RegistrationTest extends BaseTest {
         registrationPage.assertUserRegistered();
     }
 
+    @Feature("Registration")
+    @Story("Register user with twenty characters for username successfully.")
     @Test
     public void registerWithTwentyCharactersForUsername() {
         username = generateRandomUsername(20);
@@ -24,6 +30,8 @@ public class RegistrationTest extends BaseTest {
         registrationPage.assertUserRegistered();
     }
 
+    @Feature("Registration")
+    @Story("Register user with one character for username unsuccessfully.")
     @Test
     public void registerWithUnderTheRangeCharactersForUsername() {
         username = generateRandomUsername(1);
@@ -33,6 +41,8 @@ public class RegistrationTest extends BaseTest {
         registrationPage.assertUserNotRegisteredWithUnderTheRangeCharsForUsername();
     }
 
+    @Feature("Registration")
+    @Story("Register user with an already used username unsuccessfully.")
     @Test
     public void registerWithAlreadyUsedUsername() {
         username = generateRandomUsername(2);
@@ -47,6 +57,8 @@ public class RegistrationTest extends BaseTest {
         registrationPage.assertUserNotRegisteredWithAlreadyUsedUsername();
     }
 
+    @Feature("Registration")
+    @Story("Register user with twenty-one characters for username unsuccessfully.")
     @Test
     public void registerWithAboveTheRangeCharactersForUsername() {
         username = generateRandomUsername(21);
@@ -56,6 +68,8 @@ public class RegistrationTest extends BaseTest {
         registrationPage.assertUserRegistered();
     }
 
+    @Feature("Registration")
+    @Story("Register user with eight characters for password successfully.")
     @Test
     public void registerWithEightCharactersForPassword() {
         username = generateRandomUsername(2);
@@ -65,6 +79,8 @@ public class RegistrationTest extends BaseTest {
         registrationPage.assertUserRegistered();
     }
 
+    @Feature("Registration")
+    @Story("Register user with five characters for password unsuccessfully.")
     @Test
     public void registerWithFiveCharactersForPassword() {
         username = generateRandomUsername(2);
@@ -74,6 +90,8 @@ public class RegistrationTest extends BaseTest {
         registrationPage.assertUserNotRegisteredWithInvalidPassword();
     }
 
+    @Feature("Registration")
+    @Story("Register user with different confirmed password unsuccessfully.")
     @Test
     public void registerUserWithDifferentConfirmedPassword() {
         username = generateRandomUsername(2);
@@ -83,8 +101,9 @@ public class RegistrationTest extends BaseTest {
         registrationPage.userRegistrationWithDifferentConfirmedPassword(username, email, password, confirmedPassword);
         registrationPage.assertUserNotRegisteredWithDifferentConfirmedPassword();
     }
-////
 
+    @Feature("Registration")
+    @Story("Register user with seven characters for password unsuccessfully.")
     @Test
     public void registerUserWithSevenCharacterPassword() {
         username = generateRandomUsername(2);
@@ -94,6 +113,8 @@ public class RegistrationTest extends BaseTest {
         registrationPage.assertUserNotRegisteredWithInvalidPassword();
     }
 
+    @Feature("Registration")
+    @Story("Register user with only small letters for password unsuccessfully.")
     @Test
     public void registerUserWithOnlySmallLettersForPassword() {
         username = generateRandomUsername(2);

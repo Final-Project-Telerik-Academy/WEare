@@ -1,5 +1,7 @@
 package test.cases.weare;
 
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import org.junit.jupiter.api.Test;
 
 import static com.telerikacademy.testframework.RandomGenerator.*;
@@ -9,6 +11,8 @@ public class LoginTest extends BaseTest {
     String invalidUsername = generateRandomUsername(1);
     String invalidPassword = generateRandomPassword(5);
 
+    @Feature("Login")
+    @Story("Login user with valid credentials successfully.")
     @Test
     protected void loginWithValidDetails() {
         username = generateRandomUsername(2);
@@ -20,6 +24,8 @@ public class LoginTest extends BaseTest {
         loginPage.assertUserIsLoggedIn();
     }
 
+    @Feature("Login")
+    @Story("Login user with invalid username unsuccessfully.")
     @Test
     public void loginWithInvalidUsername() {
         username = generateRandomUsername(2);
@@ -31,6 +37,8 @@ public class LoginTest extends BaseTest {
         loginPage.assertUserNotLoggedInWithInvalidCredentials();
     }
 
+    @Feature("Login")
+    @Story("Login user with invalid password unsuccessfully.")
     @Test
     public void loginWithInvalidPassword() {
         username = generateRandomUsername(2);
@@ -42,6 +50,8 @@ public class LoginTest extends BaseTest {
         loginPage.assertUserNotLoggedInWithInvalidCredentials();
     }
 
+    @Feature("Login")
+    @Story("Login user with invalid credentials unsuccessfully.")
     @Test
     public void loginWithInvalidCredentials() {
         username = generateRandomUsername(2);
@@ -53,9 +63,11 @@ public class LoginTest extends BaseTest {
         loginPage.assertUserNotLoggedInWithInvalidCredentials();
     }
 
+    @Feature("Logout")
+    @Story("Logout user successfully.")
     @Test
     public void logoutUser() {
-         loginWithValidDetails();
+        loginWithValidDetails();
         loginPage.logoutUser();
         loginPage.assertUserIsLoggedOut();
 

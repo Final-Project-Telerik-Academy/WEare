@@ -1,10 +1,11 @@
 package test.cases.weare;
 
-import org.junit.jupiter.api.*;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
 
 import static com.telerikacademy.testframework.RandomGenerator.*;
-
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 public class AdminTests extends BaseTest {
 
@@ -16,8 +17,9 @@ public class AdminTests extends BaseTest {
     String adminEmail = generateRandomEmail();
     String adminPassword = generateRandomPassword(8);
 
+    @Feature("Admin")
+    @Story("Admin locks a single user successfully.")
     @Test
-    @Order(1)
     public void adminLockASingleUserTest() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
@@ -29,9 +31,10 @@ public class AdminTests extends BaseTest {
         updatePersonalProfilePage.disableUser();
         adminPage.assertUserIsLocked();
     }
+    @Feature("Admin")
+    @Story("Admin unlocks a single user successfully.")
     @Disabled
     @Test
-    @Order(2)
     public void adminUnlockASingleUserTest() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
@@ -43,9 +46,9 @@ public class AdminTests extends BaseTest {
         updatePersonalProfilePage.enableUser();
         adminPage.assertUserIsUnlocked();
     }
-
+    @Feature("Admin")
+    @Story("Admin edits other user's last created post successfully.")
     @Test
-    @Order(3)
     public void editLastCreatedUserPostTest() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
@@ -58,9 +61,9 @@ public class AdminTests extends BaseTest {
         adminPage.editUserPost();
         adminPage.assertUserPostIsEdited();
     }
-
+    @Feature("Admin")
+    @Story("Admin deletes other user's post successfully.")
     @Test
-    @Order(4)
     public void deleteLastCreatedUserPostTest() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
@@ -73,9 +76,9 @@ public class AdminTests extends BaseTest {
         adminPage.deleteLastCreatedPost();
         adminPage.assertPostIsDeletedSuccessfully();
     }
-
+    @Feature("Admin")
+    @Story("Admin edits other user's personal profile post successfully.")
     @Test
-    @Order(5)
     public void adminEditOtherUserPersonalProfileTest() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
@@ -91,7 +94,6 @@ public class AdminTests extends BaseTest {
     }
 
     @Test
-    @Order(6)
     public void adminEditOtherUserComment() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
@@ -105,9 +107,9 @@ public class AdminTests extends BaseTest {
         adminPage.editOtherUserComment();
         adminPage.asserEditedUserCommentContent();
     }
-
+    @Feature("Admin")
+    @Story("Admin edits other user's personal profile post successfully.")
     @Test
-    @Order(7)
     public void adminDeleteUserComment() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
