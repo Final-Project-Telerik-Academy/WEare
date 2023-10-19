@@ -11,7 +11,6 @@ public class AdminTests extends BaseTest {
     String usernameTest = generateRandomUsername(12);
     String emailTest = generateRandomEmail();
     String passwordTest = generateRandomPassword(8);
-
     String adminUsername = "admin" + generateRandomUsername(12);
     String adminEmail = generateRandomEmail();
     String adminPassword = generateRandomPassword(8);

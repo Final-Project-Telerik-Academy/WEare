@@ -8,7 +8,8 @@ import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-import static com.telerikacademy.testframework.RandomGenerator.*;
+import static com.telerikacademy.testframework.RandomGenerator.generateRandomMessage;
+import static com.telerikacademy.testframework.RandomGenerator.generateRandomString;
 import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
 import static java.lang.String.format;
 

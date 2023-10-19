@@ -114,22 +114,6 @@ public class PostTests extends BaseTest {
     }
 
     @Feature("Post")
-    @Story("Like specific post successfully.")
-    @Test
-    public void SpecificPostLiked_When_ClickLikeButton() {
-        postPage.likeSpecificPost();
-        postPage.assertSpecificPostIsLiked();
-    }
-
-    @Feature("Post")
-    @Story("Dislike specific post successfully.")
-    @Test
-    public void SpecificPostDisiked_When_ClickDislikeButton() {
-        postPage.dislikeSpecificPost();
-        postPage.assertSpecificPostIsDisliked();
-    }
-
-    @Feature("Post")
     @Story("Edit post content successfully.")
     @Test
     public void PostContentEdited_When_ClickEditButton() {

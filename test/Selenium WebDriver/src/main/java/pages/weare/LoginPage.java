@@ -62,6 +62,7 @@ public class LoginPage extends BasePage {
     public void assertUserIsLoggedOut() {
         actions.assertElementPresent("weare.assertLoggedOutText");
     }
+
     public void assertUserNotLoggedInWithInvalidCredentials() {
         actions.assertElementPresent("weare.wrongUsernameOrPassword");
     }
