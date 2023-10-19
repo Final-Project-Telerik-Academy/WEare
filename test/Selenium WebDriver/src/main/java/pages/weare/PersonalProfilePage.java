@@ -180,7 +180,8 @@ public class PersonalProfilePage extends BasePage {
 
     }
 
-    public void fillSkillDetails(String skillOne, String skillTwo, String skillTree, String skillFour, String skillFive) {
+    public void fillSkillDetails(String skillOne, String skillTwo, String skillTree, String skillFour, String skillFive)
+    {
         fillFieldById("weare.skill1", skillOne);
         fillFieldById("weare.skill2", skillTwo);
         fillFieldById("weare.skill3", skillTree);
@@ -204,7 +205,8 @@ public class PersonalProfilePage extends BasePage {
     }
 
     public void updatePersonalImage() {
-        String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo-2.jpg").toAbsolutePath().toString();
+        String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo-2.jpg")
+                .toAbsolutePath().toString();
         photoUser(imagePath);
 
     }
@@ -299,6 +301,5 @@ public class PersonalProfilePage extends BasePage {
         actions.waitForElementPresent("weare.personalProfileButton");
         actions.clickElement("weare.personalProfileButton");
     }
-
 }
 
