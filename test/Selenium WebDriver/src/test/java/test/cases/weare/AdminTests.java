@@ -31,9 +31,9 @@ public class AdminTests extends BaseTest {
         updatePersonalProfilePage.disableUser();
         adminPage.assertUserIsLocked();
     }
+
     @Feature("Admin")
     @Story("Admin unlocks a single user successfully.")
-    @Disabled
     @Test
     public void adminUnlockASingleUserTest() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
@@ -46,6 +46,7 @@ public class AdminTests extends BaseTest {
         updatePersonalProfilePage.enableUser();
         adminPage.assertUserIsUnlocked();
     }
+
     @Feature("Admin")
     @Story("Admin edits other user's last created post successfully.")
     @Test
@@ -61,6 +62,7 @@ public class AdminTests extends BaseTest {
         adminPage.editUserPost();
         adminPage.assertUserPostIsEdited();
     }
+
     @Feature("Admin")
     @Story("Admin deletes other user's post successfully.")
     @Test
@@ -76,6 +78,7 @@ public class AdminTests extends BaseTest {
         adminPage.deleteLastCreatedPost();
         adminPage.assertPostIsDeletedSuccessfully();
     }
+
     @Feature("Admin")
     @Story("Admin edits other user's personal profile post successfully.")
     @Test
@@ -107,6 +110,7 @@ public class AdminTests extends BaseTest {
         adminPage.editOtherUserComment();
         adminPage.asserEditedUserCommentContent();
     }
+
     @Feature("Admin")
     @Story("Admin edits other user's personal profile post successfully.")
     @Test

@@ -98,6 +98,8 @@ public class UserTests extends BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
+        AssertHelper.assertContentTypeNotNull(ContentType.JSON);
+        AssertHelper.assertResponseBodyNotNull(response.getBody());
     }
 
     @Feature("Posts")
