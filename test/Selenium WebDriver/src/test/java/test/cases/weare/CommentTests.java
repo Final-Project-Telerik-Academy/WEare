@@ -102,7 +102,6 @@ public class CommentTests extends BaseTest {
     @Test
     public void dislikeCreatedCommentTest() {
         postPage.createPublicPost();
-        commentPage.exploreThisPost();
         commentPage.createComment();
         commentPage.dislikeSpecificComment();
         commentPage.assertCommentIsDisiked();
@@ -138,7 +137,7 @@ public class CommentTests extends BaseTest {
     }
 
     @Feature("Comment")
-    @Story("Anonymous user creates a comment unsuccessfully.")
+    @Story("commentTextAreaNotVisibleForAnonymousUserTest")
     @Test
     public void anonymousUserCantCreateComment() {
         commentPage.anonymousUserTryToCreateComment();

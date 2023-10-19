@@ -22,12 +22,12 @@ public class CommentPage extends BasePage {
     int commentsCounter;
 
     public void createComment() {
-//        actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
-//        actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
+        exploreThisPost();
         actions.waitForElementPresent("weare.messageForm");
         actions.waitFor(500);
         actions.typeValueInField(randomMessage, "weare.messageForm");
         actions.waitForElementPresent("weare.postCommentBtn");
+        actions.waitFor(500);
         actions.clickElement("weare.postCommentBtn");
     }
 
@@ -257,6 +257,7 @@ public class CommentPage extends BasePage {
 
     public void exploreThisPost() {
         actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
+        actions.waitFor(500);
         actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
     }
 }
