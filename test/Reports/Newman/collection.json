@@ -1,0 +1,3402 @@
+{
+	"info": {
+		"_postman_id": "e3d64b23-f80f-4438-8c25-e09c7fd346ea",
+		"name": "WEAre",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30153307",
+		"_collection_link": "https://finalprojectteam.postman.co/workspace/WEare-v2~4c5847f7-2239-4105-8d58-b4b1e7cad889/collection/28729541-e3d64b23-f80f-4438-8c25-e09c7fd346ea?action=share&source=collection_link&creator=30153307"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Create a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody = pm.response.text(); ",
+									"",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set User ID as a dynamic variable\", function () {",
+									"    const userId = responseBody.match(/id (\\d+)/)[1]; ",
+									"    console.log(userId);",
+									"    pm.collectionVariables.set(\"userId\", userId);",
+									"});",
+									"",
+									"pm.test(\"Response body is not empty\", function () {",
+									"    pm.expect(responseBody).to.not.be.empty;",
+									"});",
+									"",
+									"pm.test(\"User ID matches expected value\", function () {",
+									"    const userId = responseBody.match(/id (\\d+)/)[1];",
+									"    pm.expect(userId).to.eql(pm.collectionVariables.get(\"userId\"));",
+									"});",
+									"",
+									"pm.test(\"Username matches expected value\", function () {",
+									"    const extractedUsername = responseBody.match(/User with name (\\w+)/)[1];",
+									"    pm.expect(extractedUsername).to.eql(pm.collectionVariables.get(\"username\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uniqueUsername = pm.variables.replaceIn('{{$randomFirstName}}{{$randomLastName}}') + Date.now();",
+									"uniqueUsername = uniqueUsername.replace(/\\d/g, '');",
+									"pm.collectionVariables.set(\"username\", uniqueUsername);",
+									"",
+									"var uniqueEmail = pm.variables.replaceIn('{{$randomEmail}}');",
+									"uniqueEmail = uniqueEmail.replace('@', '_' + Date.now() + '@');",
+									"pm.collectionVariables.set(\"email\", uniqueEmail);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"authorities\": [\n    \"ROLE_USER\"\n  ],\n  \"category\": {\n    \"id\": 102,\n    \"name\": \"{{expertise}}\"\n  },\n  \"confirmPassword\": \"{{password}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"username\": \"{{username}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate/Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(pm.cookies.get('JSESSIONID'))",
+									"const sessionID = pm.cookies.get('JSESSIONID')",
+									"pm.collectionVariables.set(\"sessionID\", sessionID);",
+									"",
+									"pm.test(\"Status code is 200\", function () {",
+									"",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/authenticate",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update personal profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"console.log(jsonData.location.city.id);",
+									"",
+									"pm.test(\"Validate the user ID\", function () {",
+									"console.log(\"API Response ID:\", pm.response.json().id);",
+									"console.log(\"Expected User ID:\", pm.collectionVariables.get(\"userId\"));",
+									"",
+									"        pm.expect(Number(pm.response.json().id)).to.equal(Number(pm.collectionVariables.get(\"userId\")));",
+									"});",
+									"",
+									"pm.test(\"Validate first name\", function() {",
+									"    pm.expect(jsonData.firstName).to.eql(pm.collectionVariables.get(\"firstName\"));",
+									"});",
+									"",
+									"pm.test(\"Validate last name\", function() {",
+									"    pm.expect(jsonData.lastName).to.eql(pm.collectionVariables.get(\"lastName\"));",
+									"});",
+									"",
+									"pm.test(\"Validate birthday date\", function() {",
+									"    pm.expect(jsonData.birthYear).to.eql(\"1990-10-03\");",
+									"});",
+									"",
+									"pm.test(\"Validate the city ID\", function() {",
+									"    pm.expect(Number(jsonData.location.city.id)).to.eql(2);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uniqueFirstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"pm.collectionVariables.set(\"firstName\", uniqueFirstName);",
+									"",
+									"var uniqueLastName = pm.variables.replaceIn('{{$randomLastName}}');",
+									"pm.collectionVariables.set(\"lastName\", uniqueLastName);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"birthYear\": \"1990-10-03\",\n  \"firstName\": \"{{firstName}}\",\n  \"id\": {{userId}},\n  \"lastName\": \"{{lastName}}\",\n  \"location\": {\n    \"city\": {\n      \"city\": \"Plovdiv\",\n      \"country\": {},\n      \"id\": 2\n    }\n  },\n  \"personalReview\": \"\",\n  \"picture\": \"\",\n  \"picturePrivacy\": true,\n  \"sex\": \"MALE\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users/auth/{{userId}}/personal",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"auth",
+								"{{userId}}",
+								"personal"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "User by id",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Validate user ID\", function() {",
+									"    pm.expect(Number(jsonData.id)).to.equal(Number(pm.collectionVariables.get(\"userId\")));",
+									"});",
+									"",
+									"pm.test(\"Response body has expected values\", function() {",
+									"    pm.expect(jsonData.username).to.eql(pm.collectionVariables.get(\"username\"));",
+									"    pm.expect(jsonData.email).to.eql(pm.collectionVariables.get(\"email\"));",
+									"    pm.expect(jsonData.expertise).to.eql(\"Actor\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users/auth/{{userId}}?principal={{username}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"auth",
+								"{{userId}}"
+							],
+							"query": [
+								{
+									"key": "principal",
+									"value": "{{username}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response has Content-Type: application/json\", function () {",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");",
+									"",
+									"    pm.expect(contentTypeHeader).to.exist;",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"jsonData.sort((a, b) => a.userId - b.userId);",
+									"",
+									"pm.test(\"Validate last created user ID\", function () {",
+									"    pm.expect(Number(jsonData[jsonData.length - 1].userId)).equal(Number(pm.collectionVariables.get(\"userId\")));",
+									"});",
+									"",
+									"pm.test(\"Response body has expected values\", function() {",
+									"    pm.expect(jsonData[jsonData.length - 1].username).to.eql(pm.collectionVariables.get(\"username\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"index\": 0,\n  \"next\": true,\n  \"searchParam1\": \"\",\n  \"searchParam2\": \"{{fullName}}\",\n  \"size\": 5\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var JSONData = JSON.parse(responseBody);\r",
+									"console.log(\"Post created with the following data:\", JSONData);\r",
+									"console.log(\"Setting postID variable:\", JSONData[\"postId\"]);\r",
+									"pm.environment.set(\"postID\", JSONData[\"postId\"]);\r",
+									"   \r",
+									"    var responseBody = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response body is a valid JSON\", function () {\r",
+									"    pm.expect(responseBody).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type: application/json\", function () {\r",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"\r",
+									"    pm.expect(contentTypeHeader).to.exist;\r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate post ID\", function () {\r",
+									"    pm.expect(responseBody.postId).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate post name\", function () {\r",
+									"    var username = pm.collectionVariables.get(\"username\");\r",
+									"    var createdPost = username + \" create a new post.\"   \r",
+									"    pm.expect(responseBody.content).to.equal(createdPost);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that the post is public\", function () {    \r",
+									"    pm.expect(responseBody.public).to.equal(true);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"{{username}} create a new post.\",\r\n    \"picture\": \"\",\r\n    \"public\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/post/auth/creator",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"auth",
+								"creator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search user's posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.collectionVariables.set(\"postId\", jsonData[0].postId);",
+									"",
+									"pm.test(\"Validate post ID\", function () {",
+									"    pm.expect(jsonData[0].postId).equal(Number(pm.collectionVariables.get(\"postId\")));",
+									"});",
+									"",
+									"pm.test(\"Validate post content\", function () {  ",
+									"    var username = pm.collectionVariables.get(\"username\");",
+									"    var postContent = username + \" create a new post.\";    ",
+									"    pm.expect(jsonData[0].content).equal(postContent);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"index\": 0,\n  \"next\": true,\n  \"searchParam1\": \"\",\n  \"searchParam2\": \"\",\n  \"size\": 5\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users/{{userId}}/posts",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"{{userId}}",
+								"posts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update user expertise profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"console.log(pm.collectionVariables.get(\"uniqueJobTitle\"));",
+									"",
+									"var jsonData = pm.response.json();",
+									"",
+									"pm.test(\"Validate user ID\", function () {",
+									"        pm.expect(Number(jsonData.id)).to.eql(Number(pm.collectionVariables.get(\"userId\")));",
+									"});",
+									"",
+									"pm.test(\"Validate category ID exist\", function() {",
+									"    pm.expect(Number(jsonData.category.id)).to.exist;",
+									"});",
+									"",
+									"pm.test(\"Validate the number of skills\", function() {",
+									"    pm.expect(Number(jsonData.skills.length)).to.eql(Number(pm.collectionVariables.get(\"skillsNumber\")));",
+									"});",
+									"",
+									"pm.test(\"Аvailability hours check\", function() {",
+									"    pm.expect(Number(jsonData.availability)).to.eql(Number(pm.collectionVariables.get(\"availability\")));",
+									"});",
+									"",
+									"var exprtise = jsonData.category.name;",
+									"pm.collectionVariables.set(\"exprtise\", exprtise);"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"let randomUserId = Math.floor(Math.random() * 1000000);",
+									"let randomSkillNumber = Math.floor(Math.random() * 1000000);",
+									"",
+									"pm.variables.set(\"randomUserId\", randomUserId);",
+									"pm.variables.set(\"randomSkillNumber\", randomSkillNumber);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"availability\": 40,\n  \"category\": {\n    \"id\": 103\n  },\n  \"id\": {{randomUserId}},\n  \"skill1\": \"skill_{{randomSkillNumber}}\",\n  \"skills\": [\n    \"skill_{{randomSkillNumber}}_2\"\n  ]\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users/auth/{{userId}}/expertise",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								"auth",
+								"{{userId}}",
+								"expertise"
+							],
+							"query": [
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Connection",
+			"item": [
+				{
+					"name": "Create first user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Extract the id from the response body",
+									"pm.test(\"Extract id from response body\", function () {",
+									"    var responseText = pm.response.text();",
+									"    var id = responseText.match(/id (\\d+)/)[1];",
+									"    pm.collectionVariables.set(\"userFirstId\", id);",
+									"});",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									" ",
+									" pm.test(\"Response body is not empty\", function () {",
+									"    var responseBody = pm.response.text();",
+									"    pm.expect(responseBody).to.not.be.empty;",
+									"});",
+									"",
+									"pm.test(\"User ID matches expected value\", function () {",
+									"    var responseBody = pm.response.text();",
+									"    var userId = responseBody.match(/id (\\d+)/)[1];",
+									"    pm.expect(userId).to.eql(pm.collectionVariables.get(\"userFirstId\"));",
+									"});",
+									"pm.test(\"Verify that the response has the header 'Content-Type' with value 'application/json'\", function () {",
+									"    pm.response.headers.has(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").includes(\"application/json\");",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uniqueUsername = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+									"pm.collectionVariables.set(\"firstUserName\", uniqueUsername);\r",
+									"\r",
+									"var uniqueFirstName = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+									"pm.collectionVariables.set(\"firstName\", uniqueFirstName);\r",
+									"\r",
+									"var uniqueLastName = pm.variables.replaceIn('{{$randomLastName}}');\r",
+									"pm.collectionVariables.set(\"lastName\", uniqueLastName);\r",
+									"\r",
+									"var uniqueEmail = pm.variables.replaceIn('{{$randomEmail}}');\r",
+									"pm.collectionVariables.set(\"firstUserEmail\", uniqueEmail);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"authorities\": [\n    \"ROLE_USER\"\n  ],\n  \"category\": {\n    \"id\": 103,\n    \"name\": \"Designer\"\n  },\n  \"confirmPassword\": \"{{password}}\",\n  \"email\": \"{{firstUserEmail}}\",\n  \"password\": \"{{password}}\",\n  \"username\": \"{{firstUserName}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create second user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"// Extract the id from the response body",
+									"pm.test(\"Extract id from response body\", function () {",
+									"    var responseText = pm.response.text();",
+									"    var id = responseText.match(/id (\\d+)/)[1];",
+									"    pm.collectionVariables.set(\"userSecondId\", id);",
+									"});",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									" ",
+									" pm.test(\"Response body is not empty\", function () {",
+									"    var responseBody = pm.response.text();",
+									"    pm.expect(responseBody).to.not.be.empty;",
+									"});",
+									"",
+									"pm.test(\"User ID matches expected value\", function () {",
+									"    var responseBody = pm.response.text();",
+									"    var userId = responseBody.match(/id (\\d+)/)[1];",
+									"    pm.expect(userId).to.eql(pm.collectionVariables.get(\"userSecondId\"));",
+									"});",
+									"pm.test(\"Verify that the response has the header 'Content-Type' with value 'application/json'\", function () {",
+									"    pm.response.headers.has(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").includes(\"application/json\");",
+									"});",
+									"pm.test(\"Verify that the response has the header 'Content-Length'\", function () {",
+									"  pm.expect(pm.response.headers.has(\"Content-Length\")).to.be.true;",
+									"});",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uniqueUsername = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+									"pm.collectionVariables.set(\"secondUserName\", uniqueUsername);\r",
+									"\r",
+									"var uniqueFirstName = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+									"pm.collectionVariables.set(\"firstName\", uniqueFirstName);\r",
+									"\r",
+									"var uniqueLastName = pm.variables.replaceIn('{{$randomLastName}}');\r",
+									"pm.collectionVariables.set(\"lastName\", uniqueLastName);\r",
+									"\r",
+									"var uniqueEmail = pm.variables.replaceIn('{{$randomEmail}}');\r",
+									"pm.collectionVariables.set(\"secondUserEmail\", uniqueEmail);\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"authorities\": [\n    \"ROLE_USER\"\n  ],\n  \"category\": {\n    \"id\": 103,\n    \"name\": \"Designer\"\n  },\n  \"confirmPassword\": \"{{password}}\",\n  \"email\": \"{{secondUserEmail}}\",\n  \"password\": \"{{password}}\",\n  \"username\": \"{{secondUserName}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate/Login first user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(pm.cookies.get('JSESSIONID'))\r",
+									"const sessionID = pm.cookies.get('JSESSIONID')\r",
+									"pm.collectionVariables.set(\"sessionID\", sessionID);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{firstUserName}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"description": "s",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/authenticate",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Successful POST request\", function () {\r",
+									"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that the response body is not empty\", function () {\r",
+									"  pm.expect(pm.response.text()).to.not.be.empty;\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"id\":{{userSecondId}} ,\r\n  \"username\": \"{{secondUserName}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/request",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"request"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate/Login second user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(pm.cookies.get('JSESSIONID'))\r",
+									"const sessionID = pm.cookies.get('JSESSIONID')\r",
+									"pm.collectionVariables.set(\"sessionID\", sessionID);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{secondUserName}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/authenticate",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Requests",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Get id from response body\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.collectionVariables.set(\"requestId\", jsonData[0].id);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/users/{{userSecondId}}/request/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"users",
+								"{{userSecondId}}",
+								"request",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve Request",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Status code name has string\", function () {\r",
+									"    pm.response.to.have.status(\"OK\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response body format\", function () {\r",
+									"    const expectedFormat = {\r",
+									"        status: \"string\",\r",
+									"        message: \"string\"\r",
+									"    };\r",
+									"\r",
+									"    pm.response.to.have.jsonBody(expectedFormat);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate response body\", function () {\r",
+									"    const firstUserName = pm.collectionVariables.get(\"firstUserName\");\r",
+									"    const secondUserName = pm.collectionVariables.get(\"secondUserName\");\r",
+									"    \r",
+									"    const expectedResponse = secondUserName + \" approved request of \" + firstUserName;\r",
+									"    pm.expect(pm.response.text()).to.equal(expectedResponse);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/auth/users/{{userSecondId}}/request/approve?requestId={{requestId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"users",
+								"{{userSecondId}}",
+								"request",
+								"approve"
+							],
+							"query": [
+								{
+									"key": "requestId",
+									"value": "{{requestId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Create a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody = pm.response.text(); ",
+									"",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set User ID as a dynamic variable\", function () {",
+									"    const userId = responseBody.match(/id (\\d+)/)[1]; ",
+									"    console.log(userId);",
+									"    pm.collectionVariables.set(\"userId\", userId);",
+									"});",
+									"",
+									"pm.test(\"Response body is not empty\", function () {",
+									"    pm.expect(responseBody).to.not.be.empty;",
+									"});",
+									"",
+									"pm.test(\"User ID matches expected value\", function () {",
+									"    const userId = responseBody.match(/id (\\d+)/)[1];",
+									"    pm.expect(userId).to.eql(pm.collectionVariables.get(\"userId\"));",
+									"});",
+									"",
+									"pm.test(\"Username matches expected value\", function () {",
+									"    const extractedUsername = responseBody.match(/User with name (\\w+)/)[1];",
+									"    pm.expect(extractedUsername).to.eql(pm.collectionVariables.get(\"username\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uniqueUsername = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"pm.collectionVariables.set(\"username\", uniqueUsername);",
+									"",
+									"var uniqueFirstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"pm.collectionVariables.set(\"firstName\", uniqueFirstName);",
+									"",
+									"var uniqueLastName = pm.variables.replaceIn('{{$randomLastName}}');",
+									"pm.collectionVariables.set(\"lastName\", uniqueLastName);",
+									"",
+									"var uniqueEmail = pm.variables.replaceIn('{{$randomEmail}}');",
+									"pm.collectionVariables.set(\"email\", uniqueEmail);",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"authorities\": [\n    \"ROLE_USER\"\n  ],\n  \"category\": {\n    \"id\": 102,\n    \"name\": \"{{expertise}}\"\n  },\n  \"confirmPassword\": \"{{password}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"username\": \"{{username}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate/Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(pm.cookies.get('JSESSIONID'))\r",
+									"const sessionID = pm.cookies.get('JSESSIONID')\r",
+									"pm.collectionVariables.set(\"sessionID\", sessionID);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/authenticate",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a private post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var JSONData = JSON.parse(responseBody);\r",
+									"console.log(\"Post created with the following data:\", JSONData);\r",
+									"console.log(\"Setting postID variable:\", JSONData[\"postId\"]);\r",
+									"pm.collectionVariables.set(\"privatePosttID\", JSONData[\"postId\"]);\r",
+									"   \r",
+									"    var responseBody = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response body is a valid JSON\", function () {\r",
+									"    pm.expect(responseBody).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type: application/json\", function () {\r",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"\r",
+									"    pm.expect(contentTypeHeader).to.exist;\r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate post ID\", function () {\r",
+									"    pm.expect(responseBody.postId).to.equal(pm.collectionVariables.get(\"privatePosttID\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate post content\", function () {    \r",
+									"    pm.expect(responseBody.content).to.equal(pm.collectionVariables.get(\"privatePostName\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that the post is private\", function () {    \r",
+									"    pm.expect(responseBody.public).to.equal(false);\r",
+									"});\r",
+									"\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Verify the presence of post details\", function () {\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('postId');\r",
+									"    pm.expect(responseData).to.have.property('content');\r",
+									"    pm.expect(responseData).to.have.property('picture');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('likes');\r",
+									"    pm.expect(responseData).to.have.property('comments');\r",
+									"    pm.expect(responseData).to.have.property('rank');\r",
+									"    pm.expect(responseData).to.have.property('category');\r",
+									"    pm.expect(responseData.category).to.have.property('id');\r",
+									"    pm.expect(responseData.category).to.have.property('name');\r",
+									"    pm.expect(responseData).to.have.property('liked');\r",
+									"    pm.expect(responseData).to.have.property('public');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"{{privatePostName}}\",\r\n    \"picture\": \"\",\r\n    \"public\": false\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/post/auth/creator",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"auth",
+								"creator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a public post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var JSONData = JSON.parse(responseBody);\r",
+									"console.log(\"Post created with the following data:\", JSONData);\r",
+									"console.log(\"Setting postID variable:\", JSONData[\"postId\"]);\r",
+									"pm.collectionVariables.set(\"postId\", JSONData[\"postId\"]);\r",
+									"   \r",
+									"    var responseBody = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Response body is a valid JSON\", function () {\r",
+									"    pm.expect(responseBody).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type: application/json\", function () {\r",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"\r",
+									"    pm.expect(contentTypeHeader).to.exist;\r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate post ID\", function () {\r",
+									"    pm.expect(responseBody.postId).to.equal(Number(pm.collectionVariables.get('postId')));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate post content\", function () {    \r",
+									"    pm.expect(responseBody.content).to.equal(pm.collectionVariables.get('postName'));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that the post is public\", function () {    \r",
+									"    pm.expect(responseBody.public).to.equal(true);\r",
+									"});\r",
+									"\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Verify the presence of post details\", function () {\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('postId');\r",
+									"    pm.expect(responseData).to.have.property('content');\r",
+									"    pm.expect(responseData).to.have.property('picture');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('likes');\r",
+									"    pm.expect(responseData).to.have.property('comments');\r",
+									"    pm.expect(responseData).to.have.property('rank');\r",
+									"    pm.expect(responseData).to.have.property('category');\r",
+									"    pm.expect(responseData.category).to.have.property('id');\r",
+									"    pm.expect(responseData.category).to.have.property('name');\r",
+									"    pm.expect(responseData).to.have.property('liked');\r",
+									"    pm.expect(responseData).to.have.property('public');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"{{postName}}\",\r\n    \"picture\": \"\",\r\n    \"public\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/post/auth/creator",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"auth",
+								"creator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function () {\r",
+									"    pm.response.to.not.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"content\": \"{{editedPostName}}\",\r\n  \"picture\": \"\",\r\n  \"public\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/post/auth/editor?postId={{postId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"auth",
+								"editor"
+							],
+							"query": [
+								{
+									"key": "postId",
+									"value": "{{postId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get posts",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify the presence of post details in each post\", function () {\r",
+									"    responseData.forEach(function (post) {\r",
+									"        pm.expect(post).to.have.property('postId');\r",
+									"        pm.expect(post).to.have.property('content');\r",
+									"        pm.expect(post).to.have.property('picture');\r",
+									"        pm.expect(post).to.have.property('date');\r",
+									"        pm.expect(post).to.have.property('likes');\r",
+									"        pm.expect(post).to.have.property('comments');\r",
+									"        pm.expect(post).to.have.property('liked');\r",
+									"        pm.expect(post).to.have.property('category');\r",
+									"        pm.expect(post.category).to.have.property('id');\r",
+									"        pm.expect(post.category).to.have.property('name');\r",
+									"        pm.expect(post).to.have.property('public');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/post/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"post",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Like a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type: application/json\", function () {\r",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"\r",
+									"    pm.expect(contentTypeHeader).to.exist;\r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the presence of post details\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('postId');\r",
+									"    pm.expect(responseData).to.have.property('content');\r",
+									"    pm.expect(responseData).to.have.property('picture');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('likes');\r",
+									"    pm.expect(responseData).to.have.property('comments');\r",
+									"    pm.expect(responseData).to.have.property('rank');\r",
+									"    pm.expect(responseData).to.have.property('liked');\r",
+									"    pm.expect(responseData).to.have.property('category');\r",
+									"    pm.expect(responseData).to.have.property('public');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that the post is liked - there is content in likes\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    pm.expect(responseData.likes).to.have.lengthOf.above(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/post/auth/likesUp?postId={{postId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"auth",
+								"likesUp"
+							],
+							"query": [
+								{
+									"key": "postId",
+									"value": "{{postId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dislike a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type: application/json\", function () {\r",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"\r",
+									"    pm.expect(contentTypeHeader).to.exist;\r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the presence of post details\", function () {\r",
+									" const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.have.property('postId');\r",
+									"    pm.expect(responseData).to.have.property('content');\r",
+									"    pm.expect(responseData).to.have.property('picture');\r",
+									"    pm.expect(responseData).to.have.property('date');\r",
+									"    pm.expect(responseData).to.have.property('likes');\r",
+									"    pm.expect(responseData).to.have.property('comments');\r",
+									"    pm.expect(responseData).to.have.property('rank');\r",
+									"    pm.expect(responseData).to.have.property('liked');\r",
+									"    pm.expect(responseData).to.have.property('category');\r",
+									"    pm.expect(responseData).to.have.property('public');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that the post is disliked - there is nothing in likes\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.likes).to.have.lengthOf(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/post/auth/likesUp?postId={{postId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"auth",
+								"likesUp"
+							],
+							"query": [
+								{
+									"key": "postId",
+									"value": "{{postId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var JSONData = JSON.parse(responseBody);\r",
+									"console.log(\"Parsed JSON Data:\", JSONData);\r",
+									"console.log(\"Setting commentId variable:\", JSONData[\"commentId\"]);\r",
+									"pm.collectionVariables.set(\"commentid\", JSONData[\"commentId\"]);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type: application/json\", function () {\r",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"    pm.expect(contentTypeHeader).to.exist;\r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate comment content\", function () {    \r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.content).to.equal(pm.collectionVariables.get(\"commentContent\"));\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the presence of properties in the response body\", function () {\r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody).to.have.property('content');\r",
+									"    pm.expect(responseBody).to.have.property('commentId');\r",
+									"    pm.expect(responseBody).to.have.property('likes');\r",
+									"    pm.expect(responseBody).to.have.property('date');\r",
+									"    pm.expect(responseBody).to.have.property('liked');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{  \r\n  \"content\": \"{{commentContent}}\",\r\n  \"deletedConfirmed\": true,\r\n  \"postId\": \"{{postId}}\",\r\n  \"userId\": \"{{userId}}\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/comment/auth/creator",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"comment",
+								"auth",
+								"creator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Show comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Verify the presence of comment details in each comment\", function () {\r",
+									"    responseData.forEach(function (comment) {\r",
+									"        pm.expect(comment).to.have.property('commentId');\r",
+									"        pm.expect(comment).to.have.property('content');\r",
+									"        pm.expect(comment).to.have.property('likes');\r",
+									"        pm.expect(comment).to.have.property('date');\r",
+									"        pm.expect(comment).to.have.property('liked');\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/post/Comments?postId={{postID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"Comments"
+							],
+							"query": [
+								{
+									"key": "postId",
+									"value": "{{postID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function () {\r",
+									"    pm.response.to.not.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/post/auth/manager?postId={{postId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"auth",
+								"manager"
+							],
+							"query": [
+								{
+									"key": "postId",
+									"value": "{{postId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "Create user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"// Extract the id from the response body",
+									"pm.test(\"Extract id from response body\", function () {",
+									"    var responseText = pm.response.text();",
+									"    var id = responseText.match(/id (\\d+)/)[1];",
+									"    pm.collectionVariables.set(\"userId\", id);",
+									"});",
+									"",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Response body is not empty\", function () {",
+									"    var responseBody = pm.response.text();",
+									"    pm.expect(responseBody).to.not.be.empty;",
+									"});",
+									"",
+									"pm.test(\"User ID matches expected value\", function () {",
+									"    var responseBody = pm.response.text();",
+									"    var userId = responseBody.match(/id (\\d+)/)[1];",
+									"    pm.expect(userId).to.eql(pm.collectionVariables.get(\"userId\"));",
+									"});",
+									"pm.test(\"Username matches expected value\", function () {",
+									"    var responseBody = pm.response.text();",
+									"    var extractedUsername = responseBody.match(/User with name (\\w+)/)[1];",
+									"    pm.expect(extractedUsername).to.eql(pm.collectionVariables.get(\"username\"));",
+									"});",
+									"",
+									"pm.test(\"Verify that the response has the header 'Content-Type' with value 'application/json'\", function () {",
+									"    pm.response.headers.has(\"Content-Type\");",
+									"    pm.response.headers.get(\"Content-Type\").includes(\"application/json\");",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uniqueUsername = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+									"pm.collectionVariables.set(\"username\", uniqueUsername);\r",
+									"\r",
+									"var uniqueFirstName = pm.variables.replaceIn('{{$randomFirstName}}');\r",
+									"pm.collectionVariables.set(\"firstName\", uniqueFirstName);\r",
+									"\r",
+									"var uniqueLastName = pm.variables.replaceIn('{{$randomLastName}}');\r",
+									"pm.collectionVariables.set(\"lastName\", uniqueLastName);\r",
+									"\r",
+									"var uniqueEmail = pm.variables.replaceIn('{{$randomEmail}}');\r",
+									"pm.collectionVariables.set(\"email\", uniqueEmail);\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"authorities\": [\n    \"ROLE_USER\"\n  ],\n  \"category\": {\n    \"id\": 103,\n    \"name\": \"Designer\"\n  },\n  \"confirmPassword\": \"{{password}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"username\": \"{{username}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate/Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(pm.cookies.get('JSESSIONID'))\r",
+									"const sessionID = pm.cookies.get('JSESSIONID')\r",
+									"pm.collectionVariables.set(\"sessionID\", sessionID);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/authenticate",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a post",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var JSONData = JSON.parse(responseBody);\r",
+									"console.log(\"Post created with the following data:\", JSONData);\r",
+									"console.log(\"Setting postID variable:\", JSONData[\"postId\"]);\r",
+									"pm.collectionVariables.set(\"postId\", JSONData[\"postId\"]);\r",
+									"   var responseBody = pm.response.json();\r",
+									"   \r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response body is a valid JSON\", function () {\r",
+									"    pm.expect(responseBody).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type: application/json\", function () {\r",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"\r",
+									"    pm.expect(contentTypeHeader).to.exist;\r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate post ID\", function () {\r",
+									"    pm.expect(responseBody.postId).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate post content\", function () {    \r",
+									"    pm.expect(responseBody.content).to.equal(\"New post with more comment.\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate that the post is public\", function () {    \r",
+									"    pm.expect(responseBody.public).to.equal(true);\r",
+									"});\r",
+									"pm.test(\"Verify that postId is a non-negative integer\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.postId).to.be.a('number');\r",
+									"    pm.expect(responseData.postId).to.be.at.least(0);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that the 'content' is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.content).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that likes is an array\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.likes).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify that comments is an array\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.comments).to.be.an('array');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"content\": \"New post with more comment.\",\r\n    \"picture\": \"\",\r\n    \"public\": true\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/post/auth/creator",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"post",
+								"auth",
+								"creator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var JSONData = JSON.parse(responseBody);\r",
+									"console.log(\"Parsed JSON Data:\", JSONData);\r",
+									"console.log(\"Setting commentId variable:\", JSONData[\"commentId\"]);\r",
+									"pm.collectionVariables.set(\"commentid\", JSONData[\"commentId\"]);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type: application/json\", function () {\r",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"\r",
+									"    pm.expect(contentTypeHeader).to.exist;\r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate comment content\", function () {    \r",
+									"    const responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody.content).to.equal(pm.collectionVariables.get(\"contentComment\"));\r",
+									"});\r",
+									"pm.test(\"CommentId is a non-negative integer\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.commentId).to.be.a('number');\r",
+									"  pm.expect(responseData.commentId).to.be.at.least(0, \"CommentId should be a non-negative integer\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.content).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Likes is an array\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.likes).to.be.an('array');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uniqueContent = pm.variables.replaceIn('{{$randomPhrase}}');\r",
+									"pm.collectionVariables.set(\"contentComment\", uniqueContent);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\r\n{\r\n    \r\n  \"content\": \"{{contentComment}}\",\r\n  \"deletedConfirmed\": true,\r\n  \"postId\": {{postId}},\r\n  \"userId\": {{userId}}\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/comment/auth/creator",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"comment",
+								"auth",
+								"creator"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"\r",
+									"pm.test(\"Verify the presence of comment details in each comment\", function () {\r",
+									"    responseData.forEach(function (comment) {\r",
+									"        pm.expect(comment).to.have.property('commentId');\r",
+									"        pm.expect(comment).to.have.property('content');\r",
+									"        pm.expect(comment).to.have.property('date');\r",
+									"        pm.expect(comment).to.have.property('liked');\r",
+									"       \r",
+									"    });\r",
+									"});\r",
+									"pm.test(\"Response is an array with at least one element\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('array').and.to.have.lengthOf.at.least(1);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Each comment has a non-negative commentId\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"\r",
+									"  pm.expect(responseData).to.be.an('array');\r",
+									"  responseData.forEach(function(comment) {\r",
+									"    pm.expect(comment.commentId).to.be.a('number').and.to.be.at.least(0);\r",
+									"  });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each comment has a non-empty content\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array').that.is.not.empty;\r",
+									"    \r",
+									"    responseData.forEach(function(comment) {\r",
+									"        pm.expect(comment.content).to.exist.and.to.be.a('string').and.to.have.lengthOf.at.least(1, \"Content should not be empty\");\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Each comment's liked property is either true or false\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    \r",
+									"    responseData.forEach(function(comment) {\r",
+									"        pm.expect(comment.liked).to.be.a('boolean');\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/comment",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"comment"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Comment",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function () {\r",
+									"    pm.response.to.not.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/comment/auth/editor?commentId={{commentid}}&content={{editContent}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"comment",
+								"auth",
+								"editor"
+							],
+							"query": [
+								{
+									"key": "commentId",
+									"value": "{{commentid}}"
+								},
+								{
+									"key": "content",
+									"value": "{{editContent}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Like Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type: application/json\", function () {\r",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"\r",
+									"    pm.expect(contentTypeHeader).to.exist;\r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.commentId).to.exist.and.to.be.a('number');\r",
+									"    pm.expect(responseData.content).to.exist.and.to.be.a('string');\r",
+									"    pm.expect(responseData.likes).to.exist.and.to.be.an('array');\r",
+									"    pm.expect(responseData.date).to.exist.and.to.be.a('string');\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"CommentId is a non-negative integer\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.commentId).to.be.a('number');\r",
+									"    pm.expect(responseData.commentId).to.be.at.least(0, \"CommentId should be a non-negative integer\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content is a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.content).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Likes is an array\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData.likes).to.be.an('array');\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/comment/auth/likesUp?commentId={{commentid}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"comment",
+								"auth",
+								"likesUp"
+							],
+							"query": [
+								{
+									"key": "commentId",
+									"value": "{{commentid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Dislike Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type: application/json\", function () {\r",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"\r",
+									"    pm.expect(contentTypeHeader).to.exist;\r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});\r",
+									"pm.test(\"Validate that the comment is disliked - there is nothing in likes\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData.likes).to.have.lengthOf(0);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/comment/auth/likesUp?commentId={{commentid}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"comment",
+								"auth",
+								"likesUp"
+							],
+							"query": [
+								{
+									"key": "commentId",
+									"value": "{{commentid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find All Comments",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('array');\r",
+									"  \r",
+									"  responseData.forEach(function(comment) {\r",
+									"    pm.expect(comment).to.have.property('commentId');\r",
+									"    pm.expect(comment).to.have.property('content');\r",
+									"    pm.expect(comment).to.have.property('likes');\r",
+									"    pm.expect(comment).to.have.property('date');\r",
+									"    pm.expect(comment).to.have.property('liked');\r",
+									"  });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"CommentId is a non-negative integer\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"\r",
+									"    responseData.forEach(function (comment) {\r",
+									"        pm.expect(comment.commentId).to.be.a('number').and.to.be.at.least(0);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Content is a non-empty string\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    responseData.forEach(function(comment) {\r",
+									"        pm.expect(comment.content).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Content should not be empty\");\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Likes is an array\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('array');\r",
+									"  pm.expect(responseData[0].likes).to.be.an('array');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/comment/byPost?postId={{postId}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"comment",
+								"byPost"
+							],
+							"query": [
+								{
+									"key": "postId",
+									"value": "{{postId}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find One Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseData).to.be.an('object');\r",
+									"    pm.expect(responseData.commentId).to.exist;\r",
+									"    pm.expect(responseData.content).to.exist;\r",
+									"    pm.expect(responseData.likes).to.exist;\r",
+									"    pm.expect(responseData.date).to.exist;\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"CommentId is a non-negative integer\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.commentId).to.be.a('number');\r",
+									"  pm.expect(responseData.commentId).to.be.at.least(0);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Content is a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.content).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Value should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Likes is an array\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.likes).to.be.an('array');\r",
+									"});\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/comment/single?commentId={{commentid}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"comment",
+								"single"
+							],
+							"query": [
+								{
+									"key": "commentId",
+									"value": "{{commentid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function () {\r",
+									"    pm.response.to.not.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/comment/auth/manager?commentId={{commentid}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"comment",
+								"auth",
+								"manager"
+							],
+							"query": [
+								{
+									"key": "commentId",
+									"value": "{{commentid}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Skills",
+			"item": [
+				{
+					"name": "Create a user",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var responseBody = pm.response.text(); ",
+									"",
+									"pm.test(\"Status code is 200 OK\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});",
+									"",
+									"pm.test(\"Set User ID as a dynamic variable\", function () {",
+									"    const userId = responseBody.match(/id (\\d+)/)[1]; ",
+									"    console.log(userId);",
+									"    pm.collectionVariables.set(\"userId\", userId);",
+									"});",
+									"",
+									"pm.test(\"Response body is not empty\", function () {",
+									"    pm.expect(responseBody).to.not.be.empty;",
+									"});",
+									"",
+									"pm.test(\"User ID matches expected value\", function () {",
+									"    const userId = responseBody.match(/id (\\d+)/)[1];",
+									"    pm.expect(userId).to.eql(pm.collectionVariables.get(\"userId\"));",
+									"});",
+									"",
+									"pm.test(\"Username matches expected value\", function () {",
+									"    const extractedUsername = responseBody.match(/User with name (\\w+)/)[1];",
+									"    pm.expect(extractedUsername).to.eql(pm.collectionVariables.get(\"username\"));",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uniqueUsername = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"pm.collectionVariables.set(\"username\", uniqueUsername);",
+									"",
+									"var uniqueFirstName = pm.variables.replaceIn('{{$randomFirstName}}');",
+									"pm.collectionVariables.set(\"firstName\", uniqueFirstName);",
+									"",
+									"var uniqueLastName = pm.variables.replaceIn('{{$randomLastName}}');",
+									"pm.collectionVariables.set(\"lastName\", uniqueLastName);",
+									"",
+									"var uniqueEmail = pm.variables.replaceIn('{{$randomEmail}}');",
+									"pm.collectionVariables.set(\"email\", uniqueEmail);",
+									"",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"authorities\": [\n    \"ROLE_USER\"\n  ],\n  \"category\": {\n    \"id\": 102,\n    \"name\": \"{{expertise}}\"\n  },\n  \"confirmPassword\": \"{{password}}\",\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"username\": \"{{username}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/users/",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"users",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Authenticate/Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"console.log(pm.cookies.get('JSESSIONID'))\r",
+									"const sessionID = pm.cookies.get('JSESSIONID')\r",
+									"pm.collectionVariables.set(\"sessionID\", sessionID);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "username",
+									"value": "{{username}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseURL}}/authenticate",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"authenticate"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create a skill",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var JSONData = JSON.parse(responseBody);\r",
+									"console.log(\"Parsed JSON Data:\", JSONData);\r",
+									"console.log(\"Setting skillID variable:\", JSONData[\"skillId\"]);\r",
+									"pm.collectionVariables.set(\"skillID\", JSONData[\"skillId\"]);\r",
+									"\r",
+									"pm.test(\"Response body is a valid JSON\", function () {\r",
+									"    var responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has Content-Type: application/json\", function () {\r",
+									"    var contentTypeHeader = pm.response.headers.get(\"Content-Type\");\r",
+									"\r",
+									"    pm.expect(contentTypeHeader).to.exist;\r",
+									"    pm.expect(contentTypeHeader).to.include(\"application/json\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the presence of skill details\", function () {\r",
+									"    const responseBody = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseBody).to.have.property('skillId');\r",
+									"    pm.expect(responseBody).to.have.property('skill');\r",
+									"    pm.expect(responseBody).to.have.property('category');\r",
+									"    pm.expect(responseBody.category).to.have.property('id');\r",
+									"    pm.expect(responseBody.category).to.have.property('name');\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"var uniqueSkillName = pm.variables.replaceIn('{{$randomJobTitle}}');\r",
+									"pm.collectionVariables.set(\"skillName\", uniqueSkillName);"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"category\": {\r\n    \"id\": {{categoryAll}},\r\n    \"name\": \"{{categoryNameAll}}\"\r\n  },\r\n  \"skill\": \"{{skillName}}\",\r\n  \"skillId\": 0\r\n}"
+						},
+						"url": {
+							"raw": "{{baseURL}}/api/skill/create",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"skill",
+								"create"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get skills",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"\r",
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"    const responseData = pm.response.json();\r",
+									"\r",
+									"pm.test(\"Verify the presence of skill details in each skill\", function () {\r",
+									"    responseData.forEach(function (skill) {\r",
+									"        pm.expect(skill).to.have.property('skillId');\r",
+									"        pm.expect(skill).to.have.property('skill');\r",
+									"        pm.expect(skill).to.have.property('category');\r",
+									"        pm.expect(skill.category).to.have.property('id');\r",
+									"        pm.expect(skill.category).to.have.property('name');\r",
+									"    });\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/skill",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"skill"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit a skill",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function () {\r",
+									"    pm.response.to.not.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/skill/edit?skill={{newSkillName}}&skillId={{skillID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"skill",
+								"edit"
+							],
+							"query": [
+								{
+									"key": "skill",
+									"value": "{{newSkillName}}"
+								},
+								{
+									"key": "skillId",
+									"value": "{{skillID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get one skill",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response body is a valid JSON\", function () {\r",
+									"    var responseBody = pm.response.json();\r",
+									"    pm.expect(responseBody).to.be.an(\"object\");\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Verify the presence of skill details\", function () {\r",
+									"    const responseBody = pm.response.json();\r",
+									"\r",
+									"    pm.expect(responseBody).to.have.property('skillId');\r",
+									"    pm.expect(responseBody).to.have.property('skill');\r",
+									"    pm.expect(responseBody).to.have.property('category');\r",
+									"    pm.expect(responseBody.category).to.have.property('id');\r",
+									"    pm.expect(responseBody.category).to.have.property('name');\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Validate skill details\", function () {\r",
+									"    const skill = pm.response.json();\r",
+									"\r",
+									"    pm.expect(skill.skillId).to.equal(pm.collectionVariables.get(\"skillID\"));\r",
+									"    pm.expect(skill.skill).to.equal(pm.collectionVariables.get(\"newSkillName\"));\r",
+									"\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}/api/skill/getOne?skillId={{skillID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"skill",
+								"getOne"
+							],
+							"query": [
+								{
+									"key": "skillId",
+									"value": "{{skillID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a skill",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body is empty\", function () {\r",
+									"    pm.response.to.not.be.withBody;\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{baseURL}}/api/skill/delete?skillId={{skillID}}",
+							"host": [
+								"{{baseURL}}"
+							],
+							"path": [
+								"api",
+								"skill",
+								"delete"
+							],
+							"query": [
+								{
+									"key": "skillId",
+									"value": "{{skillID}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "username",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "password",
+			"value": "P@ssw0rd",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "email",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "expertise",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "postId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "firstName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "lastName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "fullName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "postName",
+			"value": "This is my public post.",
+			"type": "string"
+		},
+		{
+			"key": "birthYear",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "sessionID",
+			"value": ""
+		},
+		{
+			"key": "commentid",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "categoryId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "skillsNumber",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "availability",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userFirstId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "userSecondId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "firstUserName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "firstUserPassword",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "firstUserEmail",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "secondUserName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "secondUserPassword",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "secondUserEmail",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "requestId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "cityId",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "exprtise",
+			"value": ""
+		},
+		{
+			"key": "editContent",
+			"value": "New",
+			"type": "string"
+		},
+		{
+			"key": "privatePosttID",
+			"value": ""
+		},
+		{
+			"key": "privatePostName",
+			"value": "This is my private post.",
+			"type": "string"
+		},
+		{
+			"key": "editedPostName",
+			"value": "This is my edited post.",
+			"type": "string"
+		},
+		{
+			"key": "commentName",
+			"value": "New Comment.",
+			"type": "string"
+		},
+		{
+			"key": "categoryAll",
+			"value": "100",
+			"type": "string"
+		},
+		{
+			"key": "categoryNameAll",
+			"value": "All",
+			"type": "string"
+		},
+		{
+			"key": "skillName",
+			"value": "ala bala",
+			"type": "string"
+		},
+		{
+			"key": "newSkillName",
+			"value": "As a professional plumber, I offer a wide range of plumbing services. From fixing leaky faucets and clogged drains to installing new fixtures and handling complex pipe repairs, I ensure your plumbing systems work flawlessly.",
+			"type": "string"
+		},
+		{
+			"key": "skillID",
+			"value": ""
+		},
+		{
+			"key": "postID",
+			"value": ""
+		},
+		{
+			"key": "jobTitle",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "uniqieJobDescription",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "uniqieJobDescriptionTwo",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "uniqieJobDescriptionThree",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "uniqieJobDescriptionFour",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "moreSkills",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "moreSkillsTwo",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "moreSkillsThree",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "moreSkillsFour",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "randomInt",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "contentComment",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "city",
+			"value": "Plovdiv",
+			"type": "string"
+		},
+		{
+			"key": "skillName1",
+			"value": ""
+		},
+		{
+			"key": "skillName2",
+			"value": ""
+		},
+		{
+			"key": "skillName3",
+			"value": ""
+		},
+		{
+			"key": "skillName4",
+			"value": ""
+		},
+		{
+			"key": "skillName5",
+			"value": ""
+		},
+		{
+			"key": "commentContent",
+			"value": "Hey! This is my new comment.",
+			"type": "string"
+		},
+		{
+			"key": "userPostName",
+			"value": "",
+			"type": "string"
+		},
+		{
+			"key": "firstname",
+			"value": ""
+		},
+		{
+			"key": "lastname",
+			"value": ""
+		},
+		{
+			"key": "existingUsernames",
+			"value": ""
+		},
+		{
+			"key": "existingUsernames3",
+			"value": ""
+		},
+		{
+			"key": "username3",
+			"value": ""
+		}
+	]
+}
