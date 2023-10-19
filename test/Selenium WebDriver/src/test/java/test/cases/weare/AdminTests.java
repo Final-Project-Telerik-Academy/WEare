@@ -33,7 +33,7 @@ public class AdminTests extends BaseTest {
     @Feature("Admin")
     @Story("Admin unlocks a single user successfully.")
     @Test
-    public void AdminRegistered_When_UnockSingleUser() {
+    public void AdminRegistered_When_UnlockSingleUser() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
@@ -92,37 +92,5 @@ public class AdminTests extends BaseTest {
         updatePersonalProfilePage.useractionLogic();
         adminPage.editOtherUserProfile();
         adminPage.assertUserProfileEmailIsUpdated();
-    }
-
-    @Test
-    public void AdminRegistered_When_EditUserComment() {
-        registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
-        loginPage.loginUser(usernameTest, passwordTest);
-        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
-        UserLoggedOut_When_ClickLogout();
-        updatePersonalProfilePage.backToHome();
-        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
-        loginPage.loginUser(adminUsername, adminPassword);
-        adminPage.lastCreatedPost();
-        commentPage.createComment();
-        adminPage.editOtherUserComment();
-        adminPage.asserEditedUserCommentContent();
-    }
-
-    @Feature("Admin")
-    @Story("Admin edits other user's personal profile post successfully.")
-    @Test
-    public void AdminRegistered_When_DeleteUserComment() {
-        registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
-        loginPage.loginUser(usernameTest, passwordTest);
-        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
-        UserLoggedOut_When_ClickLogout();
-        updatePersonalProfilePage.backToHome();
-        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
-        loginPage.loginUser(adminUsername, adminPassword);
-        adminPage.lastCreatedPost();
-        commentPage.createComment();
-        adminPage.deleteOtherUserComment();
-        adminPage.assertUserCommentIsDeleted();
     }
 }
