@@ -84,4 +84,14 @@ public class UserService {
                 .when()
                 .post();
     }
+
+    public static Response updatePersonalProfile(String updateExpertiseBody, Cookie cookie) {
+        return given()
+                .filter(new AllureRestAssured())
+                .cookie(cookie.getName(), cookie.getValue())
+                .contentType(ContentType.JSON)
+                .body(updateExpertiseBody)
+                .when()
+                .post();
+    }
 }

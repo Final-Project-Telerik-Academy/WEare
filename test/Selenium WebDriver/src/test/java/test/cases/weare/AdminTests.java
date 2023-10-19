@@ -19,7 +19,7 @@ public class AdminTests extends BaseTest {
     @Feature("Admin")
     @Story("Admin locks a single user successfully.")
     @Test
-    public void adminLockASingleUserTest() {
+    public void AdminRegistered_When_LockSingleUser() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
@@ -34,7 +34,7 @@ public class AdminTests extends BaseTest {
     @Feature("Admin")
     @Story("Admin unlocks a single user successfully.")
     @Test
-    public void adminUnlockASingleUserTest() {
+    public void AdminRegistered_When_UnockSingleUser() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
@@ -49,7 +49,7 @@ public class AdminTests extends BaseTest {
     @Feature("Admin")
     @Story("Admin edits other user's last created post successfully.")
     @Test
-    public void editLastCreatedUserPostTest() {
+    public void AdminRegistered_When_EditLastCreatedUserPost() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
@@ -65,7 +65,7 @@ public class AdminTests extends BaseTest {
     @Feature("Admin")
     @Story("Admin deletes other user's post successfully.")
     @Test
-    public void deleteLastCreatedUserPostTest() {
+    public void AdminRegistered_When_DeleteLastCreatedUserPost() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
@@ -81,7 +81,7 @@ public class AdminTests extends BaseTest {
     @Feature("Admin")
     @Story("Admin edits other user's personal profile post successfully.")
     @Test
-    public void adminEditOtherUserPersonalProfileTest() {
+    public void AdminRegistered_When_EditUserPersonalProfile() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
@@ -96,7 +96,7 @@ public class AdminTests extends BaseTest {
     }
 
     @Test
-    public void adminEditOtherUserComment() {
+    public void AdminRegistered_When_EditUserComment() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
@@ -113,7 +113,7 @@ public class AdminTests extends BaseTest {
     @Feature("Admin")
     @Story("Admin edits other user's personal profile post successfully.")
     @Test
-    public void adminDeleteUserComment() {
+    public void AdminRegistered_When_DeleteUserComment() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();

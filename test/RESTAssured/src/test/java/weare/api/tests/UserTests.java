@@ -52,13 +52,8 @@ public class UserTests extends BaseTestSetup {
         baseURI = format("%s%s", BASE_URL,formattedEndpoint);
 
         String updateUserBody = UserService.updateProfileRequest(user);
+        Response response = updatePersonalProfile(updateUserBody, cookie);
 
-        Response response = given()
-                .cookie(cookie.getName(), cookie.getValue())
-                .contentType(ContentType.JSON)
-                .body(updateUserBody)
-                .when()
-                .post();
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
