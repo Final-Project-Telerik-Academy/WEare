@@ -38,7 +38,7 @@ public class BaseTest {
         UserActions.quitDriver();
     }
 
-    protected void register() {
+    protected void UserRegistered_When_ValidCredentialsEntered() {
         username = generateRandomUsername();
         email = generateRandomEmail();
         password = generateRandomPassword(8);
@@ -56,7 +56,7 @@ public class BaseTest {
         registrationPage.assertAdminRegistered();
     }
 
-    protected void login() {
+    protected void UserLoggedIn_When_ValidDetailsEntered() {
         loginPage.loginUser(username, password);
         loginPage.assertUserIsLoggedIn();
     }
@@ -66,7 +66,7 @@ public class BaseTest {
         adminPage.assertAdminIsLoggedIn();
     }
 
-    protected void logout() {
+    protected void UserLoggedOut_When_ClickLogout() {
         loginPage.logoutUser();
         loginPage.assertUserIsLoggedOut();
     }

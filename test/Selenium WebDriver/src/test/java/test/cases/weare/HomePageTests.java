@@ -9,11 +9,11 @@ public class HomePageTests extends BaseTest {
     @Story("Search user by profession successfully.")
     @Test
     public void searchByProfession() {
-        register();
-        login();
+        UserRegistered_When_ValidCredentialsEntered();
+        UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         updatePersonalProfilePage.changeProfessionalCategory();
-        logout();
+        UserLoggedOut_When_ClickLogout();
         updatePersonalProfilePage.backToHome();
         homePage.searchUserByProfession();
         homePage.assertResultSearch();
@@ -23,10 +23,10 @@ public class HomePageTests extends BaseTest {
     @Story("Search user by full name successfully.")
     @Test
     public void searchUserByFullName() {
-        register();
-        login();
+        UserRegistered_When_ValidCredentialsEntered();
+        UserLoggedIn_When_ValidDetailsEntered();
         homePage.updatePersonalRegistration();
-        logout();
+        UserLoggedOut_When_ClickLogout();
         homePage.searchUserByFullName();
         homePage.assertUserResultSearch();
     }
@@ -35,10 +35,10 @@ public class HomePageTests extends BaseTest {
     @Story("Search user by first name successfully.")
     @Test
     public void searchUserByFirstName() {
-        register();
-        login();
+        UserRegistered_When_ValidCredentialsEntered();
+        UserLoggedIn_When_ValidDetailsEntered();
         homePage.updatePersonalRegistration();
-        logout();
+        UserLoggedOut_When_ClickLogout();
         homePage.searchUserByFirstName();
         homePage.assertUserResulFirstSearch();
     }

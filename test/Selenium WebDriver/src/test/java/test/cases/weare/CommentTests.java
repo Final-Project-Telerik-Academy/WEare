@@ -11,15 +11,15 @@ public class CommentTests extends BaseTest {
     @BeforeEach
     public void setupTest(TestInfo testInfo) {
         if (!"commentTextAreaNotVisibleForAnonymousUserTest".equals(testInfo.getTestMethod().get().getName())) {
-            register();
-            login();
+            UserRegistered_When_ValidCredentialsEntered();
+            UserLoggedIn_When_ValidDetailsEntered();
         }
     }
 
     @AfterEach
     public void performLogout(TestInfo testInfo) {
         if (!"commentTextAreaNotVisibleForAnonymousUserTest".equals(testInfo.getTestMethod().get().getName())) {
-            logout();
+            UserLoggedOut_When_ClickLogout();
         }
     }
 
