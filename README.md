@@ -229,7 +229,7 @@ newman run collection.json -e environment.json -r htmlextra --reporter-htmlextra
 You can execute Newman directly from these two script files in Postman folder in the project:
 
 _For Linux:_
-1. Navigate to the "Postman" directory within the project.
+1. Navigate to the "Newman" directory within the project.
 2. Open a terminal in this directory.
 3. Write in terminal one of these commands: 
 
@@ -255,11 +255,11 @@ Alternatively, you can also run the batch files from the Command Prompt. Navigat
 
 
 ```
-run.bat
+run-tests.cmd
 ```
 or
 ```
-run10.bat
+run10-tests.cmd
 ```
 ### Allure Reports
 Allure Report is a flexible, lightweight multi-language test report tool that not only shows a very concise representation of what has been tested in a neat web report form, but also allows for a deeper test debugging by providing logs, steps, fixtures, attachments, timings, and more. It's designed to create clear and comprehensive test reports that are easy to read and understand.
@@ -267,6 +267,28 @@ Allure Report is a flexible, lightweight multi-language test report tool that no
 For the *installation* of Allure Reports, follow these detailed instructions:
 
 https://www.swtestacademy.com/allure-report-junit/
+
+You can execute Allure Reports directly from the script file with name run-tests.sh inside the REST Assured project folder and Selenium WebDrive project folder:
+
+_For Linux:_
+1. Navigate to the "RESTAssured" or "Selenium WebDriver" project directory within the project.
+2. Open a terminal in this directory.
+3. Write in terminal this command:
+
+```
+./run-tests.sh
+
+```
+
+_For Windows:_
+1. Navigate to the "RESTAssured" or "Selenium WebDriver" project directory within the project.
+2. Open a terminal in this directory.
+3. Write in terminal this command:
+
+```
+./run-tests.cmd
+
+```
 
 ## Contributors
 

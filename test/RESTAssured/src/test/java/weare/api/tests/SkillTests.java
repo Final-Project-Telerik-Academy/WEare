@@ -36,6 +36,7 @@ public class SkillTests extends BaseTestSetup {
     public void tearDownAfterTest() {
         logout();
     }
+
     @Feature("Skills")
     @Story("Create a skill")
     @Description("Test to verify that a new skill can be created successfully.")
@@ -120,6 +121,7 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertCategoryIdsMatch(categoryId, Constants.CATEGORY_ID);
         AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
+
     @Feature("Skills")
     @Story("Delete a skill")
     @Description("Test to verify that a skill can be deleted successfully.")

@@ -17,7 +17,6 @@ import org.junit.jupiter.api.Test;
 import static com.weare.api.utils.Endpoints.BASE_URL;
 import static com.weare.api.utils.Endpoints.SEND_REQUEST;
 import static io.restassured.RestAssured.baseURI;
-import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
 
