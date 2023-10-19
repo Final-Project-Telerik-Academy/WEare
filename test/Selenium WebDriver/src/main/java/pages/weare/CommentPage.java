@@ -169,6 +169,7 @@ public class CommentPage extends BasePage {
         actions.waitForElementPresent("weare.LatestPostsButton");
         actions.hoverOverElement("weare.LatestPostsButton");
         actions.clickElement("weare.LatestPostsButton");
+        actions.waitFor(500);
         actions.waitForElementPresent("weare.firstCreatedPostExploreThisPostBtn");
         actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
     }
