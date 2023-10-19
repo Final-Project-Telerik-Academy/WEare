@@ -10,11 +10,12 @@ import io.restassured.response.Response;
 import static io.restassured.RestAssured.given;
 
 public class CommentService {
-    private CommentService() {}
+    private CommentService() {
+    }
 
     public static String commentRequest(Comment comment) {
         return String.format(JSONRequests.COMMENT,
-                comment.getContent(),comment.getPostId(),comment.getUserId());
+                comment.getContent(), comment.getPostId(), comment.getUserId());
     }
 
     public static Response createComment(String commentJsonBody, Cookie cookie) {
@@ -56,7 +57,7 @@ public class CommentService {
                 .post();
     }
 
-    public static Response diskComment(Cookie cookie, Integer commentId) {
+    public static Response disComment(Cookie cookie, Integer commentId) {
         return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
@@ -87,7 +88,7 @@ public class CommentService {
     }
 
     public static Response deleteComment(Cookie cookie, Integer commentId) {
-        return  given()
+        return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)
                 .cookie("JSESSIONID", cookie.getValue())

@@ -9,6 +9,7 @@ public class Comment extends BaseModel {
     private String content;
     private Integer postId;
     private Integer userId;
+    private boolean like;
 
     Faker faker = new Faker();
 
