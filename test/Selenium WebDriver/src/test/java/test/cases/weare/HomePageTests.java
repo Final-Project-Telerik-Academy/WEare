@@ -8,7 +8,7 @@ public class HomePageTests extends BaseTest {
     @Feature("HomePage")
     @Story("Search user by profession successfully.")
     @Test
-    public void searchByProfession() {
+    public void UnregisterUserSearchProfession_When_ClickSearchButton() {
         UserRegistered_When_ValidCredentialsEntered();
         UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
@@ -22,7 +22,7 @@ public class HomePageTests extends BaseTest {
     @Feature("HomePage")
     @Story("Search user by full name successfully.")
     @Test
-    public void searchUserByFullName() {
+    public void UnregisterUserSearchFullName_When_ClickSearchButton() {
         UserRegistered_When_ValidCredentialsEntered();
         UserLoggedIn_When_ValidDetailsEntered();
         homePage.updatePersonalRegistration();
@@ -34,7 +34,7 @@ public class HomePageTests extends BaseTest {
     @Feature("HomePage")
     @Story("Search user by first name successfully.")
     @Test
-    public void searchUserByFirstName() {
+    public void UnregisterUserSearchFirstName_When_ClickSearchButton() {
         UserRegistered_When_ValidCredentialsEntered();
         UserLoggedIn_When_ValidDetailsEntered();
         homePage.updatePersonalRegistration();
