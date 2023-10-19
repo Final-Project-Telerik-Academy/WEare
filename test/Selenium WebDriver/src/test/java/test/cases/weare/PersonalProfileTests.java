@@ -18,15 +18,15 @@ public class PersonalProfileTests extends BaseTest {
 
     @AfterEach
     public void performLogout() {
-        logout();
+        UserLoggedOut_When_ClickLogout();
     }
 
     @Feature("Personal profile")
     @Story("Edit personal profile - first name, last name and birthday successfully.")
     @Test
-    public void updateUserProfile() {
-        register();
-        login();
+    public void PersonalProfileUpdated_When_ValidPersonalDetailsEntered() {
+        UserRegistered_When_ValidCredentialsEntered();
+        UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         updatePersonalProfilePage.assertUserProfileUpdated();
     }
@@ -34,9 +34,9 @@ public class PersonalProfileTests extends BaseTest {
     @Feature("Personal profile")
     @Story("Change professional category successfully.")
     @Test
-    public void changeProfessionalCategory() {
-        register();
-        login();
+    public void PersonalCategoryChanged_When_ActorCategorySelected() {
+        UserRegistered_When_ValidCredentialsEntered();
+        UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         updatePersonalProfilePage.changeProfessionalCategory();
         updatePersonalProfilePage.assertCategoryChanged();
@@ -45,11 +45,11 @@ public class PersonalProfileTests extends BaseTest {
     @Feature("Personal profile")
     @Story("Send friend request to another user successfully.")
     @Test
-    public void sendFriendRequest() {
+    public void FriendRequestSent_When_ClickConnectButton() {
         registrationPage.userRegistration(receiverUsername, receiverEmail, receiverPassword);
         loginPage.loginUser(receiverUsername, receiverPassword);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
-        logout();
+        UserLoggedOut_When_ClickLogout();
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(senderUsername, senderEmail, senderPassword);
         loginPage.loginUser(senderUsername, senderPassword);
@@ -60,9 +60,9 @@ public class PersonalProfileTests extends BaseTest {
     @Feature("Personal profile")
     @Story("Approve friend request from another user successfully.")
     @Test
-    public void approveRequest() {
-        sendFriendRequest();
-        logout();
+    public void FriendRequestApproved_When_ClickApproveButton() {
+        FriendRequestSent_When_ClickConnectButton();
+        UserLoggedOut_When_ClickLogout();
         updatePersonalProfilePage.backToHome();
         loginPage.loginUser(receiverUsername, receiverPassword);
         updatePersonalProfilePage.approveFriendRequest();
@@ -72,9 +72,9 @@ public class PersonalProfileTests extends BaseTest {
     @Feature("Personal profile")
     @Story("Disconnect from another user successfully.")
     @Test
-    public void disconnectUser() {
-        approveRequest();
-        logout();
+    public void UserDisconnected_When_ClickDisconnectButton() {
+        FriendRequestApproved_When_ClickApproveButton();
+        UserLoggedOut_When_ClickLogout();
         loginPage.loginUser(senderUsername, senderPassword);
         updatePersonalProfilePage.disconnectUser();
         updatePersonalProfilePage.assertUserDisconnected();
@@ -84,8 +84,8 @@ public class PersonalProfileTests extends BaseTest {
     @Story("Edit first name with two characters successfully.")
     @Test
     public void editFirstNameWithTwoCharacters() {
-        register();
-        login();
+        UserRegistered_When_ValidCredentialsEntered();
+        UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         updatePersonalProfilePage.backToHome();
         updatePersonalProfilePage.editFirstNameWithTwoCharacters();
@@ -96,7 +96,7 @@ public class PersonalProfileTests extends BaseTest {
     @Story("Edit last name with two characters successfully.")
     @Test
     public void editLastNameWithTwoCharacters() {
-        updateUserProfile();
+        PersonalProfileUpdated_When_ValidPersonalDetailsEntered();
         updatePersonalProfilePage.backToHome();
         updatePersonalProfilePage.editLastNameWithTwoCharacters();
         updatePersonalProfilePage.assertLastNameField();
@@ -106,8 +106,8 @@ public class PersonalProfileTests extends BaseTest {
     @Story("Edit personal profile details and review it successfully.")
     @Test
     public void personalReviewField() {
-        register();
-        login();
+        UserRegistered_When_ValidCredentialsEntered();
+        UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.personalReviewField();
         updatePersonalProfilePage.backToHome();
         updatePersonalProfilePage.assertPersonalReview();
@@ -117,8 +117,8 @@ public class PersonalProfileTests extends BaseTest {
     @Story("Update skill details successfully.")
     @Test
     public void updateSkillDetails() {
-        register();
-        login();
+        UserRegistered_When_ValidCredentialsEntered();
+        UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         updatePersonalProfilePage.updateSkillDetails();
         updatePersonalProfilePage.assertSkillField();
@@ -128,8 +128,8 @@ public class PersonalProfileTests extends BaseTest {
     @Story("Update personal profile image successfully.")
     @Test
     public void updatePersonalImage() {
-        register();
-        login();
+        UserRegistered_When_ValidCredentialsEntered();
+        UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalImage();
         updatePersonalProfilePage.assertUpdatePhoto();
     }
@@ -138,8 +138,8 @@ public class PersonalProfileTests extends BaseTest {
     @Story("Edit first name with three characters successfully.")
     @Test
     public void updateFirstNameWithTreeCharacters() {
-        register();
-        login();
+        UserRegistered_When_ValidCredentialsEntered();
+        UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
         updatePersonalProfilePage.editFirstNameWithTreeCharacters();
         updatePersonalProfilePage.assertFirstNameFieldWithTreeCharacters();

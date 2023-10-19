@@ -10,21 +10,21 @@ public class PostTests extends BaseTest {
 
     @BeforeEach
     public void setupTest() {
-        register();
-        login();
+        UserRegistered_When_ValidCredentialsEntered();
+        UserLoggedIn_When_ValidDetailsEntered();
     }
 
     @Feature("Post")
     @Story("Create a public post with valid input successfully.")
     @AfterEach
     public void performLogout() {
-        logout();
+        UserLoggedOut_When_ClickLogout();
     }
 
     @Feature("Post")
     @Story("Create a public post with valid input successfully.")
     @Test
-    public void createPublicPost() {
+    public void PublicPostCreated_When_ClickAddNewPost() {
         postPage.createPublicPost();
         postPage.assertPublicPostCreated();
     }
@@ -32,7 +32,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Create a private post with valid input successfully.")
     @Test
-    public void createPrivatePost() {
+    public void PrivatePostCreated_When_ClickAddNewPost() {
         postPage.createPrivatePost();
         postPage.assertPrivatePostCreated();
     }
@@ -41,7 +41,7 @@ public class PostTests extends BaseTest {
     @Story("Create a post with one character successfully.")
 
     @Test
-    public void createPostWithOneCharacter() {
+    public void PostCreated_When_OneCharacterEntered() {
         postPage.createPostWithOneCharacter();
         postPage.assertPostWithOneCharacterCreated();
     }
@@ -50,7 +50,7 @@ public class PostTests extends BaseTest {
     @Story("Create a post with 999 characters successfully.")
 
     @Test
-    public void createPostWith999Characters() {
+    public void PostCreated_When_999CharactersEntered() {
         postPage.createPostWith999Character();
         postPage.assertPostWith999CharactersCreated();
     }
@@ -58,7 +58,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Create a post with 1000 characters successfully.")
     @Test
-    public void createPostWith1000Characters() {
+    public void PostCreated_When_1000CharactersEntered() {
         postPage.createPostWith1000Character();
         postPage.assertPostWith1000CharactersCreated();
     }
@@ -66,7 +66,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Create a post with valid size of a png format photo successfully.")
     @Test
-    public void createPostWithPngPhoto() {
+    public void PostCreated_When_PngPhotoAttached() {
         postPage.createPostWithPngFormatPhoto();
         postPage.assertPostCreatedWithPhoto();
     }
@@ -74,7 +74,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Create a post with valid size of a jpg format photo successfully.")
     @Test
-    public void createPostWithJpgPhoto() {
+    public void PostCreated_When_JpgPhotoAttached() {
         postPage.createPostWithJpgFormatPhoto();
         postPage.assertPostCreatedWithPhoto();
     }
@@ -82,7 +82,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Create a post with valid size of a panoramic photo successfully.")
     @Test
-    public void createPostWithPanoramicPhoto() {
+    public void PostCreated_When_PanoramicPhotoAttached() {
         postPage.createPostWithPanoramicPhoto();
         postPage.assertPostCreatedWithPhoto();
     }
@@ -90,7 +90,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Create a post with valid size of a photo and text successfully.")
     @Test
-    public void createPostWithTextAndPhoto() {
+    public void PostCreated_When_Text_Entered_And_Post_Attached() {
         postPage.createPostWithTextAndPhoto();
         postPage.assertPostCreatedWithTextAndPhoto();
     }
@@ -98,7 +98,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Like a post successfully.")
     @Test
-    public void likePost() {
+    public void PostLiked_When_ClickLikeButton() {
         postPage.createPublicPost();
         postPage.likePost();
         postPage.assertPostIsLiked();
@@ -107,7 +107,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Dislike a post successfully.")
     @Test
-    public void dislikePost() {
+    public void PostDisliked_When_ClickDislike() {
         postPage.createPublicPost();
         postPage.dislikePost();
         postPage.assertPostIsDisliked();
@@ -116,7 +116,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Like specific post successfully.")
     @Test
-    public void likeSpecificPost() {
+    public void SpecificPostLiked_When_ClickLikeButton() {
         postPage.likeSpecificPost();
         postPage.assertSpecificPostIsLiked();
     }
@@ -124,7 +124,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Dislike specific post successfully.")
     @Test
-    public void dislikeSpecificPost() {
+    public void SpecificPostDisiked_When_ClickDislikeButton() {
         postPage.dislikeSpecificPost();
         postPage.assertSpecificPostIsDisliked();
     }
@@ -132,7 +132,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Edit post content successfully.")
     @Test
-    public void editPostContent() {
+    public void PostContentEdited_When_ClickEditButton() {
         postPage.createPublicPost();
         postPage.editPostContent();
         postPage.assertPostContentIsEdited();
@@ -141,7 +141,7 @@ public class PostTests extends BaseTest {
     @Feature("Post")
     @Story("Delete post successfully.")
     @Test
-    public void deletePost() {
+    public void PostDeleted_When_ClickDeletePost() {
         postPage.createPublicPost();
         postPage.deletePost();
         postPage.assertPostDeleted();

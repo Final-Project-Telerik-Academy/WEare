@@ -2,7 +2,6 @@ package test.cases.weare;
 
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static com.telerikacademy.testframework.RandomGenerator.*;
@@ -24,7 +23,7 @@ public class AdminTests extends BaseTest {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
-        logout();
+        UserLoggedOut_When_ClickLogout();
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);
@@ -39,7 +38,7 @@ public class AdminTests extends BaseTest {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
-        logout();
+        UserLoggedOut_When_ClickLogout();
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);
@@ -54,7 +53,7 @@ public class AdminTests extends BaseTest {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
-        logout();
+        UserLoggedOut_When_ClickLogout();
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);
@@ -70,7 +69,7 @@ public class AdminTests extends BaseTest {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
-        logout();
+        UserLoggedOut_When_ClickLogout();
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);
@@ -86,7 +85,7 @@ public class AdminTests extends BaseTest {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
-        logout();
+        UserLoggedOut_When_ClickLogout();
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);
@@ -101,7 +100,7 @@ public class AdminTests extends BaseTest {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
-        logout();
+        UserLoggedOut_When_ClickLogout();
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);
@@ -118,7 +117,7 @@ public class AdminTests extends BaseTest {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
-        logout();
+        UserLoggedOut_When_ClickLogout();
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);

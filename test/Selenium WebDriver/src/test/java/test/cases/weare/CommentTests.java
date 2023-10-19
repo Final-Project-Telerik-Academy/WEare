@@ -10,16 +10,16 @@ import org.junit.jupiter.api.TestInfo;
 public class CommentTests extends BaseTest {
     @BeforeEach
     public void setupTest(TestInfo testInfo) {
-        if (!"anonymousUserCantCreateComment".equals(testInfo.getTestMethod().get().getName())) {
-            register();
-            login();
+        if (!"commentTextAreaNotVisibleForAnonymousUserTest".equals(testInfo.getTestMethod().get().getName())) {
+            UserRegistered_When_ValidCredentialsEntered();
+            UserLoggedIn_When_ValidDetailsEntered();
         }
     }
 
     @AfterEach
     public void performLogout(TestInfo testInfo) {
-        if (!"anonymousUserCantCreateComment".equals(testInfo.getTestMethod().get().getName())) {
-            logout();
+        if (!"commentTextAreaNotVisibleForAnonymousUserTest".equals(testInfo.getTestMethod().get().getName())) {
+            UserLoggedOut_When_ClickLogout();
         }
     }
 
@@ -137,7 +137,7 @@ public class CommentTests extends BaseTest {
     }
 
     @Feature("Comment")
-    @Story("Anonymous user can't create comment")
+    @Story("commentTextAreaNotVisibleForAnonymousUserTest")
     @Test
     public void anonymousUserCantCreateComment() {
         commentPage.anonymousUserTryToCreateComment();

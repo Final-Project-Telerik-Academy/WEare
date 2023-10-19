@@ -14,7 +14,7 @@ public class LoginTest extends BaseTest {
     @Feature("Login")
     @Story("Login user with valid credentials successfully.")
     @Test
-    protected void loginWithValidDetails() {
+    protected void UserLoggedIn_When_ValidCredentialsEntered() {
         username = generateRandomUsername(2);
         email = generateRandomEmail();
         password = generateRandomPassword(8);
@@ -27,7 +27,7 @@ public class LoginTest extends BaseTest {
     @Feature("Login")
     @Story("Login user with invalid username unsuccessfully.")
     @Test
-    public void loginWithInvalidUsername() {
+    public void UserNotLoggedIn_When_InvalidUsernameEntered() {
         username = generateRandomUsername(2);
         email = generateRandomEmail();
         password = generateRandomPassword(12);
@@ -40,7 +40,7 @@ public class LoginTest extends BaseTest {
     @Feature("Login")
     @Story("Login user with invalid password unsuccessfully.")
     @Test
-    public void loginWithInvalidPassword() {
+    public void UserNotLoggedIn_When_InvalidPasswordEntered() {
         username = generateRandomUsername(2);
         email = generateRandomEmail();
         password = generateRandomPassword(12);
@@ -53,7 +53,7 @@ public class LoginTest extends BaseTest {
     @Feature("Login")
     @Story("Login user with invalid credentials unsuccessfully.")
     @Test
-    public void loginWithInvalidCredentials() {
+    public void UserNotLoggedIn_When_InvalidCredentialsEntered() {
         username = generateRandomUsername(2);
         email = generateRandomEmail();
         password = generateRandomPassword(12);
@@ -66,8 +66,8 @@ public class LoginTest extends BaseTest {
     @Feature("Logout")
     @Story("Logout user successfully.")
     @Test
-    public void logoutUser() {
-        loginWithValidDetails();
+    public void UserLoggedOut_When_ClickLogoutButton() {
+        UserLoggedIn_When_ValidCredentialsEntered();
         loginPage.logoutUser();
         loginPage.assertUserIsLoggedOut();
 
