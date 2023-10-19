@@ -11,14 +11,17 @@ import static io.restassured.RestAssured.given;
 
 public class PostService {
     private PostService() {};
+
+
     public static String postRequest(Post post) {
         return String.format(JSONRequests.POST,
-                post.getContent(),post.getPicture(),post.isPublic());
+                post.getContent(), post.getPicture(), post.isPublic());
 
     }
+
     public static String editPostRequest(Post post) {
         return String.format(JSONRequests.EDIT_POST,
-                post.getContent(),post.getPicture(),post.isPublic());
+                post.getContent(), post.getPicture(), post.isPublic());
     }
 
     public static Response createPrivatePost(String postJsonBody, Cookie cookie) {
@@ -40,6 +43,7 @@ public class PostService {
                 .when()
                 .post();
     }
+
     public static Response editPost(String editJsonBody, Cookie cookie, Integer postId) {
         return given()
                 .filter(new AllureRestAssured())
@@ -71,7 +75,7 @@ public class PostService {
                 .post();
     }
 
-    public static Response disLikePost( Cookie cookie, Integer postId) {
+    public static Response disLikePost(Cookie cookie, Integer postId) {
         return given()
                 .filter(new AllureRestAssured())
                 .contentType(ContentType.JSON)

@@ -6,21 +6,21 @@ import com.weare.api.models.Post;
 import com.weare.api.models.User;
 import com.weare.api.services.CommentService;
 import com.weare.api.services.PostService;
-import io.restassured.http.ContentType;
-import io.restassured.response.Response;
-import org.junit.jupiter.api.*;
 import com.weare.api.utils.AssertHelper;
-
-import static com.weare.api.services.PostService.*;
-import static com.weare.api.utils.Constants.*;
-import static com.weare.api.utils.Endpoints.*;
-import static com.weare.api.utils.Endpoints.SHOW_COMMENT;
-import static io.restassured.RestAssured.baseURI;
-import static java.lang.String.format;
-import static org.apache.http.HttpStatus.SC_OK;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import io.restassured.http.ContentType;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.*;
+
+import static com.weare.api.services.PostService.disLikePost;
+import static com.weare.api.utils.Constants.COMMENT_ID;
+import static com.weare.api.utils.Constants.POST_ID;
+import static com.weare.api.utils.Endpoints.*;
+import static io.restassured.RestAssured.baseURI;
+import static java.lang.String.format;
+import static org.apache.http.HttpStatus.SC_OK;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
@@ -30,7 +30,8 @@ public class PostTest extends BaseTestSetup {
     protected static Comment comment;
     protected Integer userId;
 
-    @Override @BeforeEach
+    @Override
+    @BeforeEach
     protected void beforeEach() {
         user = new User();
         register(user);
@@ -49,13 +50,14 @@ public class PostTest extends BaseTestSetup {
     public void createPrivatePost() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
         post = new Post();
+        post.setPublic(true);
 
         String postJsonBody = PostService.postRequest(post);
         Response response = PostService.createPrivatePost(postJsonBody, cookie);
 
-        String responseBody = response.getBody().asString();
         POST_ID = response.getBody().jsonPath().get("postId");
         String contentPost = response.getBody().jsonPath().get("content");
+        String responseBody = response.getBody().asString();
         Boolean privatePost = response.getBody().jsonPath().get("public");
         System.out.println(responseBody);
         int statusCode = response.getStatusCode();
@@ -64,6 +66,7 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertContentTypeNotNull(ContentType.JSON);
         AssertHelper.assertContentEquals(contentPost, post.getContent());
     }
+
     @Feature("Posts")
     @Story("Create public post")
     @Description("Test to verify that a public post can be created successfully.")
@@ -79,9 +82,10 @@ public class PostTest extends BaseTestSetup {
         String responseBody = response.getBody().asString();
         POST_ID = response.getBody().jsonPath().get("postId");
         int statusCode = response.getStatusCode();
-        String contentPost=response.getBody().jsonPath().get("content");
-        Boolean privatePost=response.getBody().jsonPath().get("public");
+        String contentPost = response.getBody().jsonPath().get("content");
+        Boolean privatePost = response.getBody().jsonPath().get("public");
 
+        System.out.println(responseBody);
         AssertHelper.assertStatusCode(statusCode, SC_OK);
         AssertHelper.assertPostIsPrivate(privatePost);
         AssertHelper.assertContentTypeNotNull(ContentType.JSON);
@@ -93,15 +97,25 @@ public class PostTest extends BaseTestSetup {
     @Description("Test to verify that a post can be edited successfully.")
     @Test
     public void editPost() {
-        createPublicPost();
+
+        baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
+
+        post = new Post();
+        post.setPublic(true);
+        String postJsonBody = PostService.postRequest(post);
+        Response response = PostService.createPublicPost(postJsonBody, cookie);
+
+        String responseBody = response.getBody().asString();
+        POST_ID = response.getBody().jsonPath().get("postId");
+        System.out.println(responseBody);
 
         baseURI = format("%s%s", BASE_URL, EDIT_POST);
 
         String editJsonBody = PostService.editPostRequest(post);
-        Response response = PostService.editPost(editJsonBody, cookie, POST_ID);
+        response = PostService.editPost(editJsonBody, cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
-        AssertHelper.assertStatusCode(statusCode,SC_OK);
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
     @Feature("Posts")
@@ -112,9 +126,10 @@ public class PostTest extends BaseTestSetup {
         baseURI = format("%s%s", BASE_URL, GET_POST);
 
         Response response = PostService.getPost(cookie);
-
+        String responseBody = response.getBody().asString();
+        System.out.println(responseBody);
         int statusCode = response.getStatusCode();
-        AssertHelper.assertStatusCode(statusCode,SC_OK);
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
     @Feature("Posts")
@@ -122,13 +137,21 @@ public class PostTest extends BaseTestSetup {
     @Description("Test to verify that a post can be liked successfully.")
     @Test
     public void likePost() {
-        createPublicPost();
+        baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
+
+        post = new Post();
+        post.setPublic(true);
+        String postJsonBody = PostService.postRequest(post);
+        Response response = PostService.createPublicPost(postJsonBody, cookie);
+
+        POST_ID = response.getBody().jsonPath().get("postId");
+
         baseURI = format("%s%s", BASE_URL, LIKE_POST);
 
-        Response response = PostService.likePost(cookie, POST_ID);
+        response = PostService.likePost(cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
-        AssertHelper.assertStatusCode(statusCode,SC_OK);
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
     @Feature("Posts")
@@ -136,16 +159,28 @@ public class PostTest extends BaseTestSetup {
     @Description("Test to verify that a post can be disliked successfully.")
     @Test
     public void dislikePost() {
-        createPublicPost();
-        likePost();
-        baseURI = format("%s%s", BASE_URL, LIKE_POST);
 
-        Response response = disLikePost(cookie, POST_ID);
+        baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
+
+        post = new Post();
+        post.setPublic(true);
+        String postJsonBody = PostService.postRequest(post);
+        Response response = PostService.createPublicPost(postJsonBody, cookie);
+
+        // String responseBody = response.getBody().asString();
+        POST_ID = response.getBody().jsonPath().get("postId");
+
+        baseURI = format("%s%s", BASE_URL, LIKE_POST);
+        response = PostService.likePost(cookie, POST_ID);
+
+        baseURI = format("%s%s", BASE_URL, LIKE_POST);
+        response = disLikePost(cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
         String responseBody = response.getBody().asString();
+        System.out.println(responseBody);
 
-        AssertHelper.assertStatusCode(statusCode,SC_OK);
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
     @Feature("Comments")
@@ -153,35 +188,65 @@ public class PostTest extends BaseTestSetup {
     @Description("Test to verify that a comment can be added to a post successfully.")
     @Test
     public void createComment() {
-        createPublicPost();
+        baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
+        post = new Post();
+        post.setPublic(true);
+
+        String postJsonBody = PostService.postRequest(post);
+        Response response = PostService.createPublicPost(postJsonBody, cookie);
+
+        POST_ID = response.getBody().jsonPath().get("postId");
+
         baseURI = format("%s%s", BASE_URL, CREATE_COMMENT_ENDPOINT);
         comment = new Comment();
-
         userId = user.getUserId();
         comment.setUserId(userId);
+        comment.setPostId(POST_ID);
 
         String commentJsonBody = CommentService.commentRequest(comment);
-        Response response = CommentService.createComment(commentJsonBody, cookie);
+        Response commentResponse = CommentService.createComment(commentJsonBody, cookie);
+        COMMENT_ID = response.getBody().jsonPath().get("commentId");
+        String contentComment = commentResponse.getBody().jsonPath().get("content");
 
-        String contentComment=response.getBody().jsonPath().get("content");
+        String responseBody = response.getBody().asString();
+        System.out.print(responseBody);
+
         int statusCode = response.getStatusCode();
-
-        AssertHelper.assertStatusCode(statusCode,SC_OK);
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
         AssertHelper.assertContentTypeNotNull(ContentType.JSON);
         AssertHelper.assertPositiveUserId(userId);
-        AssertHelper.assertContentEquals(contentComment,comment.getContent());
+        AssertHelper.assertContentEquals(contentComment, comment.getContent());
     }
 
     @Test
     public void showComment() {
-        createComment();
+        baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
+        post = new Post();
+        post.setPublic(true);
+
+        String postJsonBody = PostService.postRequest(post);
+        Response response = PostService.createPublicPost(postJsonBody, cookie);
+
+        POST_ID = response.getBody().jsonPath().get("postId");
+
+        baseURI = format("%s%s", BASE_URL, CREATE_COMMENT_ENDPOINT);
+        comment = new Comment();
+        userId = user.getUserId();
+        comment.setUserId(userId);
+        comment.setPostId(POST_ID);
+
+
+        String commentJsonBody = CommentService.commentRequest(comment);
+        Response commentResponse = CommentService.createComment(commentJsonBody, cookie);
+        COMMENT_ID = response.getBody().jsonPath().get("commentId");
         baseURI = format("%s%s", BASE_URL, SHOW_COMMENT);
 
-        Response response = CommentService.showComment(cookie, POST_ID);
+        response = CommentService.showComment(cookie, POST_ID);
 
+        String responseBody = response.getBody().asString();
+        System.out.print(responseBody);
         int statusCode = response.getStatusCode();
-
-        AssertHelper.assertStatusCode(statusCode,SC_OK);
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 
     @Feature("Comments")
@@ -189,13 +254,20 @@ public class PostTest extends BaseTestSetup {
     @Description("Test to verify that comments of a post can be retrieved successfully.")
     @Test
     public void deletePost() {
-        createPublicPost();
+        baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
+        post = new Post();
+        post.setPublic(true);
+
+        String postJsonBody = PostService.postRequest(post);
+        Response response = PostService.createPublicPost(postJsonBody, cookie);
+
+        POST_ID = response.getBody().jsonPath().get("postId");
         baseURI = format("%s%s", BASE_URL, DELETE_POST);
 
-        Response response = PostService.deletePost(cookie, POST_ID);
+        response = PostService.deletePost(cookie, POST_ID);
 
         int statusCode = response.getStatusCode();
-        AssertHelper.assertStatusCode(statusCode,SC_OK);
+        AssertHelper.assertStatusCode(statusCode, SC_OK);
     }
 }
 
