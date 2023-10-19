@@ -43,14 +43,27 @@ public class AdminTests extends BaseTest {
     @Test
     @Order(2)
     public void adminUnlockASingleUserTest() {
-        adminPage.userPersonalProfile();
-        adminPage.enableProfile();
+        registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
+        loginPage.loginUser(usernameTest, passwordTest);
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        logout();
+        updatePersonalProfilePage.backToHome();
+        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
+        loginPage.loginUser(adminUsername, adminPassword);
+        updatePersonalProfilePage.enableUser();
         adminPage.assertUserIsUnlocked();
     }
 
     @Test
     @Order(3)
     public void editLastCreatedUserPostTest() {
+        registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
+        loginPage.loginUser(usernameTest, passwordTest);
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        logout();
+        updatePersonalProfilePage.backToHome();
+        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
+        loginPage.loginUser(adminUsername, adminPassword);
         adminPage.lastCreatedPost();
         adminPage.editUserPost();
         adminPage.assertUserPostIsEdited();
@@ -59,6 +72,13 @@ public class AdminTests extends BaseTest {
     @Test
     @Order(4)
     public void deleteLastCreatedUserPostTest() {
+        registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
+        loginPage.loginUser(usernameTest, passwordTest);
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        logout();
+        updatePersonalProfilePage.backToHome();
+        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
+        loginPage.loginUser(adminUsername, adminPassword);
         adminPage.lastCreatedPost();
         adminPage.deleteLastCreatedPost();
         adminPage.assertPostIsDeletedSuccessfully();
@@ -67,7 +87,15 @@ public class AdminTests extends BaseTest {
     @Test
     @Order(5)
     public void adminEditOtherUserPersonalProfileTest() {
-        adminPage.userPersonalProfile();
+        registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
+        loginPage.loginUser(usernameTest, passwordTest);
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        logout();
+        updatePersonalProfilePage.backToHome();
+        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
+        loginPage.loginUser(adminUsername, adminPassword);
+
+        updatePersonalProfilePage.useractionLogic();
         adminPage.editOtherUserProfile();
         adminPage.assertUserProfileEmailIsUpdated();
     }
@@ -75,7 +103,15 @@ public class AdminTests extends BaseTest {
     @Test
     @Order(6)
     public void adminEditOtherUserComment() {
+        registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
+        loginPage.loginUser(usernameTest, passwordTest);
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        logout();
+        updatePersonalProfilePage.backToHome();
+        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
+        loginPage.loginUser(adminUsername, adminPassword);
         adminPage.lastCreatedPost();
+        commentPage.createComment();
         adminPage.editOtherUserComment();
         adminPage.asserEditedUserCommentContent();
     }
@@ -83,7 +119,15 @@ public class AdminTests extends BaseTest {
     @Test
     @Order(7)
     public void adminDeleteUserComment() {
+        registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
+        loginPage.loginUser(usernameTest, passwordTest);
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        logout();
+        updatePersonalProfilePage.backToHome();
+        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
+        loginPage.loginUser(adminUsername, adminPassword);
         adminPage.lastCreatedPost();
+        commentPage.createComment();
         adminPage.deleteOtherUserComment();
         adminPage.assertUserCommentIsDeleted();
     }

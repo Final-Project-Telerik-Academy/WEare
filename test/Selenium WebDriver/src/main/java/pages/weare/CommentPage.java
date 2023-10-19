@@ -22,8 +22,8 @@ public class CommentPage extends BasePage {
     int commentsCounter;
 
     public void createComment() {
-        actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
-        actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
+//        actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
+//        actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
         actions.waitForElementPresent("weare.messageForm");
         actions.waitFor(500);
         actions.typeValueInField(randomMessage, "weare.messageForm");

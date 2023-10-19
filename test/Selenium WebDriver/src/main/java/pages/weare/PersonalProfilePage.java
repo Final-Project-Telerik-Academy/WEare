@@ -56,7 +56,7 @@ public class PersonalProfilePage extends BasePage {
         actions.clickElement("weare.connectButton");
     }
 
-    private void useractionLogic() {
+    public void useractionLogic() {
         actions.waitFor(2000);
         actions.waitForElementPresent("weare.searchUserByName");
         actions.clickElementWithJavaScriptExecutor("weare.searchUserByName");
@@ -83,9 +83,25 @@ public class PersonalProfilePage extends BasePage {
         actions.clickElement("weare.disconnectButton");
     }
 
+    public void enableUser() {
+        useractionLogic();
+        if (actions.isElementVisible("weare.enableButton")) {
+            actions.clickElement("weare.enableButton");
+        } else if (actions.isElementVisible("weare.disableButton")) {
+            actions.waitForElementVisible("weare.disableButton");
+            actions.clickElement("weare.disableButton");
+            actions.waitForElementVisible("weare.enableButton");
+            actions.clickElement("weare.enableButton");
+        }
+    }
+
     public void disableUser() {
         useractionLogic();
-        actions.waitForElementPresent("weare.disableButton");
+        if (actions.isElementVisible("weare.enableButton")) {
+            actions.clickElement("weare.enableButton");
+        }
+        actions.waitForElementVisible("weare.disableButton");
+        actions.waitFor(500);
         actions.clickElement("weare.disableButton");
     }
 

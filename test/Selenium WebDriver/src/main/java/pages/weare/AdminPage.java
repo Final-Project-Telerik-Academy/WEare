@@ -95,10 +95,12 @@ public class AdminPage extends BasePage {
 
     public void editOtherUserComment() {
         actions.waitForElementPresent("weare.showCommentsBtn");
+        actions.hoverOverElement("weare.showCommentsBtn");
         actions.waitFor(500);
         actions.clickElement("weare.showCommentsBtn");
         actions.waitForElementPresent("weare.editLastCreatedCommentButton");
-        actions.hoverOverElement("weare.editLastCreatedCommentButton");
+        //actions.hoverOverElement("weare.editLastCreatedCommentButton");
+        actions.waitFor(500);
         actions.clickElement("weare.editLastCreatedCommentButton");
         actions.waitForElementPresent("weare.messageForm");
         actions.waitFor(500);
@@ -109,14 +111,18 @@ public class AdminPage extends BasePage {
 
     public void deleteOtherUserComment() {
         actions.waitForElementPresent("weare.showCommentsBtn");
+        actions.hoverOverElement("weare.showCommentsBtn");
         actions.waitFor(500);
         actions.clickElement("weare.showCommentsBtn");
         actions.waitForElementPresent("weare.deleteLastCreatedCommentBtn");
         actions.waitFor(500);
+        actions.hoverOverElement("weare.deleteLastCreatedCommentBtn");
         actions.clickElement("weare.deleteLastCreatedCommentBtn");
+        actions.waitFor(1000);
+        actions.waitForElementPresent("weare.confirmDelete");
+        actions.clickElement("weare.confirmDelete");
+        actions.waitFor(1000);
         actions.waitForElementPresent("weare.selectDeleteCommentOption");
-        actions.hoverOverElement("weare.selectDeleteCommentOption");
-        actions.waitFor(500);
         actions.clickElement("weare.selectDeleteCommentOption");
         actions.waitForElementPresent("weare.submitBtnForDelete");
         actions.waitFor(500);
