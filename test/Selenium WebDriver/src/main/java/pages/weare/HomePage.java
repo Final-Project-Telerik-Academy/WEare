@@ -13,7 +13,7 @@ import static java.lang.String.format;
 
 public class HomePage extends BasePage {
 
-    LocalDate randomBirthday = generateRandomBirthday(1930, 2000);
+//    LocalDate randomBirthday = generateRandomBirthday(1930, 2000);
     private String firstName = generateRandomFirstName();
     private String lastName = generateRandomFirstName();
     private String fullName = firstName + " " + lastName;
@@ -28,7 +28,7 @@ public class HomePage extends BasePage {
         actions.clickElement("weare.personalProfileButton");
         actions.waitForElementPresent("weare.editProfileButton");
         actions.clickElement("weare.editProfileButton");
-        fillPersonalDetails(firstName, lastName, randomBirthday);
+        fillPersonalDetails(firstName, lastName, birthday);
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
         actions.clickElement("weare.updateMyProfileFirstButton");

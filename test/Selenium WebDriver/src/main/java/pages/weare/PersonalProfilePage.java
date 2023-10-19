@@ -17,7 +17,7 @@ public class PersonalProfilePage extends BasePage {
     private final String randomName2 = generateRandomString(2);
     private final String randomName3 = generateRandomString(3);
     private final String randomMessage = generateRandomMessage();
-    private final String skillOne = generateRandomString(1);
+    private final String skillOne = generateRandomMessage();
     private final String skillTwo = generateRandomMessage();
     private final String skillTree = generateRandomMessage();
     private final String skillFour = generateRandomMessage();
@@ -33,7 +33,7 @@ public class PersonalProfilePage extends BasePage {
         actions.clickElement("weare.personalProfileButton");
         actions.waitForElementPresent("weare.editProfileButton");
         actions.clickElement("weare.editProfileButton");
-        fillPersonalDetails(firstName, lastName, randomBirthday);
+        fillPersonalDetails(firstName, lastName, birthday);
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
         actions.clickElement("weare.updateMyProfileFirstButton");
@@ -155,7 +155,7 @@ public class PersonalProfilePage extends BasePage {
         personalProfileButton();
         actions.waitForElementPresent("weare.editProfileButton");
         actions.clickElement("weare.editProfileButton");
-        fillPersonalDetails(firstName, lastName, randomBirthday);
+        fillPersonalDetails(firstName, lastName, birthday);
         actions.waitForElementVisible("weare.personalReview");
         actions.typeValueInField(randomMessage, "weare.personalReview");
         actions.waitFor(500);
@@ -192,7 +192,7 @@ public class PersonalProfilePage extends BasePage {
         actions.waitForElementPresent("weare.editProfileButton");
         actions.clickElement("weare.editProfileButton");
         actions.waitFor(500);
-        fillPersonalDetails(firstName, lastName, randomBirthday);
+        fillPersonalDetails(firstName, lastName, birthday);
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
         actions.hoverOverElement("weare.imageUser");

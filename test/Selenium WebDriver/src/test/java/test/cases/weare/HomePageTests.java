@@ -9,6 +9,12 @@ public class HomePageTests extends BaseTest {
     @Story("Search user by profession successfully.")
     @Test
     public void searchByProfession() {
+        register();
+        login();
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        updatePersonalProfilePage.changeProfessionalCategory();
+        logout();
+        updatePersonalProfilePage.backToHome();
         homePage.searchUserByProfession();
         homePage.assertResultSearch();
     }
