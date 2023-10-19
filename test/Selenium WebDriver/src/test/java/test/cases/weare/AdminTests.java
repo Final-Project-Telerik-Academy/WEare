@@ -15,16 +15,6 @@ public class AdminTests extends BaseTest {
     String adminUsername = "admin" + generateRandomUsername(12);
     String adminEmail = generateRandomEmail();
     String adminPassword = generateRandomPassword(8);
-/*    @BeforeEach
-    public void setupTest() {
-        registerAsAdmin();
-        loginAsAdmin();
-    }*/
-/*
-    @AfterEach
-    public void performLogout() {
-        logout();
-    }*/
 
     @Test
     @Order(1)

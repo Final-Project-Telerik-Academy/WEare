@@ -108,6 +108,21 @@ public class CommentPage extends BasePage {
         }
     }
 
+    public void dislikeSpecificComment() {
+        actions.waitForElementPresent("weare.showCommentsBtn");
+        actions.hoverOverElement("weare.showCommentsBtn");
+        actions.waitFor(500);
+        actions.clickElement("weare.showCommentsBtn");
+
+        if (actions.isElementVisible("weare.dislikeBtnFirstComment")) {
+            actions.clickElement("weare.dislikeBtnFirstComment");
+        } else if (actions.isElementVisible("weare.likeBtnFirstComment")) {
+            actions.clickElement("weare.likeBtnFirstComment");
+            actions.waitForElementClickable("weare.dislikeBtnFirstComment");
+            actions.clickElement("weare.dislikeBtnFirstComment");
+        }
+    }
+
     public void editLastCreatedComment() {
         actions.waitForElementPresent("weare.showCommentsBtn");
         actions.hoverOverElement("weare.showCommentsBtn");
@@ -197,6 +212,15 @@ public class CommentPage extends BasePage {
         actions.assertElementPresent("weare.assertCommentIsLiked");
     }
 
+    public void assertCommentIsDisiked() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        actions.assertElementPresent("weare.assertCommentIsDisiked");
+    }
+
     public void assertCommentContentIsEdited() {
         actions.waitForElementPresent("weare.showCommentsBtn");
         actions.hoverOverElement("weare.showCommentsBtn");
@@ -229,5 +253,10 @@ public class CommentPage extends BasePage {
     public void assertMissingCreateCommentButtonForAnonymous() {
         boolean result = actions.isElementNotVisible("weare.postCommentBtn", 4);
         Assertions.assertTrue(result, "The post comment button is still visible for an anonymous user.");
+    }
+
+    public void exploreThisPost() {
+        actions.waitForElementVisible("weare.firstCreatedPostExploreThisPostBtn");
+        actions.clickElement("weare.firstCreatedPostExploreThisPostBtn");
     }
 }

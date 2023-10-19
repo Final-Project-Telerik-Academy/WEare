@@ -21,7 +21,6 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(1)
     public void createCommentTest() {
         postPage.createPublicPost();
         commentPage.createComment();
@@ -30,7 +29,6 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(2)
     public void createCommentWithOneCharacterTest() {
         postPage.createPublicPost();
         commentPage.createCommentWithOneCharacter();
@@ -38,7 +36,6 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(3)
     public void createCommentWith999CharactersTest() {
         postPage.createPublicPost();
         commentPage.createCommentWithWith999Characters();
@@ -46,7 +43,6 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(4)
     public void createCommentWith1000CharactersTest() {
         postPage.createPublicPost();
         commentPage.createCommentWith1000Characters();
@@ -54,7 +50,6 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(5)
     public void createCommentWithSpecialCharactersTest() {
         postPage.createPublicPost();
         commentPage.createCommentWithSpecialCharacters();
@@ -62,7 +57,6 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(6)
     public void createCommentWithHyperLinkTest() {
         postPage.createPublicPost();
         commentPage.createCommentWithHyperLink();
@@ -70,7 +64,6 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(7)
     public void createCommentWith1000CharsSpecialCharsAndHyperLinkTest() {
         postPage.createPublicPost();
         commentPage.createCommentWith1000CharsSpecialCharsAndHyperLinkTest();
@@ -78,7 +71,6 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(8)
     public void likeCreatedCommentTest() {
         postPage.createPublicPost();
         commentPage.createComment();
@@ -87,7 +79,15 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(9)
+    public void dislikeCreatedCommentTest() {
+        postPage.createPublicPost();
+        commentPage.exploreThisPost();
+        commentPage.createComment();
+        commentPage.dislikeSpecificComment();
+        commentPage.assertCommentIsDisiked();
+    }
+
+    @Test
     public void editLastCreatedCommentTest() {
         postPage.createPublicPost();
         commentPage.createComment();
@@ -96,7 +96,6 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(10)
     public void deleteLastCreatedComment() {
         postPage.createPublicPost();
         commentPage.createComment();
@@ -105,7 +104,6 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(11)
     public void createCommentWith1001Characters() {
         postPage.createPublicPost();
         commentPage.createCommentWith1001Characters();
@@ -113,7 +111,6 @@ public class CommentTests extends BaseTest {
     }
 
     @Test
-    @Order(12)
     public void anonymousUserCantCreateComment() {
         commentPage.anonymousUserTryToCreateComment();
         commentPage.assertMissingCommentTextAreaForAnonymous();
