@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="sql11654436@sql11.freemysqlhosting.net" uuid="8d087d7c-5a0e-46bb-907d-5a19caf28843">
+    <data-source source="LOCAL" name="sql11654727@sql11.freemysqlhosting.net" uuid="8d087d7c-5a0e-46bb-907d-5a19caf28843">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11654436</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
-    <data-source source="LOCAL" name="wearedb@windowmaker.myqnapcloud.com" uuid="57101704-f941-4561-837d-1c305308740f">
-      <driver-ref>mysql.8</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mysql://windowmaker.myqnapcloud.com:3307/wearedb</jdbc-url>
+      <jdbc-url>jdbc:mysql://sql11.freemysqlhosting.net:3306/sql11654727</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
   </component>

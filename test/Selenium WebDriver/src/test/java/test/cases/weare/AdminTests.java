@@ -75,7 +75,7 @@ public class AdminTests extends BaseTest {
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);
         adminPage.lastCreatedPost();
-        adminPage.deleteLastCreatedPost();
+        adminPage.deletePostTwo();
         adminPage.assertPostIsDeletedSuccessfully();
     }
 
