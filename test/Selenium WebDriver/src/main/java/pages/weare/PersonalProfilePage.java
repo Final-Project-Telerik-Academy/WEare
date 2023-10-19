@@ -117,6 +117,8 @@ public class PersonalProfilePage extends BasePage {
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
         actions.clickElement("weare.updateMyProfileFirstButton");
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
 
     }
 
@@ -132,6 +134,8 @@ public class PersonalProfilePage extends BasePage {
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
         actions.clickElement("weare.updateMyProfileFirstButton");
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
     }
     public void personalReviewField(){
         actions.waitForElementPresent("weare.personalProfileButton");
@@ -145,6 +149,10 @@ public class PersonalProfilePage extends BasePage {
         actions.hoverOverElement("weare.updateMyProfileFirstButton");
         actions.waitForElementPresent("weare.updateMyProfileFirstButton");
         actions.clickElement("weare.updateMyProfileFirstButton");
+        actions.waitFor(200);
+        actions.waitForElementPresent("weare.personalProfileButton");
+        actions.clickElement("weare.personalProfileButton");
+
 
     }
     public void updateSkillDetails() {
@@ -159,9 +167,7 @@ public class PersonalProfilePage extends BasePage {
         actions.hoverOverElement("//*[@id=\"profile-resource\"]/div[3]/div/button");
         actions.waitForElementPresent("//*[@id=\"profile-resource\"]/div[3]/div/button");
         actions.clickElement("//*[@id=\"profile-resource\"]/div[3]/div/button");
-       // personalProfileButton();
-        actions.waitForElementPresent("weare.personalProfileButton");
-        actions.clickElement("weare.personalProfileButton");
+
     }
     public void fillSkillDetails(String skillOne , String skillTwo, String skillTree,String skillFour,String skillFive) {
         fillFieldById("weare.skill1", skillOne);
@@ -184,8 +190,6 @@ public class PersonalProfilePage extends BasePage {
         actions.typeValueInField(imagePath, "weare.imageUser");
         actions.waitFor(5000);
         actions.clickElement("(//button[@type='submit' and contains(text(), 'Update')])[4]");
-        actions.waitForElementPresent("weare.personalProfileButton");
-        actions.clickElement("weare.personalProfileButton");
     }
     public void updatePersonalImage(){
         String imagePath = Paths.get("src", "main", "resources", "images", "bug-photo-2.jpg").toAbsolutePath().toString();
@@ -203,16 +207,19 @@ public class PersonalProfilePage extends BasePage {
     }
 
     public void assertFirstNameField() {
-        actions.assertElementPresent(format(getUIMappingByKey("weare.assertFirstNameField"), randomName2));
+        actions.assertElementPresent(format(getUIMappingByKey("//div[@class='col-md-6']/p[text()='%s %s']"), randomName2,lastName));
     }
 
     public void assertLastNameField() {
-        actions.assertElementPresent(format(getUIMappingByKey("weare.assertLastNameField"), randomName2));
+        actions.assertElementPresent(format(getUIMappingByKey("//div[@class='col-md-6']/p[text()='%s %s']"), firstName,randomName2));
     }
     public void assertPersonalReview(){
         actions.waitForElementPresent("weare.personalProfileButton");
         actions.clickElement("weare.personalProfileButton");
-        actions.assertElementPresent(format(getUIMappingByKey("weare.assertPersonalReview"),randomMessage));
+//        actions.assertElementPresent(format(getUIMappingByKey("weare.assertPersonalReview"),randomMessage));
+       // actions.assertElementPresent(format(getUIMappingByKey("//span[text()='%s']"),randomMessage));
+      //  actions.hoverOverElement("//div[@class='col-lg-12']");
+        actions.assertElementPresent(format(getUIMappingByKey("//p[text() = '%s']"),randomMessage));
     }
 
     public void assertUserProfileUpdated(){
@@ -249,6 +256,9 @@ public class PersonalProfilePage extends BasePage {
     }
     public void assertUserCreatedUploadPhoto() {
         actions.assertElementPresent("weare.assertPhotoExists");
+    }
+    public void assertUpdatePhoto(){
+        actions.assertElementPresent(format(getUIMappingByKey("//div[@class='imgPr']/img")));
     }
 }
 
