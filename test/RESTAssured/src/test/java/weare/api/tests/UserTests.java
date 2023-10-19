@@ -14,24 +14,25 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static com.weare.api.services.UserService.*;
 import static com.weare.api.utils.Constants.POST_ID;
 import static com.weare.api.utils.Endpoints.*;
 import static io.restassured.RestAssured.baseURI;
-import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
-
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 public class UserTests extends BaseTestSetup {
     private User user;
     Post post;
     Skill skill;
 
-    @Override @BeforeEach
+    @Override
+    @BeforeEach
     protected void beforeEach() {
         user = new User();
         register(user);
@@ -49,7 +50,7 @@ public class UserTests extends BaseTestSetup {
     @Test
     public void updatePersonalProfileTest() {
         String formattedEndpoint = String.format(UPDATE_PERSONAL_PROFILE_ENDPOINT, userId);
-        baseURI = format("%s%s", BASE_URL,formattedEndpoint);
+        baseURI = format("%s%s", BASE_URL, formattedEndpoint);
 
         String updateUserBody = UserService.updateProfileRequest(user);
         Response response = updatePersonalProfile(updateUserBody, cookie);
@@ -126,7 +127,7 @@ public class UserTests extends BaseTestSetup {
     @Test
     public void searchUserPostsTest() {
         createPostTest();
-        String formattedEndpoint = format(SEARCH_USER_POSTS_ENDPOINT, userId) ;
+        String formattedEndpoint = format(SEARCH_USER_POSTS_ENDPOINT, userId);
         baseURI = format("%s%s", BASE_URL, formattedEndpoint);
 
         Response response = searchUserPosts(JSONRequests.SHOW_PROFILE_POSTS, cookie);

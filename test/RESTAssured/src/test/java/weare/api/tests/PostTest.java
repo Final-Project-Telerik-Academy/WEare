@@ -12,7 +12,9 @@ import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
 import static com.weare.api.services.PostService.disLikePost;
 import static com.weare.api.utils.Constants.COMMENT_ID;
@@ -21,8 +23,6 @@ import static com.weare.api.utils.Endpoints.*;
 import static io.restassured.RestAssured.baseURI;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
-
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
 public class PostTest extends BaseTestSetup {
 

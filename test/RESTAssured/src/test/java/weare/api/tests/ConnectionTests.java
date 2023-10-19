@@ -27,7 +27,8 @@ public class ConnectionTests extends BaseTestSetup {
     private static int requestId;
 
 
-    @Override @BeforeEach
+    @Override
+    @BeforeEach
     protected void beforeEach() {
         sender = new User();
         register(sender);
@@ -40,6 +41,7 @@ public class ConnectionTests extends BaseTestSetup {
     public void tearDownAfterTest() {
         logout();
     }
+
     @Feature("Connections")
     @Story("Send connection request")
     @Description("Test to verify that a connection request can be sent successfully.")
@@ -84,7 +86,7 @@ public class ConnectionTests extends BaseTestSetup {
         login(receiver);
         baseURI = format("http://localhost:8081/api/auth/users/%d/request/", receiver.getUserId());
 
-         response = ConnectionService.getUsersRequest(cookie);
+        response = ConnectionService.getUsersRequest(cookie);
 
         System.out.println(response.asString());
 
@@ -133,16 +135,16 @@ public class ConnectionTests extends BaseTestSetup {
 
         JSONArray jsonArray = new JSONArray(response.asString());
 
-            requestId = jsonArray.getJSONObject(0).getInt("id");
-            System.out.println("Extracted ID from response: " + requestId);
+        requestId = jsonArray.getJSONObject(0).getInt("id");
+        System.out.println("Extracted ID from response: " + requestId);
 
-            JSONObject jsonObject = jsonArray.getJSONObject(0);
+        JSONObject jsonObject = jsonArray.getJSONObject(0);
 
         logout();
         login(receiver);
         baseURI = String.format("http://localhost:8081/api/auth/users/%s/request/approve", receiver.getUserId());
 
-         response = ConnectionService.approveRequest(cookie, requestId);
+        response = ConnectionService.approveRequest(cookie, requestId);
 
         System.out.println(response.asString());
 

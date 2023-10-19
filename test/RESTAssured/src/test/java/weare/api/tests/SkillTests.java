@@ -4,28 +4,28 @@ import base.BaseTestSetup;
 import com.weare.api.models.Skill;
 import com.weare.api.models.User;
 import com.weare.api.services.SkillService;
-import com.weare.api.utils.Constants;
-import io.restassured.response.Response;
-
-import org.junit.jupiter.api.*;
 import com.weare.api.utils.AssertHelper;
-
-import static com.weare.api.services.SkillService.*;
-import static com.weare.api.utils.Endpoints.*;
-import static io.restassured.RestAssured.*;
-import static java.lang.String.format;
-import static org.apache.http.HttpStatus.SC_OK;
+import com.weare.api.utils.Constants;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
+import io.restassured.response.Response;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 
-
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+import static com.weare.api.services.SkillService.*;
+import static com.weare.api.utils.Endpoints.*;
+import static io.restassured.RestAssured.baseURI;
+import static java.lang.String.format;
+import static org.apache.http.HttpStatus.SC_OK;
 
 public class SkillTests extends BaseTestSetup {
     Skill skill = new Skill();
 
-    @Override @BeforeEach
+    @Override
+    @BeforeEach
     protected void beforeEach() {
         user = new User();
         register(user);
@@ -84,6 +84,7 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertCategoryIdsMatch(categoryId, Constants.CATEGORY_ID);
         AssertHelper.assertCategoryNameMatches(categoryName, Constants.CATEGORY_NAME);
     }
+
     @Feature("Skills")
     @Story("Edit a skill")
     @Description("Test to verify that a skill can be edited successfully.")
@@ -98,6 +99,7 @@ public class SkillTests extends BaseTestSetup {
         AssertHelper.assertStatusCode(SC_OK, statusCode);
         AssertHelper.assertResponseBodyNotNull(response.getBody());
     }
+
     @Feature("Skills")
     @Story("Retrieve a single Skill")
     @Description("Test to verify that a single skill can be retrieved by its unique ID.")
