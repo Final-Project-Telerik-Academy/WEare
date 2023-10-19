@@ -81,6 +81,7 @@ public class RegistrationTest extends BaseTest {
 
     @Feature("Registration")
     @Story("Register user with five characters for password unsuccessfully.")
+    @Disabled(value = "Bug link: https://weare-project.atlassian.net/browse/WFP-160")
     @Test
     public void registerWithFiveCharactersForPassword() {
         username = generateRandomUsername(2);
@@ -104,6 +105,7 @@ public class RegistrationTest extends BaseTest {
 
     @Feature("Registration")
     @Story("Register user with seven characters for password unsuccessfully.")
+    @Disabled(value = "Bug link: https://weare-project.atlassian.net/browse/WFP-159")
     @Test
     public void registerUserWithSevenCharacterPassword() {
         username = generateRandomUsername(2);
@@ -115,6 +117,8 @@ public class RegistrationTest extends BaseTest {
 
     @Feature("Registration")
     @Story("Register user with only small letters for password unsuccessfully.")
+    @Disabled(value = "Bug link: https://weare-project.atlassian.net/browse/WFP-182")
+
     @Test
     public void registerUserWithOnlySmallLettersForPassword() {
         username = generateRandomUsername(2);
