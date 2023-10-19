@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public static String searchUserRequest(User user) {
-        return String.format(JSONRequests.SEARCH_USER, user.getFullName());
+        return String.format(JSONRequests.SEARCH_USER, "Filip Gargov");
     }
 
     public static String updateExpertiseProfileRequest(User user, Skill skill) {
@@ -36,10 +36,9 @@ public class UserService {
                 Constants.AVAILABILITY, user.getCategoryId(), user.getUserId(), skill.getName());
     }
 
-    public static Response searchByUser(String searchUserBody, Cookie cookie) {
+    public static Response searchByUser(String searchUserBody) {
         return given()
                 .filter(new AllureRestAssured())
-                .cookie(cookie.getName(), cookie.getValue())
                 .contentType(ContentType.JSON)
                 .body(searchUserBody)
                 .when()

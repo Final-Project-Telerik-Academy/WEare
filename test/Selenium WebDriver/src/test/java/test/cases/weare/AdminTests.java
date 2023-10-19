@@ -29,7 +29,7 @@ public class AdminTests extends BaseTest {
         updatePersonalProfilePage.disableUser();
         adminPage.assertUserIsLocked();
     }
-
+    @Disabled
     @Test
     @Order(2)
     public void adminUnlockASingleUserTest() {

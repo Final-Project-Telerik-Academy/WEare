@@ -45,9 +45,11 @@ public class JSONRequests {
             "}";
 
     public static final String SEARCH_USER = "{\n" +
+            "  \"index\": 0,\n" +
+            "  \"next\": true,\n" +
             "  \"searchParam1\": \"\",\n" +
             "  \"searchParam2\": \"%s\",\n" +
-            "  \"size\": 10\n" +
+            "  \"size\": 5\n" +
             "}";
 
     public static final String SHOW_PROFILE_POSTS = "{\n" +

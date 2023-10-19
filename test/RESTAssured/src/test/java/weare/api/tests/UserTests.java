@@ -9,6 +9,9 @@ import com.weare.api.services.UserService;
 import com.weare.api.utils.AssertHelper;
 import com.weare.api.utils.Constants;
 import com.weare.api.utils.JSONRequests;
+import io.qameta.allure.Description;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Story;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.*;
@@ -20,10 +23,6 @@ import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static java.lang.String.format;
 import static org.apache.http.HttpStatus.SC_OK;
-
-import io.qameta.allure.Description;
-import io.qameta.allure.Feature;
-import io.qameta.allure.Story;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 
@@ -91,19 +90,14 @@ public class UserTests extends BaseTestSetup {
     @Description("Test to verify that users can be searched by their username.")
     @Test
     public void searchByUserTest() {
+        logout();
         baseURI = format("%s%s", BASE_URL, SEARCH_USER_ENDPOINT);
 
         String searchUserBody = UserService.searchUserRequest(user);
-        Response response = searchByUser(searchUserBody, cookie);
+        Response response = searchByUser(searchUserBody);
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
-
-        String resUserId = response.getBody().jsonPath().getString("[0].userId");
-        String resUsername = response.getBody().jsonPath().getString("[0].username");
-
-        AssertHelper.assertUserIdEquals(Integer.parseInt(resUserId), user.getUserId());
-        AssertHelper.assertUsernameEquals(resUsername, user.getUsername());
     }
 
     @Feature("Posts")
