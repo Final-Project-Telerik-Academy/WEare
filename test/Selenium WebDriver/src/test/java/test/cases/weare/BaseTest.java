@@ -14,9 +14,6 @@ public class BaseTest {
     protected String confirmedPassword;
     protected String username;
     protected String email;
-    protected String adminUsername;
-    protected String adminPassword;
-    protected String adminEmail;
 
     UserActions actions = new UserActions();
 
@@ -46,24 +43,9 @@ public class BaseTest {
         registrationPage.assertUserRegistered();
     }
 
-    protected void registerAsAdmin() {
-        actions.waitForElementPresent("weare.homeButton");
-        actions.clickElement("weare.homeButton");
-        adminUsername = "admin" + generateRandomUsername();
-        adminEmail = generateRandomEmail();
-        adminPassword = generateRandomPassword(8);
-        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
-        registrationPage.assertAdminRegistered();
-    }
-
     protected void UserLoggedIn_When_ValidDetailsEntered() {
         loginPage.loginUser(username, password);
         loginPage.assertUserIsLoggedIn();
-    }
-
-    protected void loginAsAdmin() {
-        adminPage.loginAdmin(adminUsername, adminPassword);
-        adminPage.assertAdminIsLoggedIn();
     }
 
     protected void UserLoggedOut_When_ClickLogout() {
