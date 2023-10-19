@@ -234,12 +234,12 @@ _For Linux:_
 3. Write in terminal one of these commands: 
 
 ```
-./run.sh
+./run-tests.sh
 
 ```
 or
 ```
-./run10.sh
+./run10-tests.sh
 ```
 - **run.sh** - This script will execute the basic command.
 
