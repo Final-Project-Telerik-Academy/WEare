@@ -1,10 +1,9 @@
 package com.telerikacademy.testframework;
 
 import com.github.javafaker.Faker;
+import com.github.javafaker.Number;
 
 import java.security.SecureRandom;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.List;
 import java.util.Random;
 
@@ -72,16 +71,6 @@ public class RandomGenerator {
         String username = new RandomGenerator().faker.lorem().characters(2, 20, false, false);
         return username.toLowerCase();
     }
-
-        public static LocalDate generateRandomBirthday ( int startYear, int endYear){
-            Random random = new Random();
-
-            int year = startYear + random.nextInt(endYear - startYear + 1);
-            int month = 1 + random.nextInt(12);
-            int day = 1 + random.nextInt(28);
-
-            return LocalDate.of(year, month, day);
-        }
 
     public static String generateRandomPassword(int length) {
         String randomPassword = faker.lorem().characters(length - 2);
