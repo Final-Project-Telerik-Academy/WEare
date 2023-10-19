@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public static String searchUserRequest(User user) {
-        return String.format(JSONRequests.SEARCH_USER, user.getFullName());
+        return String.format(JSONRequests.SEARCH_USER, "Ivan Ivanov");
     }
 
     public static String updateExpertiseProfileRequest(User user, Skill skill) {
