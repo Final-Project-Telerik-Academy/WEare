@@ -83,7 +83,7 @@ public class PersonalProfileTests extends BaseTest {
     @Feature("Personal profile")
     @Story("Edit first name with two characters successfully.")
     @Test
-    public void editFirstNameWithTwoCharacters() {
+    public void UserEditFirstName_When_TwoCharactersEntered() {
         UserRegistered_When_ValidCredentialsEntered();
         UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
@@ -95,7 +95,7 @@ public class PersonalProfileTests extends BaseTest {
     @Feature("Personal profile")
     @Story("Edit last name with two characters successfully.")
     @Test
-    public void editLastNameWithTwoCharacters() {
+    public void UserEditLastName_When_TwoCharactersEntered() {
         PersonalProfileUpdated_When_ValidPersonalDetailsEntered();
         updatePersonalProfilePage.backToHome();
         updatePersonalProfilePage.editLastNameWithTwoCharacters();
@@ -105,7 +105,7 @@ public class PersonalProfileTests extends BaseTest {
     @Feature("Personal profile")
     @Story("Edit personal profile details and review it successfully.")
     @Test
-    public void personalReviewField() {
+    public void UserEditProfileReview_When_ClickEditButton() {
         UserRegistered_When_ValidCredentialsEntered();
         UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.personalReviewField();
@@ -116,7 +116,7 @@ public class PersonalProfileTests extends BaseTest {
     @Feature("Personal profile")
     @Story("Update skill details successfully.")
     @Test
-    public void updateSkillDetails() {
+    public void UserSkillUpdate_When_ClickUpdateButton() {
         UserRegistered_When_ValidCredentialsEntered();
         UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
@@ -127,7 +127,7 @@ public class PersonalProfileTests extends BaseTest {
     @Feature("Personal profile")
     @Story("Update personal profile image successfully.")
     @Test
-    public void updatePersonalImage() {
+    public void UserUpdateProfileImage_When_ClickUpdateButton() {
         UserRegistered_When_ValidCredentialsEntered();
         UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalImage();
@@ -137,7 +137,7 @@ public class PersonalProfileTests extends BaseTest {
     @Feature("Personal profile")
     @Story("Edit first name with three characters successfully.")
     @Test
-    public void updateFirstNameWithTreeCharacters() {
+    public void UserEditFirstName_When_TreeCharactersEntered() {
         UserRegistered_When_ValidCredentialsEntered();
         UserLoggedIn_When_ValidDetailsEntered();
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
