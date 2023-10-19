@@ -3,17 +3,13 @@ package pages.weare;
 import org.openqa.selenium.WebDriver;
 
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.format.DateTimeFormatter;
-import java.util.Random;
-import static com.telerikacademy.testframework.RandomGenerator.*;
+
 import static com.telerikacademy.testframework.RandomGenerator.generateRandomFirstName;
 import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
 import static java.lang.String.format;
 
 public class HomePage extends BasePage {
-
-//    LocalDate randomBirthday = generateRandomBirthday(1930, 2000);
     private String firstName = generateRandomFirstName();
     private String lastName = generateRandomFirstName();
     private String fullName = firstName + " " + lastName;
@@ -82,7 +78,7 @@ public class HomePage extends BasePage {
     }
 
     public void assertUserResulFirstSearch() {
-        actions.assertElementPresent(format(getUIMappingByKey("weare.assertFirstNameSearchResult"), firstName,lastName));
+        actions.assertElementPresent(format(getUIMappingByKey("weare.assertFirstNameSearchResult"), firstName, lastName));
     }
 
 }

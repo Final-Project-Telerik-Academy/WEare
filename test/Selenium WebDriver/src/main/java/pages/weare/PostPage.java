@@ -121,35 +121,6 @@ public class PostPage extends BasePage {
         actions.clickElement("weare.likePostButton");
     }
 
-    public void likeSpecificPost() {
-        actions.waitForElementPresent("weare.LatestPostsButton");
-        actions.clickElement("weare.LatestPostsButton");
-        actions.waitForElementPresent("weare.secondPost");
-        actions.hoverOverElement("weare.secondPost");
-
-        if (actions.isElementVisible("weare.likeSecondPost")) {
-            actions.clickElement("weare.likeSecondPost");
-        } else if (actions.isElementVisible("weare.dislikeSecondPost")) {
-            actions.clickElement("weare.dislikeSecondPost");
-            actions.waitForElementPresent("weare.likeSecondPost");
-            actions.clickElement("weare.likeSecondPost");
-        }
-    }
-
-    public void dislikeSpecificPost() {
-        actions.waitForElementPresent("weare.LatestPostsButton");
-        actions.clickElement("weare.LatestPostsButton");
-        actions.waitForElementPresent("weare.firstPost");
-        actions.hoverOverElement("weare.firstPost");
-
-        if (actions.isElementVisible("weare.likeFirstPost")) {
-            actions.clickElement("weare.likeFirstPost");
-            actions.waitForElementPresent("weare.dislikeFirstPost");
-            actions.clickElement("weare.dislikeFirstPost");
-        } else if (actions.isElementVisible("weare.dislikeFirstPost")) {
-            actions.clickElement("weare.dislikeFirstPost");
-        }
-    }
 
     public void dislikePost() {
         if (actions.isElementVisible("weare.likePostButton")) {
