@@ -86,11 +86,6 @@ public class UserTests extends BaseTestSetup {
     @Description("Test to verify that users can be searched by their username.")
     @Test
     public void searchByUserTest() {
-//        logout();
-//        User userTwo = new User();
-//        register(userTwo);
-//        login(userTwo);
-//        logout();
         baseURI = format("%s%s", BASE_URL, SEARCH_USER_ENDPOINT);
 
         String searchUserBody = UserService.searchUserRequest(user);

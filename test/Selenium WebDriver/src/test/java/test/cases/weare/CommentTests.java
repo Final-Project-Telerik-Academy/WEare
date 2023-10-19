@@ -26,7 +26,7 @@ public class CommentTests extends BaseTest {
     @Feature("Comment")
     @Story("Create a comment with valid input successfully.")
     @Test
-    public void createCommentTest() {
+    public void CommentCreated_When_ClickSubmitButton() {
         postPage.createPublicPost();
         commentPage.createComment();
         commentPage.assertNewCommentCreated();
@@ -36,7 +36,7 @@ public class CommentTests extends BaseTest {
     @Feature("Comment")
     @Story("Create a comment with one character successfully.")
     @Test
-    public void createCommentWithOneCharacterTest() {
+    public void CommentCreated_When_OneCharacterEntered() {
         postPage.createPublicPost();
         commentPage.createCommentWithOneCharacter();
         commentPage.assertNewCommentCreated();
@@ -45,7 +45,7 @@ public class CommentTests extends BaseTest {
     @Feature("Comment")
     @Story("Create a comment with 999 characters successfully.")
     @Test
-    public void createCommentWith999CharactersTest() {
+    public void CommentCreated_When_999CharacterEntered() {
         postPage.createPublicPost();
         commentPage.createCommentWithWith999Characters();
         commentPage.assertNewCommentCreated();
@@ -54,7 +54,7 @@ public class CommentTests extends BaseTest {
     @Feature("Comment")
     @Story("Create a comment with 1000 characters successfully.")
     @Test
-    public void createCommentWith1000CharactersTest() {
+    public void CommentCreated_When_1000CharacterEntered() {
         postPage.createPublicPost();
         commentPage.createCommentWith1000Characters();
         commentPage.assertNewCommentCreated();
@@ -63,7 +63,7 @@ public class CommentTests extends BaseTest {
     @Feature("Comment")
     @Story("Create a comment with special characters successfully.")
     @Test
-    public void createCommentWithSpecialCharactersTest() {
+    public void CommentCreated_When_SpecialCharactersEntered() {
         postPage.createPublicPost();
         commentPage.createCommentWithSpecialCharacters();
         commentPage.assertCommentWithSpecialCharsCreated();
@@ -72,7 +72,7 @@ public class CommentTests extends BaseTest {
     @Feature("Comment")
     @Story("Create a comment with hyperlink successfully.")
     @Test
-    public void createCommentWithHyperLinkTest() {
+    public void CommentCreated_When_HyperLinkEntered() {
         postPage.createPublicPost();
         commentPage.createCommentWithHyperLink();
         commentPage.assertCommentWithHyperlinkCreated();
@@ -81,7 +81,7 @@ public class CommentTests extends BaseTest {
     @Feature("Comment")
     @Story("Create a comment with 1000 characters, special characters and hyperlink successfully.")
     @Test
-    public void createCommentWith1000CharsSpecialCharsAndHyperLinkTest() {
+    public void CommentCreated_When_Combine1000CharactersSpecialCharactersAndHyperlink() {
         postPage.createPublicPost();
         commentPage.createCommentWith1000CharsSpecialCharsAndHyperLinkTest();
         commentPage.assertCommentWithMessageHyperLinkAndSpecialChars();
@@ -90,7 +90,7 @@ public class CommentTests extends BaseTest {
     @Feature("Comment")
     @Story("Like a created comment successfully.")
     @Test
-    public void likeCreatedCommentTest() {
+    public void UserLogged_When_LikeCreatedComment() {
         postPage.createPublicPost();
         commentPage.createComment();
         commentPage.likeSpecificComment();
@@ -100,7 +100,7 @@ public class CommentTests extends BaseTest {
     @Feature("Comment")
     @Story("Dislike a created comment successfully.")
     @Test
-    public void dislikeCreatedCommentTest() {
+    public void UserLogged_When_DislikeCreatedComment() {
         postPage.createPublicPost();
         commentPage.createComment();
         commentPage.dislikeSpecificComment();
@@ -110,7 +110,7 @@ public class CommentTests extends BaseTest {
     @Feature("Comment")
     @Story("Edit last created comment successfully.")
     @Test
-    public void editLastCreatedCommentTest() {
+    public void UserLogged_When_EditLastCreatedComment() {
         postPage.createPublicPost();
         commentPage.createComment();
         commentPage.editLastCreatedComment();
@@ -120,7 +120,7 @@ public class CommentTests extends BaseTest {
     @Feature("Comment")
     @Story("Delete last created comment successfully.")
     @Test
-    public void deleteLastCreatedComment() {
+    public void UserLogged_When_deleteLastCreatedComment() {
         postPage.createPublicPost();
         commentPage.createComment();
         commentPage.deleteLastCreatedComment();
