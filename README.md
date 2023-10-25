@@ -248,10 +248,11 @@ or
 4. Тhe test report will appear in a folder named 'Newman' in the same directory.
 
 _For Windows:_
+* Simply double-click on either run-tests.cmd or run10-tests.cmd batch files. The command prompt window will stay open to view the results because of the pause command at the end of each batch file.
 
-Double-click on the desired batch file to run it. The pause command at the end of each batch file will keep the command prompt window open so you can view the results.
+Or
 
-Alternatively, you can also run the batch files from the Command Prompt. Navigate to the directory containing the batch files and type the name of the batch file you want to run, followed by pressing Enter.
+* Open the Command Prompt, navigate to the directory containing the batch files and type the name of the batch file you want to run:
 
 
 ```
@@ -281,12 +282,14 @@ _For Linux:_
 ```
 
 _For Windows:_
-1. Navigate to the "RESTAssured" or "Selenium WebDriver" project directory within the project.
-2. Open a terminal in this directory.
-3. Write in terminal this command:
+* Simply double-click on either run-tests.cmd or run10-tests.cmd batch files. The command prompt window will stay open to view the results because of the pause command at the end of each batch file.
+
+Or
+
+* Open the Command Prompt, navigate to the directory containing the batch files and type the name of the batch file you want to run:
 
 ```
-./run-tests.cmd
+run-tests.cmd
 
 ```
 
