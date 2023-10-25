@@ -56,6 +56,7 @@ public class AdminTests extends BaseTest {
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);
+        postPage.createPublicPost();
         adminPage.lastCreatedPost();
         adminPage.editUserPost();
         adminPage.assertUserPostIsEdited();
@@ -72,8 +73,9 @@ public class AdminTests extends BaseTest {
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);
+        postPage.createPublicPost();
         adminPage.lastCreatedPost();
-        adminPage.deletePostTwo();
+        adminPage.deleteLastCreatedPost();
         adminPage.assertPostIsDeletedSuccessfully();
     }
 

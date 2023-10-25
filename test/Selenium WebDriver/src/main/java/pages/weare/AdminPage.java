@@ -63,22 +63,6 @@ public class AdminPage extends BasePage {
         actions.clickElement("weare.submitBtnForPostDelete");
     }
 
-    public void deletePostTwo() {
-        actions.waitForElementClickable("weare.exploreThisPost");
-        actions.waitFor(500);
-        actions.clickElement("weare.exploreThisPost");
-        actions.waitFor(1000);
-        actions.waitForElementClickable("weare.deletePostbutton");
-        actions.clickElement("weare.deletePostbutton");
-        actions.waitFor(1000);
-        actions.waitForElementPresent("weare.confirmDelete");
-        actions.clickElement("weare.confirmDelete");
-        actions.waitForElementPresent("weare.deleteOption");
-        actions.clickElement("weare.deleteOption");
-        actions.waitForElementPresent("weare.submitButton");
-        actions.clickElement("weare.submitButton");
-    }
-
     public void editOtherUserProfile() {
         actions.waitForElementPresent("weare.editProfileHyperlink");
         actions.hoverOverElement("weare.editProfileHyperlink");
