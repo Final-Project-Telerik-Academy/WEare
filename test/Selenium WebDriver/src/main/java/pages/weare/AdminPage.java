@@ -174,6 +174,7 @@ public class AdminPage extends BasePage {
     }
 
     public void assertUserPostIsEdited() {
+        actions.waitFor(500);
         actions.assertElementPresent(String.format(getUIMappingByKey("weare.assertPostIsEdited"), editedContent));
     }
 

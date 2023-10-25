@@ -46,6 +46,23 @@ public class AdminTests extends BaseTest {
     }
 
     @Feature("Admin")
+    @Story("Admin edits other user's personal profile post successfully.")
+    @Test
+    public void AdminRegistered_When_EditUserPersonalProfile() {
+        registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
+        loginPage.loginUser(usernameTest, passwordTest);
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        UserLoggedOut_When_ClickLogout();
+        updatePersonalProfilePage.backToHome();
+        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
+        loginPage.loginUser(adminUsername, adminPassword);
+
+        updatePersonalProfilePage.useractionLogic();
+        adminPage.editOtherUserProfile();
+        adminPage.assertUserProfileEmailIsUpdated();
+    }
+
+    @Feature("Admin")
     @Story("Admin edits other user's last created post successfully.")
     @Test
     public void AdminRegistered_When_EditLastCreatedUserPost() {
@@ -80,9 +97,9 @@ public class AdminTests extends BaseTest {
     }
 
     @Feature("Admin")
-    @Story("Admin edits other user's personal profile post successfully.")
+    @Story("Admin edits other user's last created comment successfully.")
     @Test
-    public void AdminRegistered_When_EditUserPersonalProfile() {
+    public void AdminRegistered_When_EditLastCreatedUserComment() {
         registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
         loginPage.loginUser(usernameTest, passwordTest);
         updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
@@ -90,9 +107,26 @@ public class AdminTests extends BaseTest {
         updatePersonalProfilePage.backToHome();
         registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
         loginPage.loginUser(adminUsername, adminPassword);
+        postPage.createPublicPost();
+        commentPage.createComment();
+        adminPage.editOtherUserComment();
+        adminPage.asserEditedUserCommentContent();
+    }
 
-        updatePersonalProfilePage.useractionLogic();
-        adminPage.editOtherUserProfile();
-        adminPage.assertUserProfileEmailIsUpdated();
+    @Feature("Admin")
+    @Story("Admin deletes other user's last created comment successfully.")
+    @Test
+    public void AdminRegistered_When_DeleteLastCreatedUserComment() {
+        registrationPage.userRegistration(usernameTest, emailTest, passwordTest);
+        loginPage.loginUser(usernameTest, passwordTest);
+        updatePersonalProfilePage.updatePersonalInfoAfterRegistration();
+        UserLoggedOut_When_ClickLogout();
+        updatePersonalProfilePage.backToHome();
+        registrationPage.userRegistration(adminUsername, adminEmail, adminPassword);
+        loginPage.loginUser(adminUsername, adminPassword);
+        postPage.createPublicPost();
+        commentPage.createComment();
+        adminPage.deleteOtherUserComment();
+        adminPage.assertUserCommentIsDeleted();
     }
 }
