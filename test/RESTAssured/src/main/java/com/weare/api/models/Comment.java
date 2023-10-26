@@ -11,8 +11,6 @@ public class Comment extends BaseModel {
     private Integer userId;
     private boolean like;
 
-    Faker faker = new Faker();
-
     public Comment(){
         this.content= faker.lorem().sentence();
         this.postId=Constants.POST_ID;

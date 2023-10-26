@@ -151,9 +151,9 @@ To set up the database, first ensure you have created your own SQL database loca
 
 Once you have a working database, navigate to the project and open the application.properties file. Fill in the following fields:
 
-spring.datasource.url=_YOUR_DATABASE_URL_
-spring.datasource.username=_YOUR_USERNAME_
-spring.datasource.password=_YOUR_PASSWORD_
+* spring.datasource.url=_YOUR_DATABASE_URL_
+* spring.datasource.username=_YOUR_USERNAME_
+* spring.datasource.password=_YOUR_PASSWORD_
 
 Next, execute the **create.sql** script and specify the name of your database.
 Finally, run the **data.sql** script to populate the tables with data.

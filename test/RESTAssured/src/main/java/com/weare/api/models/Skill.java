@@ -7,7 +7,6 @@ import lombok.Data;
 public class Skill extends BaseModel {
     private Integer id;
     private String name;
-    private Faker faker = new Faker();
 
     public Skill() {
         setRandomSkillName();
