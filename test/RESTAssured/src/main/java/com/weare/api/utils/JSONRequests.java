@@ -14,6 +14,7 @@ public class JSONRequests {
             "  \"password\": \"%s\",\n" +
             "  \"username\": \"%s\"\n" +
             "}";
+
     public static final String POST="{\n" +
             "    \"content\": \"%s\",\n" +
             "    \"picture\": \"%s\",\n" +
@@ -75,15 +76,7 @@ public class JSONRequests {
             "    ]\n" +
             "}";
 
-  /*  public static final String UPDATE_USER_EXPERTISE = "{\n" +
-            "  \"availability\": %s,\n" +
-            "  \"category\": {\n" +
-            "    \"id\": %s\n" +
-            "  },\n" +
-            "  \"id\": %s,\n" +
-            "  \"skill1\": \"skill_%s\"\n" +
-            "}";*/
-    public static final String COMMENT="{\n" +
+    public static final String COMMENT = "{\n" +
             "    \"content\": \"%s\",\n" +
             "    \"deletedConfirmed\": true,\n" +
             "     \"postId\": %d,\n" +
