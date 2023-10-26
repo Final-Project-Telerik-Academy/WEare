@@ -1,7 +1,5 @@
 package com.weare.api.models;
 
-
-import com.github.javafaker.Faker;
 import com.weare.api.utils.Constants;
 import lombok.Data;
 

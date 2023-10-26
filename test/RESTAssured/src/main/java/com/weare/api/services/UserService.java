@@ -1,7 +1,7 @@
 package com.weare.api.services;
 
-import com.weare.api.models.User;
 import com.weare.api.models.Skill;
+import com.weare.api.models.User;
 import com.weare.api.utils.Constants;
 import com.weare.api.utils.JSONRequests;
 import io.qameta.allure.restassured.AllureRestAssured;
@@ -10,7 +10,6 @@ import io.restassured.http.Cookie;
 import io.restassured.response.Response;
 
 import static io.restassured.RestAssured.given;
-
 
 public class UserService {
     private UserService() {};
@@ -23,7 +22,7 @@ public class UserService {
 
     public static String updateProfileRequest(User user) {
         return String.format(JSONRequests.UPDATE_PERSONAL_PROFILE,
-                Constants.birthYear, user.getFirstName(), user.getUserId(), user.getLastName(),
+                user.getBirthYear(), user.getFirstName(), user.getUserId(), user.getLastName(),
                 Constants.CITY, Constants.CITY_ID);
     }
 

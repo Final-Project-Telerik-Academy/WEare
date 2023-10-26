@@ -1,6 +1,5 @@
 package com.weare.api.models;
 import com.weare.api.utils.Constants;
-import com.github.javafaker.Faker;
 
 import lombok.Data;
 
@@ -15,6 +14,7 @@ public class User extends BaseModel {
     private String authority;
     private Integer categoryId;
     private String categoryName;
+    private String birthYear;
 
     public User(){
         this.userId = getUserId();
@@ -25,6 +25,7 @@ public class User extends BaseModel {
         this.lastName = getRandomLastName();
         this.authority = Constants.AUTHORITIES_USER;
         this.categoryId = Constants.CATEGORY_ID;
+        this.birthYear = Constants.birthYear;
     }
 
     private String getRandomFirstName() {
