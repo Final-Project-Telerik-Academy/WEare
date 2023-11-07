@@ -195,6 +195,46 @@ With Selenium WebDriver, we automate the interaction with the application's web 
 
 By using the page-oriented model, we organize our UI tests based on individual pages or components of the application, enabling a systematic and maintainable testing process.
 
+## Performance Testing with JMeter
+The "WEare Performance Testing" project is a comprehensive JMeter test suite designed to evaluate the performance, load, and stability of the WEare application. It is structured to simulate a variety of user interactions to ensure that the application can handle expected traffic levels and to identify potential bottlenecks.
+
+_Test Plan Structure_
+
+**User Defined Variables:**
+Centralized configuration of base URL, port, and protocol to target the local development environment.
+
+**HTTP Requests:** 
+A series of HTTP requests to test user authentication, registration, posting, and commenting functionalities.
+Cookie Management: Configuration for handling cookies throughout the test sessions, ensuring session persistence is accurately tested.
+
+**Cookie Management:** A Cookie Manager is configured to simulate real-user sessions, maintaining state across requests.
+
+**HTTP Defaults:** 
+Default settings for HTTP requests to reduce redundancy and make the test plan more maintainable.
+Headers Management: Standard headers like Accept and Content-Type are set to application/json to mimic API calls.
+
+_Key Features_
+
+**Dynamic Data Generation:** Utilizes JSR223 PreProcessors with Groovy scripting to generate random user data for registration and login processes.
+
+**Assertions:** Response assertions are in place to validate the success of requests based on status codes and response content.
+
+_Test Fragments and Modules_
+
+**Test Fragments:** Reusable test components like "Registration" and "Log In" are encapsulated as test fragments for modularity.
+
+**Modular Approach:** The test plan uses a modular structure, allowing for isolated testing of specific functionalities and easy reuse of test components.
+
+_Ultimate Thread Group Plugin_
+
+The Ultimate Thread Group plugin extends JMeter's capabilities for performance, load, and spike testing by providing a highly customizable thread execution schedule.
+
+_Endpoints Tested_
+* Authentication (**/authenticate**)
+* User Logout (**/logout**)
+* User Creation (**/api/users/**)
+* Post Creation (**/api/post/auth/creator**)
+* Comment Creation (**/api/comment/auth/creator**)
 
 ## Reporting
 
@@ -293,8 +333,24 @@ run-tests.cmd
 
 ```
 
-## Performance Testing
+### JMeter Report:
+1. Move the 'WEarePerformanceTesting.jmx' file from the 'PerformanceTesting' project folder and paste it into the 'bin' folder of your JMeter application.
 
+
+2. Run the Test and Generate the Report:
+
+   * Open the Command Prompt or PowerShell on your Windows machine.
+
+   * Navigate to the bin directory of your JMeter application.
+
+Execute the test Command Prompt or PowerShell and generate the report using the following command:
+```
+./jmeter.bat -n -t "<PathToJMeterBin>\WeArePerformanceTesting.jmx" -l "<PathToSaveCSVReport>\CSVReport.csv" -e -o "<PathToSaveHTMLReport>\WeArePerformanceReport"
+```
+
+In this command:
+* Replace `<PathToJMeterBin>` with the actual path to the directory where your JMeter executable .bat file is located.
+* Replace `<PathToReports>` with the actual path to the directory where you want to save both the CSV and HTML reports.
 
 
 ## Contributors
