@@ -218,6 +218,9 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertContentEquals(contentComment, comment.getContent());
     }
 
+    @Feature("Comments")
+    @Story("Show comment on a post")
+    @Description("Test to verify that a comment is displayed correctly on a post.\"")
     @Test
     public void showComment() {
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
