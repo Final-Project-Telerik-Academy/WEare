@@ -293,6 +293,10 @@ run-tests.cmd
 
 ```
 
+## Performance Testing
+
+
+
 ## Contributors
 
 - Rositsa Markova: [GitHub profile](https://github.com/rosicatm)
