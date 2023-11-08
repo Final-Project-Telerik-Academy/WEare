@@ -8,6 +8,7 @@ import com.weare.api.services.CommentService;
 import com.weare.api.services.PostService;
 import com.weare.api.services.UserService;
 import com.weare.api.utils.AssertHelper;
+import com.weare.api.utils.DatabaseOperations;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -40,7 +41,14 @@ public class CommentTest extends BaseTestSetup {
 
     @AfterEach
     public void tearDownAfterTest() {
+        if (user != null) {
+            DatabaseOperations.deleteLikesForUserComments(user.getUserId());
+            DatabaseOperations.deleteCommentsForUserPosts(user.getUserId());
+            DatabaseOperations.deleteLikesForUserPosts(user.getUserId());
+            DatabaseOperations.deletePostsByUserId(user.getUserId());
+        }
         logout();
+        DatabaseOperations.removeUserById("user_id", user.getUserId());
     }
 
 

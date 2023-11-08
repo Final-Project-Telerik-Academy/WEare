@@ -8,6 +8,7 @@ import com.weare.api.services.PostService;
 import com.weare.api.services.UserService;
 import com.weare.api.utils.AssertHelper;
 import com.weare.api.utils.Constants;
+import com.weare.api.utils.DatabaseOperations;
 import com.weare.api.utils.JSONRequests;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
@@ -41,7 +42,11 @@ public class UserTests extends BaseTestSetup {
 
     @AfterEach
     public void tearDownAfterTest() {
+        if (user != null) {
+            DatabaseOperations.deletePostsByUserId(user.getUserId());
+        }
         logout();
+        DatabaseOperations.removeUserById("user_id", user.getUserId());
     }
 
     @Feature("User Profile")
@@ -118,6 +123,12 @@ public class UserTests extends BaseTestSetup {
         AssertHelper.assertPostIsPrivate(privatePost);
         AssertHelper.assertContentTypeNotNull(ContentType.JSON);
         AssertHelper.assertContentEquals(contentPost, post.getContent());
+
+        boolean postExists = DatabaseOperations.checkPostExists(POST_ID);
+        AssertHelper.assertUserPostExist(postExists, POST_ID);
+
+        int actualPostCount = DatabaseOperations.countPostsByUserId(userId);
+        AssertHelper.assertPostCountByUserId(actualPostCount, 1, userId);
     }
 
     @Feature("User Search")

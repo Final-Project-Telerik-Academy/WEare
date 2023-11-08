@@ -118,7 +118,6 @@ public class RegistrationTest extends BaseTest {
     @Feature("Registration")
     @Story("Register user with only small letters for password unsuccessfully.")
     @Disabled(value = "Bug link: https://weare-project.atlassian.net/browse/WFP-182")
-
     @Test
     public void UserNotRegistered_When_TryToEnterOnlySmallLettersForPassword() {
         username = generateRandomUsername(2);

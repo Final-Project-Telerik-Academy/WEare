@@ -7,6 +7,7 @@ import com.weare.api.models.User;
 import com.weare.api.services.CommentService;
 import com.weare.api.services.PostService;
 import com.weare.api.utils.AssertHelper;
+import com.weare.api.utils.DatabaseOperations;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -40,7 +41,13 @@ public class PostTest extends BaseTestSetup {
 
     @AfterEach
     public void tearDownAfterTest() {
+        if (user != null) {
+            DatabaseOperations.deleteCommentsForUserPosts(user.getUserId());
+            DatabaseOperations.deleteLikesForUserPosts(user.getUserId());
+            DatabaseOperations.deletePostsByUserId(user.getUserId());
+        }
         logout();
+        DatabaseOperations.removeUserById("user_id", user.getUserId());
     }
 
     @Feature("Posts")
@@ -65,6 +72,9 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
         AssertHelper.assertContentTypeNotNull(ContentType.JSON);
         AssertHelper.assertContentEquals(contentPost, post.getContent());
+
+        boolean postExists = DatabaseOperations.checkPostExists(POST_ID);
+        AssertHelper.assertUserPostExist(postExists, POST_ID);
     }
 
     @Feature("Posts")
@@ -90,6 +100,9 @@ public class PostTest extends BaseTestSetup {
         AssertHelper.assertPostIsPrivate(privatePost);
         AssertHelper.assertContentTypeNotNull(ContentType.JSON);
         AssertHelper.assertContentEquals(contentPost, post.getContent());
+
+        boolean postExists = DatabaseOperations.checkPostExists(POST_ID);
+        AssertHelper.assertUserPostExist(postExists, POST_ID);
     }
 
     @Feature("Posts")
@@ -97,7 +110,6 @@ public class PostTest extends BaseTestSetup {
     @Description("Test to verify that a post can be edited successfully.")
     @Test
     public void editPost() {
-
         baseURI = format("%s%s", BASE_URL, CREATE_POST_ENDPOINT);
 
         post = new Post();
@@ -152,6 +164,9 @@ public class PostTest extends BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
+
+        boolean isPostLiked = DatabaseOperations.isPostLikedByUser(POST_ID, user.getUserId());
+        AssertHelper.assertPostIsLikedByUser(isPostLiked);
     }
 
     @Feature("Posts")

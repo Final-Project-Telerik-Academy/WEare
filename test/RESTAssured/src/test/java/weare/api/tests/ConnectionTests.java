@@ -4,6 +4,7 @@ import base.BaseTestSetup;
 import com.weare.api.models.User;
 import com.weare.api.services.ConnectionService;
 import com.weare.api.utils.AssertHelper;
+import com.weare.api.utils.DatabaseOperations;
 import io.qameta.allure.Description;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Story;
@@ -40,6 +41,10 @@ public class ConnectionTests extends BaseTestSetup {
     @AfterEach
     public void tearDownAfterTest() {
         logout();
+        DatabaseOperations.truncateConnections();
+        DatabaseOperations.truncateRequests();
+        DatabaseOperations.removeUserById("user_id", sender.getUserId());
+        DatabaseOperations.removeUserById("user_id", receiver.getUserId());
     }
 
     @Feature("Connections")
@@ -47,7 +52,6 @@ public class ConnectionTests extends BaseTestSetup {
     @Description("Test to verify that a connection request can be sent successfully.")
     @Test
     public void sendConnectionRequest() {
-
         baseURI = format("%s%s", BASE_URL, SEND_REQUEST);
 
         JSONObject sendRequestJsonBody = new JSONObject();
@@ -67,6 +71,9 @@ public class ConnectionTests extends BaseTestSetup {
         AssertHelper.assertStatusCode(statusCode, SC_OK);
         String expectedResponseBody = String.format("%s send friend request to %s", sender.getUsername(), receiver.getUsername());
         AssertHelper.assertResponseBodyEquals(expectedResponseBody, responseBody);
+
+        boolean isFriendRequestSent = DatabaseOperations.checkFriendRequestExists(sender.getUserId(), receiver.getUserId());
+        AssertHelper.assertFriendRequestStatus(isFriendRequestSent, sender.getUserId(), receiver.getUserId());
     }
 
     @Feature("Connections")
@@ -108,6 +115,9 @@ public class ConnectionTests extends BaseTestSetup {
         } else {
             System.out.println("No items found in the response or ID not found.");
         }
+
+        boolean isRequestPresent = DatabaseOperations.checkRequestById(requestId);
+        AssertHelper.assertRequestPresence(isRequestPresent, requestId);
     }
 
     @Feature("Connections")
@@ -152,5 +162,8 @@ public class ConnectionTests extends BaseTestSetup {
         String expectedResponseBody = String.format("%s approved request of %s", receiver.getUsername(), sender.getUsername());
         AssertHelper.assertResponseBodyEquals(expectedResponseBody, responseBody);
         AssertHelper.assertStatusCode(statusCode, SC_OK);
+
+        boolean isRequestApproved = DatabaseOperations.checkRequestApprovalStatus(requestId);
+        AssertHelper.assertRequestApprovalStatus(isRequestApproved, requestId);
     }
 }

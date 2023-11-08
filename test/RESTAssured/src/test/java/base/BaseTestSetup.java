@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 import com.weare.api.models.User;
 import com.weare.api.services.UserService;
 import com.weare.api.utils.AssertHelper;
+import com.weare.api.utils.DatabaseOperations;
 import io.restassured.http.ContentType;
 import io.restassured.http.Cookie;
 import org.junit.jupiter.api.*;
@@ -47,7 +48,7 @@ public class BaseTestSetup {
 
         int statusCode = response.getStatusCode();
         AssertHelper.assertStatusCode(statusCode, SC_OK);
-        Assertions.assertFalse(responseBody.trim().isEmpty());
+        AssertHelper.assertNotEmptyResponse(responseBody);
 
         String regex = "name (\\w+)(.*)id (\\d+)";
         Matcher matcher = Pattern.compile(regex).matcher(responseBody);
@@ -58,9 +59,12 @@ public class BaseTestSetup {
 
         user.setUserId(userId);
 
-        Assertions.assertEquals(username, user.getUsername(), "Username does not match expected value");
-        Assertions.assertTrue(userId > 0, "The user ID should be a positiveinteger");
+        AssertHelper.assertUsernameEquals(username, user.getUsername());
+        AssertHelper.assertPositiveUserId(userId);
         System.out.println(response.asString());
+
+        boolean userExists = DatabaseOperations.checkUserExists(userId);
+        AssertHelper.assertUserExists(userExists, userId);
     }
 
     public void login(User user) {
