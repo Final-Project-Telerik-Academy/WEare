@@ -26,97 +26,86 @@ The task is to test a WEAre Social Network web application which is a social med
 ## Project Structure
 The project is structured as follows:
 ```bash
-.
+[Project Root]
 ├── RESTAssured
 │   ├── allure-results
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   ├── api
-│   │   │   │   │   ├── models
-│   │   │   │   │   │   ├── BaseModel.java
-│   │   │   │   │   │   ├── Comment.java
-│   │   │   │   │   │   ├── Connection.java
-│   │   │   │   │   │   ├── Post.java
-│   │   │   │   │   │   ├── Skill.java
-│   │   │   │   │   │   └── User.java
-│   │   │   │   │   ├── services
-│   │   │   │   │   │   ├── CommentService.java
-│   │   │   │   │   │   ├── ConnectionService.java
-│   │   │   │   │   │   ├── PostService.java
-│   │   │   │   │   │   ├── SkillService.java
-│   │   │   │   │   │   └── UserService.java
-│   │   │   │   │   └── utils
-│   │   │   │   │       ├── AssertHelper.java
-│   │   │   │   │       ├── Constants.java
-│   │   │   │   │       ├── Endpoints.java
-│   │   │   │   │       ├── Helper.java
-│   │   │   │   │       └── JSONRequests.java
-│   │   │   └── test
-│   │   │       ├── java
-│   │   │       │   ├── base
-│   │   │       │   │   └── BaseTestSetup.java
-│   │   │       │   └── tests
-│   │   │       │       ├── CommentTest.java
-│   │   │       │       ├── ConnectionTests.java
-│   │   │       │       ├── PostTest.java
-│   │   │       │       ├── SkillTests.java
-│   │   │       │       └── UserTests.java
-│   │   └── resources
-│   │       └── main-suite.xml
-│   │
-│   └── pom.xml
-
+│   └── src
+│       ├── main
+│       │   └── java
+│       │       ├── api
+│       │       │   └── models
+│       │       │       ├── BaseModel.java
+│       │       │       ├── Comment.java
+│       │       │       ├── Connection.java
+│       │       │       ├── Post.java
+│       │       │       ├── Skill.java
+│       │       │       └── User.java
+│       │       └── services
+│       │           ├── CommentService.java
+│       │           ├── ConnectionService.java
+│       │           ├── PostService.java
+│       │           ├── SkillService.java
+│       │           └── UserService.java
+│       │       └── utils
+│       │           ├── AssertHelper.java
+│       │           ├── Constants.java
+│       │           ├── DatabaseOperations.java
+│       │           ├── Endpoints.java
+│       │           ├── Helper.java
+│       │           └── JSONRequests.java
+│       └── test
+│           ├── java
+│           │   ├── base
+│           │   │   └── BaseTestSetup.java
+│           │   └── tests
+│           │       ├── CommentTest.java
+│           │       ├── ConnectionTests.java
+│           │       ├── PostTest.java
+│           │       ├── SkillTests.java
+│           │       └── UserTests.java
+│           └── resources
 ├── Selenium WebDriver
-│   ├── src
-│   │   ├── main
-│   │   │   ├── java
-│   │   │   │   ├── testframework
-│   │   │   │   │   ├── pages
-│   │   │   │   │   │   ├── BasePage.java
-│   │   │   │   │   │   ├── CustomWebDriverManager.java
-│   │   │   │   │   │   ├── Driver.java
-│   │   │   │   │   │   ├── PropertiesManager.java
-│   │   │   │   │   │   ├── RandomGenerator.java
-│   │   │   │   │   │   ├── UserActionNonImplemented.java
-│   │   │   │   │   │   └── UserActions.java
-│   │   │   │   │   ├── Utils.java
-│   │   │   │   │   └── weare
-│   │   │   │   │       ├── AdminPage.java
-│   │   │   │   │       ├── BasePage.java
-│   │   │   │   │       ├── CommentPage.java
-│   │   │   │   │       ├── HomePage.java
-│   │   │   │   │       ├── LoginPage.java
-│   │   │   │   │       ├── PersonalProfilePage.java
-│   │   │   │   │       ├── PostPage.java
-│   │   │   │   │       └── RegistrationPage.java
-│   │   │   └── resources
-│   │   │       ├── images
-│   │   │       │   ├── bug-photo.png
-│   │   │       │   ├── bug-photo-2.jpg
-│   │   │       │   └── panoramic.jpg
-│   │   │       ├── log4j.properties
-│   │   │       ├── log4j.xml
-│   │   │       └── log4j2.xml
-│   │   └── test
-│   │       ├── java
-│   │       │   └── weare
-│   │       │       ├── AdminTests.java
-│   │       │       ├── BaseTest.java
-│   │       │       ├── CommentTests.java
-│   │       │       ├── HomePageTests.java
-│   │       │       ├── LoginTest.java
-│   │       │       ├── PersonalProfileTests.java
-│   │       │       ├── PostTests.java
-│   │       │       └── RegistrationTest.java
-│   │       └── resources
-│   │           ├── mappings
-│   │           │   └── ui_map.properties
-│   │           └── config.properties
-│   └── pom.xml
+│   ├── allure-results
+│   └── src
+│       ├── main
+│       │   └── java
+│       │       ├── testframework
+│       │       │   └── pages
+│       │       │       ├── BasePage.java
+│       │       │       ├── CustomWebDriverManager.java
+│       │       │       ├── Driver.java
+│       │       │       ├── PropertiesManager.java
+│       │       │       ├── RandomGenerator.java
+│       │       │       ├── UserActions.java
+│       │       │       └── Utils.java
+│       │       └── pages
+│       │           └── weare
+│       │               ├── AdminPage.java
+│       │               ├── BasePage.java
+│       │               ├── CommentPage.java
+│       │               ├── HomePage.java
+│       │               ├── LoginPage.java
+│       │               ├── PersonalProfilePage.java
+│       │               ├── PostPage.java
+│       │               └── RegistrationPage.java
+│       └── test
+│           ├── java
+│           │   └── weare
+│           │       ├── AdminTests.java
+│           │       ├── BaseTest.java
+│           │       ├── CommentTests.java
+│           │       ├── HomePageTests.java
+│           │       ├── LoginTest.java
+│           │       ├── PersonalProfileTests.java
+│           │       ├── PostTests.java
+│           │       └── RegistrationTest.java
+│           └── resources
+│               └── mappings
+│                   ├── ui_map.properties
+│                   └── config.properties
 ├── .gitignore
-└── README.md
-
+├── README.md
+└── Test Plan - Final Project.pdf
 ```
 ## Prerequisites
 - Java SDK 11
